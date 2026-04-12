@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Blog Upload Test</title>
+</head>
+<body>
+
+<h2>Upload Blog</h2>
+
+<input type="text" id="title" placeholder="Title"><br><br>
+
+<textarea id="description" placeholder="Description"></textarea><br><br>
+
+<label>Image:</label> <input type="file" id="imageInput"><br><br>
+
+<label>Video (optional):</label> <input type="file" id="videoInput"><br><br>
+
+<input type="text" id="social" placeholder="Social Link"><br><br>
+
+<button onclick="submitBlog()">Submit Blog</button>
+
+<p id="result"></p>
+
+<script>
+async function uploadFile(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const res = await fetch('http://localhost:5000/api/upload', {
+        method: 'POST',
+        body: formData
+    });
+
+    const text = await res.text();
+    console.log("UPLOAD RESPONSE:", text);
+
+    if (!res.ok) {
+        throw new Error(text);
+    }
+
+    return JSON.parse(text).url;
+}
+
+async function submitBlog() {
+    try {
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const social = document.getElementById('social').value;
+
+        const imageFile = document.getElementById('imageInput').files[0];
+        const videoFile = document.getElementById('videoInput').files[0];
+
+        if (!title || !description || !imageFile) {
+            alert("Title, Description and Image are required");
+            return;
+        }
+
+        document.getElementById('result').innerText = "Uploading image...";
+
+        const imageUrl = await uploadFile(imageFile);
+
+        let videoUrl = "";
+        if (videoFile) {
+            document.getElementById('result').innerText = "Uploading video...";
+            videoUrl = await uploadFile(videoFile);
+        }
+
+        document.getElementById('result').innerText = "Saving blog...";
+
+        const res = await fetch('http://localhost:5000/api/add-blog', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                title,
+                description,
+                image: imageUrl,
+                video: videoUrl,
+                social_link: social
+            })
+        });
+
+        const text = await res.text();
+        console.log("BLOG RESPONSE:", text);
+
+        if (!res.ok) {
+            throw new Error(text);
+        }
+
+        document.getElementById('result').innerHTML = `
+            ✅ Blog Added Successfully! <br>
+            <a href="${imageUrl}" target="_blank">View Image</a>
+        `;
+
+    } catch (err) {
+        console.error("❌ FRONTEND ERROR:", err);
+        document.getElementById('result').innerText = "Error: " + err.message;
+        alert("Error: " + err.message);
+    }
+}
+</script>
+
+</body>
+</html>
