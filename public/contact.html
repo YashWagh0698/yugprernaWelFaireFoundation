@@ -1,47 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - YugPrerna Welfare Foundation</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — YugPrerna Welfare Foundation</title>
+  <meta name="description" content="Get in touch with YugPrerna Welfare Foundation for partnerships, volunteering, or program support.">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <a class="skip-link" href="#main-content">Skip to main content</a>
-    <header>
-        <h1>YugPrerna Welfare Foundation</h1>
-        <nav aria-label="Main navigation">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="projects.html">Projects</a>
-            <a href="contact.html">Contact</a>
-        </nav>
-    </header>
 
-    <main id="main-content">
-        <section id="contact-info">
-            <h2>Contact Us</h2>
-            <p>For partnerships, program support, or accessible formats, please reach out to us.</p>
-            <ul>
-                <li>Partnerships Email: <a href="mailto:partnerships@yugprernawelfare.org">partnerships@yugprernawelfare.org</a></li>
-                <li>General Email: <a href="mailto:info@yugprernawelfare.org">info@yugprernawelfare.org</a></li>
-                <li>Website: <a href="https://www.yugprernawelfare.org" target="_blank" rel="noopener">www.yugprernawelfare.org</a></li>
-                <li>LinkedIn: <a href="https://www.linkedin.com/company/yugprerna-welfare-foundation" target="_blank" rel="noopener">/company/yugprerna-welfare-foundation</a></li>
-                <li>Phone: [+91-XXXXX-XXXXX]</li>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav class="site-nav" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark" aria-hidden="true">Y</div>
+    <div><div class="nav-logo-text">YugPrerna</div><div class="nav-logo-sub">Welfare Foundation</div></div>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html">Programs</a>
+    <a href="blogs.html">Blog</a>
+    <a href="contact.html" class="active">Contact</a>
+    <a href="contact.html#partner" class="btn-partner">Partner With Us</a>
+  </div>
+  <button class="nav-hamburger" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<main id="main-content">
+
+  <!-- PAGE HERO -->
+  <div style="background: linear-gradient(135deg, var(--earth) 0%, #3D1A08 100%); color: #fff; padding: clamp(48px,8vw,80px) clamp(20px,5vw,80px);">
+    <div class="container">
+      <p style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--saffron-light); margin-bottom: 10px; font-weight: 600;">Get in Touch</p>
+      <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(2rem,4vw,3rem); font-weight: 700;">Contact Us</h1>
+      <p style="margin-top: 16px; opacity: 0.8; max-width: 550px;">For partnerships, program support, volunteering, or accessible format requests — our team is ready to connect.</p>
+    </div>
+  </div>
+
+  <!-- CONTACT DETAILS + FORM -->
+  <section class="section" id="partner" aria-labelledby="contact-heading">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- LEFT: Contact info -->
+        <div>
+          <p class="section-label">Reach Us Directly</p>
+          <h2 class="section-title" id="contact-heading" style="font-size: 1.8rem;">Our Contact Details</h2>
+
+          <div class="contact-item">
+            <div class="contact-icon" aria-hidden="true">✉️</div>
+            <div>
+              <div class="contact-label">Partnerships Email</div>
+              <div class="contact-value"><a href="mailto:partnerships@yugprernawelfare.org">partnerships@yugprernawelfare.org</a></div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon" aria-hidden="true">📬</div>
+            <div>
+              <div class="contact-label">General Email</div>
+              <div class="contact-value"><a href="mailto:info@yugprernawelfare.org">info@yugprernawelfare.org</a></div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon" aria-hidden="true">📍</div>
+            <div>
+              <div class="contact-label">Registered Office</div>
+              <div class="contact-value">Aurangabad, Maharashtra, India</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon" aria-hidden="true">💼</div>
+            <div>
+              <div class="contact-label">LinkedIn</div>
+              <div class="contact-value"><a href="https://www.linkedin.com/company/yugprerna-welfare-foundation" target="_blank" rel="noopener">/company/yugprerna-welfare-foundation</a></div>
+            </div>
+          </div>
+
+          <div style="margin-top: 32px; padding: 20px; background: var(--saffron-pale); border-radius: 12px; border-left: 3px solid var(--saffron);">
+            <h3 style="font-size: 14px; font-weight: 600; color: var(--earth); margin-bottom: 8px;">Accessible Formats Available</h3>
+            <p style="font-size: 13px; color: var(--text-muted);">Large print, screen-reader friendly, audio, Marathi, and Hindi formats available on request. Contact <a href="mailto:info@yugprernawelfare.org" style="color: var(--saffron);">info@yugprernawelfare.org</a>. Fulfilled within 5 working days at no cost.</p>
+          </div>
+
+          <div style="margin-top: 24px; padding: 20px; background: #EEF5EC; border-radius: 12px;">
+            <h3 style="font-size: 14px; font-weight: 600; color: var(--earth); margin-bottom: 12px;">Partner Engagement Models</h3>
+            <ul style="list-style: none; padding: 0; font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; gap: 8px;">
+              <li>🤝 <strong style="color: var(--text-mid);">Funded programs</strong> — Project-based CSR grants with defined deliverables</li>
+              <li>👥 <strong style="color: var(--text-mid);">Employee volunteering</strong> — Structured time-bound mentoring and workshops</li>
+              <li>🎯 <strong style="color: var(--text-mid);">Co-design partnerships</strong> — Joint program design aligned to CSR priorities</li>
+              <li>🔗 <strong style="color: var(--text-mid);">Procurement linkages</strong> — Connecting beneficiaries to corporate supply chains</li>
             </ul>
-        </section>
+          </div>
+        </div>
 
-        <section id="partner-call">
-            <h2>Partner With Us</h2>
-            <p>Our programs are designed to align with CSR, ESG, and governance-ready reporting. We welcome corporate, government, NGO, and academic partnerships for measurable social impact.</p>
-            <p>Accessible formats (large print, screen-reader friendly, audio) are available on request.</p>
-        </section>
-    </main>
+        <!-- RIGHT: Enquiry form -->
+        <div>
+          <p class="section-label">Send Us a Message</p>
+          <h2 class="section-title" style="font-size: 1.8rem;">Partnership &amp; General Enquiry</h2>
 
-    <footer>
-        <p>YugPrerna Welfare Foundation — Empowering Expertise. Enabling Inclusion. Strengthening Impact.</p>
-    </footer>
+          <form class="contact-form" id="contactForm" aria-label="Contact form" onsubmit="handleSubmit(event)" novalidate>
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input type="text" id="name" name="name" required placeholder="Your name" autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="org">Organisation / Company</label>
+              <input type="text" id="org" name="org" placeholder="Organisation name (optional)" autocomplete="organization">
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" required placeholder="your@email.com" autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="enquiry-type">Enquiry Type</label>
+              <select id="enquiry-type" name="enquiry_type">
+                <option value="">Select type...</option>
+                <option value="csr-partnership">CSR Partnership</option>
+                <option value="volunteer">Volunteer Registration</option>
+                <option value="donate">Donation / Funding</option>
+                <option value="program-info">Program Information</option>
+                <option value="accessible-format">Accessible Format Request</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Message *</label>
+              <textarea id="message" name="message" required placeholder="Tell us how you'd like to connect or what you need..."></textarea>
+            </div>
 
-    <script src="js/main.js"></script>
+            <button type="submit" class="btn-submit" id="submitBtn">Send Message →</button>
+            <p id="form-status" role="alert" aria-live="polite" style="margin-top: 12px; font-size: 14px; display: none;"></p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION STRIP -->
+  <section class="section" style="background: var(--warm-white); padding-top: 0;" aria-labelledby="csr-cta-heading">
+    <div class="container">
+      <div style="background: linear-gradient(135deg, var(--earth), #3D1A08); border-radius: 20px; padding: 40px; color: #fff; text-align: center;">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 14px;" id="csr-cta-heading">Ready to Co-Design Impactful Programs?</h2>
+        <p style="opacity: 0.8; max-width: 540px; margin: 0 auto 24px; font-size: 15px;">Our CSR compliance pack includes MOU templates, due-diligence documentation, utilisation certificates, and Schedule VII alignment reports.</p>
+        <a href="mailto:partnerships@yugprernawelfare.org" class="btn-primary" style="display: inline-flex;">
+          Email Our Partnerships Team →
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>YugPrerna Welfare Foundation</h3>
+        <p>Empowering Expertise. Enabling Inclusion. Strengthening Impact.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="projects.html">Programs</a>
+        <a href="blogs.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="mailto:partnerships@yugprernawelfare.org">Partnerships</a>
+        <a href="mailto:info@yugprernawelfare.org">General Enquiry</a>
+        <a href="https://www.linkedin.com/company/yugprerna-welfare-foundation" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 YugPrerna Welfare Foundation. All rights reserved.</span>
+      <a href="mailto:info@yugprernawelfare.org">info@yugprernawelfare.org</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+async function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const status = document.getElementById('form-status');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  // Simulate a send (replace with real API call when backend is ready)
+  await new Promise(r => setTimeout(r, 1000));
+
+  status.style.display = 'block';
+  status.style.color = 'var(--sage)';
+  status.textContent = '✓ Thank you! We will get back to you within 2 working days.';
+  document.getElementById('contactForm').reset();
+  btn.disabled = false;
+  btn.textContent = 'Send Message →';
+}
+</script>
+<script src="js/main.js"></script>
 </body>
 </html>

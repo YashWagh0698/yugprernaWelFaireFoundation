@@ -1,16 +1,381 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title> adminLogin</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Blog — YugPrerna Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --saffron: #E8621A;
+      --earth: #7A3B1E;
+      --cream: #FAF7F2;
+      --warm-white: #FFFDF9;
+      --text-dark: #1C1008;
+      --text-mid: #4A3728;
+      --text-muted: #8B6F5E;
+      --border: #E8D5C4;
+      --success: #2D7D46;
+      --error: #C0392B;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
+
+    /* Admin top bar */
+    .admin-bar {
+      background: var(--earth); color: #fff;
+      padding: 0 24px; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .admin-bar-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+    .admin-bar-mark { width: 32px; height: 32px; background: var(--saffron); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display'; font-size: 16px; }
+    .admin-bar-links { display: flex; gap: 4px; }
+    .admin-bar-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; padding: 6px 12px; border-radius: 6px; transition: background 0.2s; }
+    .admin-bar-links a:hover, .admin-bar-links a.active { background: rgba(255,255,255,0.15); color: #fff; }
+
+    /* Layout */
+    .page { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; }
+    .page-header { margin-bottom: 32px; }
+    .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--earth); }
+    .page-header p { color: var(--text-muted); margin-top: 6px; font-size: 14px; }
+
+    /* Card */
+    .card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 16px; padding: 32px; }
+    .card + .card { margin-top: 20px; }
+    .card-title { font-weight: 600; color: var(--earth); margin-bottom: 20px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* Form elements */
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--text-mid); margin-bottom: 6px; }
+    .form-group label .required { color: var(--saffron); }
+    .form-group input[type="text"],
+    .form-group input[type="url"],
+    .form-group textarea {
+      width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
+      border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px;
+      background: var(--cream); color: var(--text-dark); outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--saffron); background: #fff; }
+    .form-group textarea { min-height: 130px; resize: vertical; }
+    .form-hint { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+
+    /* File upload zone */
+    .upload-zone {
+      border: 2px dashed var(--border); border-radius: 10px; padding: 28px;
+      text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      background: var(--cream); position: relative;
+    }
+    .upload-zone:hover, .upload-zone.drag-over { border-color: var(--saffron); background: #FDF0E8; }
+    .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    .upload-icon { font-size: 32px; margin-bottom: 8px; }
+    .upload-zone p { font-size: 13px; color: var(--text-muted); }
+    .upload-zone strong { color: var(--saffron); }
+    .upload-optional { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+    /* Upload status */
+    .upload-status {
+      display: none; margin-top: 12px; padding: 10px 14px;
+      border-radius: 8px; font-size: 13px; align-items: center; gap: 10px;
+    }
+    .upload-status.uploading { display: flex; background: #EAF2FB; color: #1A5276; }
+    .upload-status.done { display: flex; background: #EEF5EC; color: var(--success); }
+    .upload-status.error { display: flex; background: #FDEDEC; color: var(--error); }
+    .preview-img { margin-top: 12px; border-radius: 8px; max-height: 160px; max-width: 100%; object-fit: cover; display: none; }
+
+    /* Spinner */
+    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Submit */
+    .form-actions { display: flex; gap: 14px; align-items: center; margin-top: 28px; flex-wrap: wrap; }
+    .btn-submit {
+      background: var(--saffron); color: #fff; border: none;
+      padding: 13px 32px; border-radius: 8px; font-family: 'DM Sans', sans-serif;
+      font-weight: 600; font-size: 15px; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-submit:hover:not(:disabled) { background: var(--earth); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-cancel { background: none; border: 1.5px solid var(--border); color: var(--text-mid); padding: 12px 24px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; }
+    .btn-cancel:hover { border-color: var(--text-mid); }
+
+    /* Result banner */
+    #result-banner {
+      display: none; padding: 16px 20px; border-radius: 10px; font-size: 14px;
+      margin-top: 20px; font-weight: 500;
+    }
+    #result-banner.success { background: #EEF5EC; color: var(--success); border: 1px solid #B7DEC4; }
+    #result-banner.error { background: #FDEDEC; color: var(--error); border: 1px solid #F5B7B1; }
+
+    /* Progress steps */
+    .progress-steps { display: flex; gap: 0; margin-bottom: 32px; }
+    .step { flex: 1; text-align: center; padding: 10px; font-size: 12px; color: var(--text-muted); border-bottom: 2px solid var(--border); }
+    .step.active { color: var(--saffron); border-bottom-color: var(--saffron); font-weight: 600; }
+    .step.done { color: var(--success); border-bottom-color: var(--success); }
+  </style>
 </head>
 <body>
 
-<h2>Add Blog</h2>
-
-<div>
-<h1>add your content here</h1>
-feelds: blog_title,blog description,image not requare but it should be there, video not requare but it should be there.
+<div class="admin-bar">
+  <div class="admin-bar-brand">
+    <div class="admin-bar-mark">Y</div>
+    YugPrerna Admin
+  </div>
+  <div class="admin-bar-links">
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/add-blog" class="active">Add Blog</a>
+    <a href="/admin/add-project">Add Project</a>
+    <a href="/index.html" target="_blank">View Site ↗</a>
+  </div>
 </div>
 
+<div class="page">
+  <div class="page-header">
+    <h1>Add New Blog Post</h1>
+    <p>Fill in the details below. Image will be uploaded to Google Drive, content saved to Google Sheets.</p>
+  </div>
+
+  <!-- Auth check notice -->
+  <div id="auth-notice" style="display:none; padding:14px 18px; background:#FDF0E8; border:1px solid #F5C5A3; border-radius:10px; font-size:14px; margin-bottom:20px; color: var(--earth);">
+    ⚠️ Not authenticated with Google. <a href="/auth/google" style="color:var(--saffron); font-weight:600;">Click here to authenticate</a> before uploading files.
+  </div>
+
+  <!-- PROGRESS INDICATOR -->
+  <div class="progress-steps" id="progressSteps" role="status" aria-label="Upload progress">
+    <div class="step active" id="step-1">1. Fill Details</div>
+    <div class="step" id="step-2">2. Upload Image</div>
+    <div class="step" id="step-3">3. Upload Video</div>
+    <div class="step" id="step-4">4. Save to Sheets</div>
+  </div>
+
+  <div class="card">
+    <p class="card-title">Blog Content</p>
+
+    <div class="form-group">
+      <label for="blog-title">Blog Title <span class="required">*</span></label>
+      <input type="text" id="blog-title" placeholder="Enter a clear, descriptive title" required>
+    </div>
+
+    <div class="form-group">
+      <label for="blog-desc">Description / Content <span class="required">*</span></label>
+      <textarea id="blog-desc" placeholder="Write the blog post content or a summary..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="social-link">Social Media Link</label>
+      <input type="url" id="social-link" placeholder="https://linkedin.com/... or https://twitter.com/...">
+      <p class="form-hint">Optional link to a related social post or external article.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title">Media Uploads</p>
+
+    <!-- Image Upload -->
+    <div class="form-group">
+      <label>Blog Image <span class="required">*</span></label>
+      <div class="upload-zone" id="imageZone"
+        ondragover="event.preventDefault(); this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="handleDrop(event, 'image')">
+        <input type="file" id="imageInput" accept="image/*" onchange="handleFileSelect(this, 'image')" aria-label="Upload blog image">
+        <div class="upload-icon" aria-hidden="true">🖼️</div>
+        <p><strong>Click to upload</strong> or drag &amp; drop</p>
+        <p>PNG, JPG, WEBP — Max 10 MB</p>
+      </div>
+      <div class="upload-status" id="imageStatus"></div>
+      <img id="imagePreview" class="preview-img" alt="Image preview">
+      <input type="hidden" id="imageUrl">
+    </div>
+
+    <!-- Video Upload -->
+    <div class="form-group" style="margin-top: 28px;">
+      <label>Blog Video <span style="color:var(--text-muted); font-weight:400;">(Optional)</span></label>
+      <div class="upload-zone" id="videoZone"
+        ondragover="event.preventDefault(); this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="handleDrop(event, 'video')">
+        <input type="file" id="videoInput" accept="video/*" onchange="handleFileSelect(this, 'video')" aria-label="Upload blog video">
+        <div class="upload-icon" aria-hidden="true">🎬</div>
+        <p><strong>Click to upload</strong> or drag &amp; drop</p>
+        <p>MP4, MOV, AVI — Max 100 MB</p>
+      </div>
+      <div class="upload-status" id="videoStatus"></div>
+      <input type="hidden" id="videoUrl">
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="form-actions">
+    <button class="btn-submit" id="submitBtn" onclick="submitBlog()">Publish Blog Post</button>
+    <button class="btn-cancel" onclick="if(confirm('Discard changes?')) history.back()">Cancel</button>
+    <span style="font-size:12px; color:var(--text-muted);" id="submit-hint">Fill in the title, description, and upload an image to publish.</span>
+  </div>
+
+  <div id="result-banner" role="alert"></div>
+</div>
+
+<script>
+// ─── State ───────────────────────────────────────────────
+const state = { imageUploading: false, videoUploading: false };
+
+// ─── Auth check ──────────────────────────────────────────
+async function checkAuth() {
+  try {
+    const res = await fetch('/api/blogs');
+    if (res.status === 401) document.getElementById('auth-notice').style.display = 'block';
+  } catch {}
+}
+checkAuth();
+
+// ─── Drag & Drop helper ──────────────────────────────────
+function handleDrop(e, type) {
+  e.preventDefault();
+  document.getElementById(type + 'Zone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  const input = document.getElementById(type + 'Input');
+  const dt = new DataTransfer();
+  dt.items.add(file);
+  input.files = dt.files;
+  handleFileSelect(input, type);
+}
+
+// ─── File selected → auto-upload ─────────────────────────
+async function handleFileSelect(input, type) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const statusEl = document.getElementById(type + 'Status');
+  const urlField = document.getElementById(type + 'Url');
+
+  // Validate size
+  const maxMB = type === 'image' ? 10 : 100;
+  if (file.size > maxMB * 1024 * 1024) {
+    setStatus(statusEl, 'error', `File too large. Max ${maxMB} MB.`);
+    return;
+  }
+
+  // Show preview for images
+  if (type === 'image') {
+    const preview = document.getElementById('imagePreview');
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = 'block';
+  }
+
+  // Upload to Google Drive
+  setStatus(statusEl, 'uploading', `Uploading ${file.name}...`);
+  setStep(type === 'image' ? 2 : 3);
+  state[type + 'Uploading'] = true;
+
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const res = await fetch('/api/upload', { method: 'POST', body: formData });
+    const text = await res.text();
+
+    if (!res.ok) throw new Error(text || `Upload failed (${res.status})`);
+
+    const data = JSON.parse(text);
+    urlField.value = data.url;
+    setStatus(statusEl, 'done', `✓ Uploaded — ${file.name}`);
+    setStep(type === 'image' ? 2 : 3, true);
+
+  } catch (err) {
+    setStatus(statusEl, 'error', `✗ ${err.message}`);
+    urlField.value = '';
+  }
+  state[type + 'Uploading'] = false;
+}
+
+// ─── Submit blog ──────────────────────────────────────────
+async function submitBlog() {
+  const title = document.getElementById('blog-title').value.trim();
+  const desc  = document.getElementById('blog-desc').value.trim();
+  const img   = document.getElementById('imageUrl').value;
+  const video = document.getElementById('videoUrl').value;
+  const social = document.getElementById('social-link').value.trim();
+  const banner = document.getElementById('result-banner');
+  const btn    = document.getElementById('submitBtn');
+
+  // Validation
+  if (!title) { alert('Please enter a blog title.'); document.getElementById('blog-title').focus(); return; }
+  if (!desc)  { alert('Please enter a description.'); document.getElementById('blog-desc').focus(); return; }
+  if (!img)   { alert('Please upload an image before publishing.'); return; }
+  if (state.imageUploading || state.videoUploading) { alert('Please wait for the upload to finish.'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Publishing...';
+  setStep(4);
+  banner.style.display = 'none';
+
+  try {
+    const res = await fetch('/api/add-blog', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, description: desc, image: img, video, social_link: social })
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || `Server error ${res.status}`);
+
+    // Success!
+    setStep(4, true);
+    banner.className = 'success';
+    banner.innerHTML = `✓ Blog post "<strong>${escHtml(title)}</strong>" published successfully! <a href="/blogs.html" target="_blank" style="color:var(--success);font-weight:600;">View on site →</a>`;
+    banner.style.display = 'block';
+
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      document.getElementById('blog-title').value = '';
+      document.getElementById('blog-desc').value = '';
+      document.getElementById('social-link').value = '';
+      document.getElementById('imageUrl').value = '';
+      document.getElementById('videoUrl').value = '';
+      document.getElementById('imageInput').value = '';
+      document.getElementById('videoInput').value = '';
+      document.getElementById('imagePreview').style.display = 'none';
+      document.getElementById('imageStatus').className = 'upload-status';
+      document.getElementById('videoStatus').className = 'upload-status';
+      resetSteps();
+    }, 3000);
+
+  } catch (err) {
+    banner.className = 'error';
+    banner.textContent = `✗ Failed to publish: ${err.message}`;
+    banner.style.display = 'block';
+    if (err.message.includes('401') || err.message.toLowerCase().includes('auth')) {
+      document.getElementById('auth-notice').style.display = 'block';
+    }
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Publish Blog Post';
+}
+
+// ─── UI helpers ───────────────────────────────────────────
+function setStatus(el, type, msg) {
+  el.className = 'upload-status ' + type;
+  el.innerHTML = type === 'uploading'
+    ? `<span class="spinner"></span><span>${msg}</span>`
+    : `<span>${msg}</span>`;
+}
+
+function setStep(n, done = false) {
+  document.querySelectorAll('.progress-steps .step').forEach((s, i) => {
+    s.className = 'step' + (i + 1 < n || (i + 1 === n && done) ? ' done' : i + 1 === n ? ' active' : '');
+  });
+}
+function resetSteps() {
+  document.querySelectorAll('.progress-steps .step').forEach((s, i) => {
+    s.className = 'step' + (i === 0 ? ' active' : '');
+  });
+}
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
 </body>
 </html>

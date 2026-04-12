@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — YugPrerna Welfare Foundation</title>
+  <meta name="description" content="Updates, insights, and stories from YugPrerna Welfare Foundation's programs across India.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav class="site-nav" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark" aria-hidden="true">Y</div>
+    <div><div class="nav-logo-text">YugPrerna</div><div class="nav-logo-sub">Welfare Foundation</div></div>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html">Programs</a>
+    <a href="blogs.html" class="active">Blog</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html#partner" class="btn-partner">Partner With Us</a>
+  </div>
+  <button class="nav-hamburger" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<main id="main-content">
+
+  <!-- PAGE HERO -->
+  <div style="background: linear-gradient(135deg, var(--earth) 0%, #3D1A08 100%); color: #fff; padding: clamp(48px,8vw,80px) clamp(20px,5vw,80px);">
+    <div class="container">
+      <p style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--saffron-light); margin-bottom: 10px; font-weight: 600;">Stories &amp; Insights</p>
+      <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(2rem,4vw,3rem); font-weight: 700;">Our Blog</h1>
+      <p style="margin-top: 16px; opacity: 0.8; max-width: 500px;">Updates from the field, program insights, impact stories, and news from YugPrerna Welfare Foundation.</p>
+    </div>
+  </div>
+
+  <!-- BLOG LISTING -->
+  <section class="section" aria-labelledby="blog-heading">
+    <div class="container">
+      <h2 class="section-title" id="blog-heading" style="margin-bottom: 8px;">All Posts</h2>
+      <p style="color: var(--text-muted); margin-bottom: 0;">Showing all published articles and updates.</p>
+
+      <!-- Search / Filter bar -->
+      <div style="margin: 28px 0; display: flex; gap: 12px; flex-wrap: wrap;">
+        <input
+          type="search"
+          id="blog-search"
+          placeholder="Search posts..."
+          aria-label="Search blog posts"
+          style="flex: 1; min-width: 200px; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; background: var(--warm-white); outline: none;"
+          oninput="filterBlogs(this.value)"
+        >
+      </div>
+
+      <div id="blog-container" aria-live="polite" aria-label="Blog posts">
+        <div class="blog-empty">
+          <div style="font-size: 48px; margin-bottom: 16px;" aria-hidden="true">📰</div>
+          <p>Loading posts...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>YugPrerna Welfare Foundation</h3>
+        <p>Empowering Expertise. Enabling Inclusion. Strengthening Impact.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="projects.html">Programs</a>
+        <a href="blogs.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="mailto:partnerships@yugprernawelfare.org">Partnerships</a>
+        <a href="mailto:info@yugprernawelfare.org">General Enquiry</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 YugPrerna Welfare Foundation. All rights reserved.</span>
+      <a href="mailto:info@yugprernawelfare.org">info@yugprernawelfare.org</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+let allBlogs = [];
+
+async function loadBlogs() {
+  const container = document.getElementById('blog-container');
+  try {
+    const res = await fetch('/api/blogs');
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    allBlogs = await res.json();
+    renderBlogs(allBlogs);
+  } catch (err) {
+    console.error('Failed to load blogs:', err);
+    container.innerHTML = `<div class="blog-empty"><div style="font-size:48px;margin-bottom:16px">📭</div><p>Could not load posts. Please try again later.</p></div>`;
+  }
+}
+
+function renderBlogs(blogs) {
+  const container = document.getElementById('blog-container');
+  if (!blogs.length) {
+    container.innerHTML = `<div class="blog-empty"><div style="font-size:48px;margin-bottom:16px">✍️</div><p>No posts yet. Check back soon!</p></div>`;
+    return;
+  }
+  container.innerHTML = `<div class="blog-grid">${blogs.map(blogCard).join('')}</div>`;
+}
+
+function blogCard(blog) {
+  const img = blog.image
+    ? `<img src="${escHtml(blog.image)}" alt="${escHtml(blog.title)}" class="blog-card-img" loading="lazy">`
+    : `<div class="blog-card-img-placeholder" aria-hidden="true">📰</div>`;
+
+  const links = [];
+  if (blog.video) links.push(`<a href="${escHtml(blog.video)}" target="_blank" rel="noopener">▶ Watch Video</a>`);
+  if (blog.social_link) links.push(`<a href="${escHtml(blog.social_link)}" target="_blank" rel="noopener">↗ Social Post</a>`);
+
+  const date = blog.created_at ? new Date(blog.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+
+  return `
+    <article class="blog-card">
+      ${img}
+      <div class="blog-card-body">
+        ${date ? `<p style="font-size:12px;color:var(--text-muted);margin-bottom:8px">${date}</p>` : ''}
+        <h3>${escHtml(blog.title)}</h3>
+        <p>${escHtml(blog.description)}</p>
+      </div>
+      ${links.length ? `<div class="blog-card-footer">${links.join('')}</div>` : ''}
+    </article>`;
+}
+
+function escHtml(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function filterBlogs(query) {
+  const q = query.toLowerCase();
+  const filtered = q ? allBlogs.filter(b =>
+    b.title.toLowerCase().includes(q) || b.description.toLowerCase().includes(q)
+  ) : allBlogs;
+  renderBlogs(filtered);
+}
+
+loadBlogs();
+</script>
+</body>
+</html>
