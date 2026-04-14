@@ -1,32 +1,29 @@
 /**
  * nav-logo.js
- * Fetches the site logo URL from /api/config (which reads website_logo from .env)
- * and replaces the fallback "Y" mark in the navbar with the real logo image.
- * Included on every public page via <script src="js/nav-logo.js"></script>
+ * Replaces the fallback "Y" mark in every nav with the real foundation logo.
+ * Uses the Google Drive public URL directly — no API call required.
  */
-(async function injectLogo() {
-  try {
-    const res = await fetch('/api/config');
-    if (!res.ok) return;
-    const { logoUrl } = await res.json();
-    if (!logoUrl) return;
+(function injectLogo() {
+  const LOGO_URL = 'https://drive.google.com/uc?id=1krpIJwi0ZUlLmnE0Z2pRff8NSsnZa-Vb';
 
-    // Find every .nav-logo-mark on the page (there's usually just one)
-    document.querySelectorAll('.nav-logo-mark').forEach(mark => {
-      const img = document.createElement('img');
-      img.src = logoUrl;
-      img.alt = 'YugPrerna Welfare Foundation Logo';
-      img.className = 'nav-logo-img';
-      img.loading = 'eager';
+  document.querySelectorAll('.nav-logo').forEach(navLogo => {
+    const mark = navLogo.querySelector('.nav-logo-mark');
+    if (!mark) return;
 
-      // If the image fails to load, keep showing the fallback "Y" mark
-      img.onerror = () => { img.remove(); mark.style.display = 'flex'; };
+    const img = document.createElement('img');
+    img.src = LOGO_URL;
+    img.alt = 'YugPrerna Welfare Foundation Logo';
+    img.className = 'nav-logo-img';
+    img.loading = 'eager';
 
-      // Hide the fallback mark and insert the real logo before it
-      mark.style.display = 'none';
-      mark.parentNode.insertBefore(img, mark);
-    });
-  } catch (e) {
-    // Silently fail — fallback "Y" mark stays visible
-  }
+    // If Drive image fails to load, show the fallback "Y" mark
+    img.onerror = function () {
+      img.remove();
+      mark.style.display = 'flex';
+    };
+
+    // Hide the "Y" fallback and insert the real logo before it
+    mark.style.display = 'none';
+    mark.parentNode.insertBefore(img, mark);
+  });
 })();
