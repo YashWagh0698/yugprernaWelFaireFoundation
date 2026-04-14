@@ -31,14 +31,28 @@ app.use(express.static('admin', { index: false })); // serve admin html files
 // Routes
 app.use('/auth', authRoutes);
 app.use('/api', uploadRoutes);
-app.use('/api', blogRoutes); // ← THIS WAS MISSING — caused all /api/add-blog calls to 404
+app.use('/api', blogRoutes);
 
-// Admin login endpoint
+// ── Public config endpoint — exposes safe frontend variables ──────────────────
+// Frontend calls GET /api/config to get the logo URL (avoids hardcoding in HTML)
+app.get('/api/config', (req, res) => {
+    const logoId = process.env.website_logo;
+    res.json({
+        logoUrl: logoId ? `https://drive.google.com/uc?id=${logoId}` : null
+    });
+});
+
+// ── Admin login ───────────────────────────────────────────────────────────────
+// BUG FIX: .env uses ADMIN_USER / ADMIN_PASS — not ADMIN_USERNAME / ADMIN_PASSWORD
 app.post('/admin/login', (req, res) => {
     const { username, password } = req.body;
+
+    const adminUser = process.env.ADMIN_USER?.trim();
+    const adminPass = process.env.ADMIN_PASS?.trim();
+
     if (
-        username === process.env.ADMIN_USERNAME &&
-        password === process.env.ADMIN_PASSWORD
+        username?.trim() === adminUser &&
+        password?.trim() === adminPass
     ) {
         req.session.isAdmin = true;
         return res.json({ success: true });
@@ -46,14 +60,15 @@ app.post('/admin/login', (req, res) => {
     res.status(401).json({ success: false, message: 'Invalid credentials' });
 });
 
-// Middleware to protect admin pages
+// ── Middleware to protect admin pages ─────────────────────────────────────────
 function requireAdmin(req, res, next) {
     if (req.session && req.session.isAdmin) return next();
     res.status(401).json({ error: 'Unauthorized' });
 }
 
-// Protected admin routes (optional — add requireAdmin if you want auth)
+// ── Admin page routes ─────────────────────────────────────────────────────────
 app.get('/admin', (req, res) => res.sendFile('login.html', { root: 'admin' }));
+app.get('/admin/login', (req, res) => res.sendFile('login.html', { root: 'admin' }));
 app.get('/admin/dashboard', requireAdmin, (req, res) =>
     res.sendFile('dashboard.html', { root: 'admin' })
 );
