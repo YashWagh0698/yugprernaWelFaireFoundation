@@ -75,6 +75,7 @@ loadBlogs();
 
 
 
+<<<<<<< HEAD
 =======
 function setupScrollAnimations() {
   const selectors = [
@@ -171,3 +172,5 @@ document.addEventListener('DOMContentLoaded', () => {
   setupMobileNav();
 });
 >>>>>>> a73b645 (improved UI)
+=======
+>>>>>>> 2aa42300a67da169e869904c593e46fa93b4b5c7
