@@ -6,7 +6,11 @@ const { oauth2Client } = require('../config/google');
 router.get('/google', (req, res) => {
 const url = oauth2Client.generateAuthUrl({
 access_type: 'offline',
-scope: ['https://www.googleapis.com/auth/drive']
+scope: [
+    'https://www.googleapis.com/auth/drive',
+    'https://www.googleapis.com/auth/spreadsheets'
+],
+prompt: 'consent'
 });
 
 res.redirect(url);

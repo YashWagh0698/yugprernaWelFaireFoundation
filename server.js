@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
-
+const MongoStore = require('connect-mongo').default;
 const authRoutes = require('./routes/authRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const blogRoutes = require('./routes/blogRoutes');
@@ -17,12 +17,14 @@ app.use(express.json());
 
 // Session MUST be registered before routes so req.session is available in controllers
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'mysecret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        secure: false
-    }
+secret: 'mysecret',
+resave: false,
+saveUninitialized: false,
+store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+cookie: {
+secure: true,
+sameSite: 'none'
+}
 }));
 
 app.use(express.static('public'));

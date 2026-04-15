@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - YugPrerna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+      :root {
+      --saffron: #ff8e42;
+      --ink: #06090f;
+      --ink-card: #121b2a;
+      --ink-input: #0b121d;
+      --text-main: #f3f6fb;
+      --text-soft: #cdd6e4;
+      --text-muted: #97a6bc;
+      --border: #26344b;
+      --error: #ff8f98;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      min-height: 100vh;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255, 142, 66, 0.14), transparent 24%),
+        radial-gradient(circle at 84% 10%, rgba(104, 179, 255, 0.16), transparent 22%),
+        linear-gradient(165deg, #050910 0%, #0a1220 55%, #060b13 100%);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    .login-wrap {
+      width: min(420px, 100%);
+      background: linear-gradient(180deg, rgba(19, 28, 43, 0.9) 0%, rgba(14, 20, 32, 0.95) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45);
+    }
+    .brand {
+      font-family: "Playfair Display", serif;
+      font-size: 1.45rem;
+      margin-bottom: 4px;
+    }
+    .sub {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+    .form-group { margin-bottom: 16px; }
+    label {
+      display: block;
+      font-size: 13px;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: var(--ink-input);
+      color: var(--text-main);
+      font: inherit;
+      outline: none;
+    }
+    input:focus {
+      border-color: var(--saffron);
+      box-shadow: 0 0 0 3px rgba(255, 142, 66, 0.18);
+    }
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--saffron) 0%, #ff6a3d 100%);
+      color: #fff;
+      padding: 12px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+    #error-msg {
+      margin-top: 12px;
+      color: var(--error);
+      font-size: 13px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <section class="login-wrap" aria-label="Admin login">
+    <h1 class="brand">YugPrerna Admin</h1>
+    <p class="sub">Sign in to manage dashboard content.</p>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input id="username" type="text" required autocomplete="username">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" type="password" required autocomplete="current-password">
+      </div>
+
+      <button type="submit">Log In</button>
+      <p id="error-msg">Invalid credentials</p>
+    </form>
+
+    <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
+      <a href="/admin/dashboard" onclick="return openAdmin(event, '/admin/dashboard')" style="color:var(--text-soft); font-size:13px; text-decoration:none;">Dashboard</a>
+      <a href="/admin/add-blog" onclick="return openAdmin(event, '/admin/add-blog')" style="color:var(--text-soft); font-size:13px; text-decoration:none;">Add Blog</a>
+      <a href="/admin/add-project" onclick="return openAdmin(event, '/admin/add-project')" style="color:var(--text-soft); font-size:13px; text-decoration:none;">Add Project</a>
+    </div>
+  </section>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const res = await fetch('/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: document.getElementById('username').value,
+          password: document.getElementById('password').value
+        })
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        if (data.token) {
+          localStorage.setItem('adminToken', data.token);
+          localStorage.setItem('adminTokenExpiresAt', data.expiresAt || '');
+        }
+        window.location.href = '/admin/dashboard';
+      } else {
+        document.getElementById('error-msg').style.display = 'block';
+      }
+    });
+
+    async function openAdmin(e, target) {
+      if (e) e.preventDefault();
+      const token = localStorage.getItem('adminToken');
+      if (!token) return false;
+      try {
+        const res = await fetch('/admin/session', {
+          method: 'POST',
+          headers: { 'x-admin-token': token }
+        });
+        if (res.ok) {
+          window.location.href = target;
+          return false;
+        }
+      } catch {}
+      return false;
+    }
+  </script>
+</body>
+</html>

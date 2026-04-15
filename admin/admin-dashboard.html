@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard — YugPrerna Admin</title>
+=======
+  <title>Admin Dashboard - YugPrerna</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+
+      --saffron: #E8621A;
+      --saffron-light: #F5874A;
+      --saffron-pale: #FDF0E8;
+      --earth: #7A3B1E;
+      --earth-mid: #B05A2F;
+      --sage: #4A6741;
+      --cream: #FAF7F2;
+      --warm-white: #FFFDF9;
+      --text-dark: #1C1008;
+      --text-mid: #4A3728;
+      --text-muted: #8B6F5E;
+      --border: #E8D5C4;
+      --success: #2D7D46;
+      --warning: #A05C00;
+      --info: #1A5276;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── TOP BAR ── */
+    .admin-bar {
+      background: var(--earth); color: #fff;
+      padding: 0 24px; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .admin-bar-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; text-decoration: none; color: #fff; }
+    .admin-bar-logo { height: 34px; width: auto; border-radius: 4px; object-fit: contain; }
+    .admin-bar-links { display: flex; gap: 4px; align-items: center; }
+    .admin-bar-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; padding: 6px 12px; border-radius: 6px; transition: background 0.2s; }
+    .admin-bar-links a:hover, .admin-bar-links a.active { background: rgba(255,255,255,0.15); color: #fff; }
+    .admin-bar-links a.btn-view { background: rgba(232,98,26,0.3); color: #fff; }
+    .admin-bar-links a.btn-view:hover { background: var(--saffron); }
+
+    /* ── LAYOUT ── */
+    .layout { display: flex; flex: 1; min-height: 0; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 220px; flex-shrink: 0;
+      background: var(--warm-white); border-right: 1px solid var(--border);
+      padding: 24px 0;
+      display: flex; flex-direction: column;
+    }
+    .sidebar-section-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted); padding: 0 20px; margin-bottom: 6px; margin-top: 20px;
+    }
+    .sidebar-section-title:first-child { margin-top: 0; }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 20px; font-size: 13px; font-weight: 500;
+      color: var(--text-mid); text-decoration: none; border-radius: 0;
+      transition: background 0.15s, color 0.15s;
+      cursor: pointer; border: none; background: none; width: 100%; text-align: left;
+    }
+    .sidebar-link:hover { background: var(--saffron-pale); color: var(--saffron); }
+    .sidebar-link.active { background: var(--saffron-pale); color: var(--saffron); border-right: 3px solid var(--saffron); font-weight: 600; }
+    .sidebar-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+    .sidebar-badge {
+      margin-left: auto; background: var(--saffron); color: #fff;
+      font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px;
+    }
+    .sidebar-badge.wip { background: var(--border); color: var(--text-muted); }
+
+    /* ── MAIN CONTENT ── */
+    .main { flex: 1; overflow-y: auto; padding: 32px; }
+
+    /* ── PAGE HEADER ── */
+    .page-header { margin-bottom: 28px; }
+    .page-header h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--earth); margin-bottom: 4px; }
+    .page-header p { color: var(--text-muted); font-size: 14px; }
+    .breadcrumb { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+    .breadcrumb span { color: var(--saffron); }
+
+    /* ── STAT CARDS ── */
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .stat-card {
+      background: var(--warm-white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .stat-card-icon { font-size: 24px; }
+    .stat-card-value { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--earth); font-weight: 700; line-height: 1; }
+    .stat-card-label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+    .stat-card.highlight { background: var(--earth); border-color: var(--earth); }
+    .stat-card.highlight .stat-card-value { color: var(--saffron-light); }
+    .stat-card.highlight .stat-card-label { color: rgba(255,255,255,0.7); }
+
+    /* ── QUICK ACTIONS GRID ── */
+    .section-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--earth); margin-bottom: 16px; }
+    .actions-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .action-card {
+      background: var(--warm-white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px;
+      display: flex; flex-direction: column; gap: 12px;
+      text-decoration: none; color: inherit;
+      transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+      cursor: pointer;
+      position: relative; overflow: hidden;
+    }
+    .action-card:hover:not(.disabled) { box-shadow: 0 4px 20px rgba(120,59,30,0.12); transform: translateY(-2px); border-color: var(--saffron); }
+    .action-card.disabled { opacity: 0.65; cursor: default; }
+    .action-card-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .action-card-icon.orange { background: var(--saffron-pale); }
+    .action-card-icon.green { background: #EEF5EC; }
+    .action-card-icon.blue { background: #EAF2FB; }
+    .action-card-icon.purple { background: #F0EBF8; }
+    .action-card-icon.teal { background: #E6F4F1; }
+    .action-card-icon.amber { background: #FEF3E2; }
+    .action-card h3 { font-size: 14px; font-weight: 600; color: var(--earth); line-height: 1.3; }
+    .action-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+    .action-card-tag {
+      position: absolute; top: 12px; right: 12px;
+      font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 10px;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .action-card-tag.live { background: #EEF5EC; color: var(--success); }
+    .action-card-tag.wip { background: var(--border); color: var(--text-muted); }
+    .action-card-arrow { font-size: 13px; color: var(--saffron); font-weight: 600; margin-top: auto; }
+    .action-card.disabled .action-card-arrow { color: var(--text-muted); }
+
+    /* ── RECENT ACTIVITY PLACEHOLDER ── */
+    .activity-box {
+      background: var(--warm-white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px;
+    }
+    .activity-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 0; border-bottom: 1px solid var(--border);
+    }
+    .activity-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .activity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: var(--saffron); }
+    .activity-dot.gray { background: var(--border); }
+    .activity-text { font-size: 13px; color: var(--text-mid); flex: 1; }
+    .activity-time { font-size: 12px; color: var(--text-muted); flex-shrink: 0; }
+
+    /* ── WIP MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(28,16,8,0.5); z-index: 500;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--warm-white); border-radius: 16px;
+      padding: 32px; max-width: 420px; width: 90%;
+      text-align: center; position: relative;
+    }
+    .modal-icon { font-size: 48px; margin-bottom: 16px; }
+    .modal h2 { font-family: 'Playfair Display', serif; color: var(--earth); margin-bottom: 10px; font-size: 1.3rem; }
+    .modal p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; }
+    .modal-close {
+      background: var(--saffron); color: #fff; border: none;
+      padding: 10px 28px; border-radius: 8px; font-family: 'DM Sans', sans-serif;
+      font-weight: 600; font-size: 14px; cursor: pointer;
+    }
+    .modal-close:hover { background: var(--earth); }
+
+    /* ── FOOTER ── */
+    .admin-footer {
+      background: var(--warm-white); border-top: 1px solid var(--border);
+      padding: 12px 32px; font-size: 12px; color: var(--text-muted);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-shrink: 0;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width: 768px) {
+      .sidebar { display: none; }
+      .main { padding: 20px; }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+
+      --saffron: #ff8e42;
+      --text-main: #f3f6fb;
+      --text-soft: #cdd6e4;
+      --text-muted: #97a6bc;
+      --border: #26344b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: var(--text-main);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255, 142, 66, 0.14), transparent 24%),
+        radial-gradient(circle at 84% 10%, rgba(104, 179, 255, 0.16), transparent 22%),
+        linear-gradient(165deg, #050910 0%, #0a1220 55%, #060b13 100%);
+    }
+    .admin-bar {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8, 12, 19, 0.9);
+    }
+    .admin-bar a {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 14px;
+      margin-left: 14px;
+    }
+    .admin-bar a.active, .admin-bar a:hover { color: var(--text-main); }
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 34px 20px 70px;
+    }
+    h1 {
+      font-family: "Playfair Display", serif;
+      margin-bottom: 8px;
+    }
+    p { color: var(--text-muted); }
+    .grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      background: linear-gradient(180deg, rgba(19, 28, 43, 0.88) 0%, rgba(14, 20, 32, 0.92) 100%);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45);
+    }
+    .card h3 { margin-bottom: 6px; }
+    .badge {
+      display: inline-block;
+      margin-top: 10px;
+      background: rgba(255, 142, 66, 0.12);
+      color: #ffc89b;
+      border: 1px solid rgba(255, 142, 66, 0.35);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 768px) {
+      .admin-bar {
+        height: auto;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+        padding: 14px 16px;
+      }
+      .admin-bar nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .admin-bar a {
+        margin-left: 0;
+      }
+      .page {
+        padding: 24px 16px 52px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .card {
+        padding: 18px;
+      }
+>>>>>>> a73b645 (improved UI)
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-bar">
+    <strong>YugPrerna Admin</strong>
+    <nav>
+      <a href="/admin/dashboard" class="active" onclick="return openAdmin(event, '/admin/dashboard')">Dashboard</a>
+      <a href="/admin/add-blog" onclick="return openAdmin(event, '/admin/add-blog')">Add Blog</a>
+      <a href="/admin/add-project" onclick="return openAdmin(event, '/admin/add-project')">Add Project</a>
+      <a href="/admin" data-auth="login">Login</a>
+      <a href="#" data-auth="logout" onclick="logoutAdmin(event)">Logout</a>
+    </nav>
+  </div>
+
+<<<<<<< HEAD
+<!-- TOP BAR -->
+<div class="admin-bar" role="banner">
+  <a href="/admin/dashboard" class="admin-bar-brand">
+    <img src="https://drive.google.com/uc?id=1krpIJwi0ZUlLmnE0Z2pRff8NSsnZa-Vb"
+         alt="YugPrerna Welfare Foundation"
+         class="admin-bar-logo"
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <span style="display:none; width:28px; height:28px; background:var(--saffron); border-radius:5px; align-items:center; justify-content:center; font-family:'Playfair Display'; font-size:14px; color:#fff;">Y</span>
+    YugPrerna Admin
+  </a>
+  <div class="admin-bar-links">
+    <a href="/admin/dashboard" class="active">Dashboard</a>
+    <a href="/admin/add-blog">Add Blog</a>
+    <a href="/index.html" target="_blank" class="btn-view">View Site ↗</a>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" role="navigation" aria-label="Admin navigation">
+    <p class="sidebar-section-title">Content</p>
+    <a href="/admin/add-blog" class="sidebar-link">
+      <span class="sidebar-icon">📝</span> Add Blog Post
+    </a>
+    <button class="sidebar-link" onclick="showWip('Manage Blogs')">
+      <span class="sidebar-icon">📋</span> Manage Blogs
+      <span class="sidebar-badge wip">Soon</span>
+    </button>
+
+    <p class="sidebar-section-title">Team</p>
+    <button class="sidebar-link" onclick="showWip('Add Employee')">
+      <span class="sidebar-icon">👤</span> Add Employee
+    </button>
+    <button class="sidebar-link" onclick="showWip('Manage Team')">
+      <span class="sidebar-icon">👥</span> Manage Team
+      <span class="sidebar-badge wip">Soon</span>
+    </button>
+    <button class="sidebar-link" onclick="showWip('Volunteer Registry')">
+      <span class="sidebar-icon">🤝</span> Volunteer Registry
+      <span class="sidebar-badge wip">Soon</span>
+    </button>
+
+    <p class="sidebar-section-title">Programs</p>
+    <button class="sidebar-link" onclick="showWip('Add Project')">
+      <span class="sidebar-icon">🎯</span> Add Project
+    </button>
+    <button class="sidebar-link" onclick="showWip('Impact Reports')">
+      <span class="sidebar-icon">📊</span> Impact Reports
+      <span class="sidebar-badge wip">Soon</span>
+    </button>
+
+    <p class="sidebar-section-title">Settings</p>
+    <button class="sidebar-link" onclick="showWip('Site Settings')">
+      <span class="sidebar-icon">⚙️</span> Site Settings
+      <span class="sidebar-badge wip">Soon</span>
+    </button>
+    <button class="sidebar-link" onclick="showWip('Media Library')">
+      <span class="sidebar-icon">🖼️</span> Media Library
+      <span class="sidebar-badge wip">Soon</span>
+    </button>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main" id="main-content">
+
+    <!-- BREADCRUMB + HEADER -->
+    <div class="page-header">
+      <p class="breadcrumb">Admin / <span>Dashboard</span></p>
+      <h1>Dashboard</h1>
+      <p>Welcome back. Here's an overview of your website and content.</p>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="stat-grid" role="list" aria-label="Site statistics">
+      <div class="stat-card" role="listitem">
+        <div class="stat-card-icon">📝</div>
+        <div class="stat-card-value" id="stat-blogs">—</div>
+        <div class="stat-card-label">Blog Posts Published</div>
+      </div>
+      <div class="stat-card" role="listitem">
+        <div class="stat-card-icon">🎯</div>
+        <div class="stat-card-value">4</div>
+        <div class="stat-card-label">Active Programs</div>
+      </div>
+      <div class="stat-card" role="listitem">
+        <div class="stat-card-icon">🤝</div>
+        <div class="stat-card-value">4</div>
+        <div class="stat-card-label">Volunteer Tiers</div>
+      </div>
+      <div class="stat-card highlight" role="listitem">
+        <div class="stat-card-icon">✅</div>
+        <div class="stat-card-value">Live</div>
+        <div class="stat-card-label">Website Status</div>
+      </div>
+    </div>
+
+    <!-- QUICK ACTIONS -->
+    <h2 class="section-title">Quick Actions</h2>
+    <div class="actions-grid" role="list">
+
+      <!-- ADD BLOG — Live -->
+      <a href="/admin/add-blog" class="action-card" role="listitem" aria-label="Add Blog Post">
+        <span class="action-card-tag live">Live</span>
+        <div class="action-card-icon orange">📝</div>
+        <h3>Add Blog Post</h3>
+        <p>Upload images &amp; videos to Drive, save content to Google Sheets.</p>
+        <div class="action-card-arrow">Go to form →</div>
+      </a>
+
+      <!-- ADD EMPLOYEE — WIP -->
+      <div class="action-card disabled" role="listitem" onclick="showWip('Add New Employee')" aria-label="Add Employee - Under Development" tabindex="0" onkeydown="if(event.key==='Enter') showWip('Add New Employee')">
+        <span class="action-card-tag wip">Coming Soon</span>
+        <div class="action-card-icon green">👤</div>
+        <h3>Add New Employee</h3>
+        <p>Register team members, assign roles, and manage staff profiles.</p>
+        <div class="action-card-arrow">Under development</div>
+      </div>
+
+      <!-- ADD PROJECT — WIP -->
+      <div class="action-card disabled" role="listitem" onclick="showWip('Add Project')" aria-label="Add Project - Under Development" tabindex="0" onkeydown="if(event.key==='Enter') showWip('Add Project')">
+        <span class="action-card-tag wip">Coming Soon</span>
+        <div class="action-card-icon blue">🎯</div>
+        <h3>Add Project</h3>
+        <p>Publish program updates, outcomes, and impact stories to the website.</p>
+        <div class="action-card-arrow">Under development</div>
+      </div>
+
+      <!-- MANAGE BLOGS — WIP -->
+      <div class="action-card disabled" role="listitem" onclick="showWip('Manage Blogs')" aria-label="Manage Blogs - Under Development" tabindex="0" onkeydown="if(event.key==='Enter') showWip('Manage Blogs')">
+        <span class="action-card-tag wip">Coming Soon</span>
+        <div class="action-card-icon purple">📋</div>
+        <h3>Manage Blogs</h3>
+        <p>View, edit, and delete existing blog posts from Google Sheets.</p>
+        <div class="action-card-arrow">Under development</div>
+      </div>
+
+      <!-- VOLUNTEER REGISTRY — WIP -->
+      <div class="action-card disabled" role="listitem" onclick="showWip('Volunteer Registry')" aria-label="Volunteer Registry - Under Development" tabindex="0" onkeydown="if(event.key==='Enter') showWip('Volunteer Registry')">
+        <span class="action-card-tag wip">Coming Soon</span>
+        <div class="action-card-icon teal">🤝</div>
+        <h3>Volunteer Registry</h3>
+        <p>View and manage VEP volunteer applications and tier assignments.</p>
+        <div class="action-card-arrow">Under development</div>
+      </div>
+
+      <!-- IMPACT REPORTS — WIP -->
+      <div class="action-card disabled" role="listitem" onclick="showWip('Impact Reports')" aria-label="Impact Reports - Under Development" tabindex="0" onkeydown="if(event.key==='Enter') showWip('Impact Reports')">
+        <span class="action-card-tag wip">Coming Soon</span>
+        <div class="action-card-icon amber">📊</div>
+        <h3>Impact Reports</h3>
+        <p>Generate quarterly partner dashboards and annual impact summaries.</p>
+        <div class="action-card-arrow">Under development</div>
+      </div>
+
+    </div>
+
+    <!-- RECENT ACTIVITY -->
+    <h2 class="section-title">Recent Activity</h2>
+    <div class="activity-box" aria-label="Recent activity">
+      <div class="activity-row">
+        <div class="activity-dot"></div>
+        <div class="activity-text">Blog module connected — Google Sheets &amp; Drive integration active</div>
+        <div class="activity-time">Today</div>
+      </div>
+      <div class="activity-row">
+        <div class="activity-dot"></div>
+        <div class="activity-text">Admin login system configured and working</div>
+        <div class="activity-time">Today</div>
+      </div>
+      <div class="activity-row">
+        <div class="activity-dot"></div>
+        <div class="activity-text">Google OAuth authentication set up successfully</div>
+        <div class="activity-time">Today</div>
+      </div>
+      <div class="activity-row">
+        <div class="activity-dot gray"></div>
+        <div class="activity-text" id="recent-blog-text" style="color: var(--text-muted);">Loading latest blog post...</div>
+        <div class="activity-time" id="recent-blog-time">—</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="admin-footer" role="contentinfo">
+  <span>YugPrerna Welfare Foundation — Admin Panel</span>
+  <span>© 2026 · <a href="/index.html" target="_blank" style="color: var(--saffron); text-decoration: none;">View Public Site</a></span>
+</footer>
+
+<!-- WIP MODAL -->
+<div class="modal-overlay" id="wipModal" role="dialog" aria-modal="true" aria-labelledby="wip-title"
+     onclick="if(event.target===this) closeWip()">
+  <div class="modal">
+    <div class="modal-icon" aria-hidden="true">🚧</div>
+    <h2 id="wip-title">Feature Under Development</h2>
+    <p id="wip-desc">This feature is currently under development and will be available soon.</p>
+    <button class="modal-close" onclick="closeWip()" aria-label="Close dialog">Got it</button>
+  </div>
+</div>
+
+<script>
+// ── WIP Modal ─────────────────────────────────────────────
+function showWip(featureName) {
+  document.getElementById('wip-title').textContent = featureName;
+  document.getElementById('wip-desc').textContent =
+    `"${featureName}" is currently under development. This feature will be available in a future update.`;
+  const modal = document.getElementById('wipModal');
+  modal.classList.add('open');
+  document.getElementById('wipModal').querySelector('.modal-close').focus();
+}
+function closeWip() {
+  document.getElementById('wipModal').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWip(); });
+
+// ── Load blog count + latest post from API ─────────────────
+async function loadStats() {
+  try {
+    const res = await fetch('/api/blogs');
+    if (!res.ok) return;
+    const blogs = await res.json();
+
+    document.getElementById('stat-blogs').textContent = blogs.length;
+
+    if (blogs.length > 0) {
+      // Sort newest first
+      blogs.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+      const latest = blogs[0];
+      const date = latest.created_at
+        ? new Date(latest.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
+        : '';
+      document.getElementById('recent-blog-text').textContent =
+        `Blog post published: "${latest.title.length > 50 ? latest.title.slice(0,47)+'...' : latest.title}"`;
+      document.getElementById('recent-blog-text').style.color = '';
+      document.getElementById('recent-blog-time').textContent = date;
+      document.getElementById('recent-blog-dot') && (document.getElementById('recent-blog-dot').classList.remove('gray'));
+    } else {
+      document.getElementById('recent-blog-text').textContent = 'No blog posts yet — publish your first one!';
+      document.getElementById('recent-blog-time').textContent = '';
+    }
+  } catch (e) {
+    document.getElementById('stat-blogs').textContent = '—';
+    document.getElementById('recent-blog-text').textContent = 'Could not connect to blog API';
+  }
+}
+
+loadStats();
+</script>
+</body>
+=======
+  <main class="page">
+    <h1>Admin Dashboard</h1>
+    <p>Dashboard now follows the same dark visual language as the rest of the website.</p>
+
+    <section class="grid">
+      <article class="card">
+        <h3>Blog Management</h3>
+        <p>Create and publish blog content with media upload support.</p>
+        <span class="badge">Active</span>
+      </article>
+
+      <article class="card">
+        <h3>Project Management</h3>
+        <p>Project entry page is themed and ready for full form integration.</p>
+        <span class="badge">Ready</span>
+      </article>
+
+      <article class="card">
+        <h3>Theme Status</h3>
+        <p>Public pages and admin screens are now aligned to the new dark style.</p>
+        <span class="badge">Updated</span>
+      </article>
+    </section>
+  </main>
+</body>
+<script>
+  async function logoutAdmin(e) {
+    if (e) e.preventDefault();
+    const token = localStorage.getItem('adminToken') || '';
+    try {
+      await fetch('/admin/logout', {
+        method: 'POST',
+        headers: token ? { 'x-admin-token': token } : {}
+      });
+    } catch {}
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminTokenExpiresAt');
+    window.location.href = '/admin';
+  }
+
+  function setAuthLinks() {
+    const hasToken = !!localStorage.getItem('adminToken');
+    document.querySelectorAll('[data-auth="login"]').forEach(el => {
+      el.style.display = hasToken ? 'none' : 'inline-flex';
+    });
+    document.querySelectorAll('[data-auth="logout"]').forEach(el => {
+      el.style.display = hasToken ? 'inline-flex' : 'none';
+    });
+  }
+
+  async function openAdmin(e, target) {
+    if (e) e.preventDefault();
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      window.location.href = '/admin';
+      return false;
+    }
+    try {
+      const res = await fetch('/admin/session', {
+        method: 'POST',
+        headers: { 'x-admin-token': token }
+      });
+      if (res.ok) {
+        window.location.href = target;
+        return false;
+      }
+    } catch {}
+    window.location.href = '/admin';
+    return false;
+  }
+
+  setAuthLinks();
+</script>
+>>>>>>> a73b645 (improved UI)
+</html>

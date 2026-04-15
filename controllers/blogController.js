@@ -75,3 +75,28 @@ exports.getBlogs = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+// GET /api/sheets-status
+exports.sheetsStatus = async (req, res) => {
+    try {
+        if (!req.session || !req.session.tokens) {
+            return res.status(401).json({ error: 'Not authenticated' });
+        }
+
+        oauth2Client.setCredentials(req.session.tokens);
+
+        const response = await sheets.spreadsheets.values.get({
+            spreadsheetId: process.env.SHEET_ID,
+            range: 'Sheet1!A1:A1'
+        });
+
+        res.json({
+            ok: true,
+            sheetId: process.env.SHEET_ID,
+            sample: (response.data.values && response.data.values[0]) || []
+        });
+    } catch (err) {
+        console.error('SHEET STATUS ERROR:', err.message);
+        res.status(500).json({ ok: false, error: err.message });
+    }
+};
