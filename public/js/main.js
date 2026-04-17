@@ -1,69 +1,158 @@
+let allBlogs = [];
+
+function getApiUrl(path) {
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+
+  // When page is opened directly from file://, route API calls to local backend.
+  if (window.location.protocol === 'file:') {
+    return `http://localhost:5000${normalizedPath}`;
+  }
+
+  return normalizedPath;
+}
+
+function esc(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function formatBlogDate(value) {
+  if (!value) return '';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+
+  return date.toLocaleDateString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  });
+}
+
+function announceBlogResults(count, query = '') {
+  const status = document.getElementById('blog-results-status');
+  if (!status) return;
+
+  const message = query
+    ? `${count} post${count === 1 ? '' : 's'} found for "${query}".`
+    : `${count} post${count === 1 ? '' : 's'} available.`;
+
+  status.textContent = message;
+}
+
+function blogCard(blog) {
+  const title = esc(blog.title || 'Untitled post');
+  const description = esc(blog.description || 'No description available.');
+  const imageMarkup = blog.image
+    ? `<img src="${esc(blog.image)}" alt="Featured image for ${title}" class="blog-card-img" loading="lazy">`
+    : '<div class="blog-card-img-placeholder" aria-hidden="true">News</div>';
+
+  const links = [];
+  if (blog.video) {
+    links.push(
+      `<a href="${esc(blog.video)}" target="_blank" rel="noopener" aria-label="Watch video for ${title} (opens in a new tab)">Watch Video</a>`
+    );
+  }
+  if (blog.social_link) {
+    links.push(
+      `<a href="${esc(blog.social_link)}" target="_blank" rel="noopener" aria-label="Open social post for ${title} (opens in a new tab)">View Social Post</a>`
+    );
+  }
+
+  const date = formatBlogDate(blog.created_at);
+
+  return `
+    <article class="blog-card reveal-item">
+      ${imageMarkup}
+      <div class="blog-card-body">
+        ${date ? `<p style="font-size:12px;color:var(--text-muted);margin-bottom:8px">${date}</p>` : ''}
+        <h3>${title}</h3>
+        <p>${description}</p>
+      </div>
+      ${links.length ? `<div class="blog-card-footer">${links.join('')}</div>` : ''}
+    </article>
+  `;
+}
+
+function renderBlogs(blogs, query = '') {
+  const container = document.getElementById('blog-container');
+  if (!container) return;
+
+  container.setAttribute('aria-busy', 'false');
+
+  if (!blogs.length) {
+    const message = query
+      ? `No posts matched "${esc(query)}". Try a different search.`
+      : 'No posts yet. Check back soon!';
+    container.innerHTML = `<p class="blog-empty">${message}</p>`;
+    announceBlogResults(0, query);
+    return;
+  }
+
+  container.innerHTML = `<div class="blog-grid">${blogs.map(blogCard).join('')}</div>`;
+  announceBlogResults(blogs.length, query);
+}
+
 async function loadBlogs() {
   const container = document.getElementById('blog-container');
   if (!container) return;
 
-  const isHomepage = document.querySelector('title')?.textContent?.includes('YugPrerna Welfare Foundation') &&
-                     !document.querySelector('title')?.textContent?.includes('Blog');
+  const isHomepage = window.location.pathname.endsWith('/index.html') || window.location.pathname === '/' || window.location.pathname === '';
+  const searchInput = document.getElementById('blog-search');
+
+  container.setAttribute('aria-busy', 'true');
 
   try {
-    const res = await fetch('/api/blogs');
+    const res = await fetch(getApiUrl('/api/blogs'));
     if (!res.ok) throw new Error(`Server returned ${res.status}`);
-    let data = await res.json();
 
-    data.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
-    if (isHomepage) data = data.slice(0, 3);
+    const data = await res.json();
+    allBlogs = Array.isArray(data) ? data.slice() : [];
+    allBlogs.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
 
-    container.innerHTML = '';
-    if (data.length === 0) {
-      container.innerHTML = '<p class="blog-empty">No posts yet. Check back soon!</p>';
-      return;
-    }
+    const query = searchInput ? searchInput.value.trim() : '';
+    const visibleBlogs = searchInput
+      ? filterBlogList(query)
+      : (isHomepage ? allBlogs.slice(0, 3) : allBlogs);
 
-    const grid = document.createElement('div');
-    grid.className = 'blog-grid';
-
-    data.forEach(blog => {
-      const article = document.createElement('article');
-      article.className = 'blog-card reveal-item';
-
-      const img = blog.image
-        ? `<img src="${esc(blog.image)}" alt="${esc(blog.title)}" class="blog-card-img" loading="lazy">`
-        : `<div class="blog-card-img-placeholder" aria-hidden="true">📰</div>`;
-
-      const date = blog.created_at
-        ? new Date(blog.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
-        : '';
-
-      const links = [];
-      if (blog.video) links.push(`<a href="${esc(blog.video)}" target="_blank" rel="noopener">▶ Video</a>`);
-      if (blog.social_link) links.push(`<a href="${esc(blog.social_link)}" target="_blank" rel="noopener">↗ Social</a>`);
-
-      article.innerHTML = `
-        ${img}
-        <div class="blog-card-body">
-          ${date ? `<p style="font-size:12px;color:var(--text-muted);margin-bottom:8px">${date}</p>` : ''}
-          <h3>${esc(blog.title)}</h3>
-          <p>${esc(blog.description)}</p>
-        </div>
-        ${links.length ? `<div class="blog-card-footer">${links.join('')}</div>` : ''}
-      `;
-      grid.appendChild(article);
-    });
-
-    container.appendChild(grid);
+    renderBlogs(visibleBlogs, query);
+    setupScrollAnimations();
   } catch (err) {
     console.error('Failed to load blogs:', err);
-    if (container) {
-      container.innerHTML = '<p class="blog-empty">Could not load posts right now.</p>';
-    }
+    container.setAttribute('aria-busy', 'false');
+    const fallbackMessage = window.location.protocol === 'file:'
+      ? 'Could not load posts. Start backend with "node server.js" and open http://localhost:5000/.'
+      : 'Could not load posts right now. Please try again later.';
+    container.innerHTML = `<p class="blog-empty">${fallbackMessage}</p>`;
+    announceBlogResults(0, '');
   }
 }
 
-function esc(str) {
-  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function filterBlogList(query) {
+  const normalized = query.trim().toLowerCase();
+  if (!normalized) return allBlogs;
+
+  return allBlogs.filter(blog => {
+    const title = String(blog.title || '').toLowerCase();
+    const description = String(blog.description || '').toLowerCase();
+    return title.includes(normalized) || description.includes(normalized);
+  });
+}
+
+function setupBlogSearch() {
+  const input = document.getElementById('blog-search');
+  if (!input) return;
+
+  input.addEventListener('input', event => {
+    const query = event.target.value.trim();
+    renderBlogs(filterBlogList(query), query);
+  });
 }
 
 function setupScrollAnimations() {
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const selectors = [
     '.hero-inner',
     '.stat-card',
@@ -83,6 +172,11 @@ function setupScrollAnimations() {
 
   const elements = document.querySelectorAll(selectors.join(', '));
   if (!elements.length) return;
+
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    elements.forEach(el => el.classList.add('is-visible'));
+    return;
+  }
 
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
@@ -106,7 +200,6 @@ function setupScrollAnimations() {
 function setupHeroMotion() {
   const hero = document.querySelector('.hero');
   if (!hero || !window.matchMedia) return;
-
   if (!window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
 
   hero.addEventListener('pointermove', event => {
@@ -128,30 +221,98 @@ function setupMobileNav() {
   const navLinks = document.getElementById('navLinks');
   if (!button || !navLinks) return;
 
+  const setMenuState = isOpen => {
+    navLinks.classList.toggle('open', isOpen);
+    button.setAttribute('aria-expanded', String(isOpen));
+    button.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+  };
+
+  setMenuState(false);
+
   button.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
+    setMenuState(!navLinks.classList.contains('open'));
   });
 
   document.addEventListener('click', event => {
     if (!navLinks.contains(event.target) && !button.contains(event.target)) {
-      navLinks.classList.remove('open');
+      setMenuState(false);
     }
   });
 
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => navLinks.classList.remove('open'));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && navLinks.classList.contains('open')) {
+      setMenuState(false);
+      button.focus();
+    }
+  });
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => setMenuState(false));
   });
 
   window.addEventListener('resize', () => {
     if (window.innerWidth > 900) {
-      navLinks.classList.remove('open');
+      setMenuState(false);
     }
   });
 }
 
+function setupContactForm() {
+  const form = document.getElementById('contactForm');
+  const submitButton = document.getElementById('submitBtn');
+  const status = document.getElementById('form-status');
+  if (!form || !submitButton || !status) return;
+
+  const fields = Array.from(form.querySelectorAll('input, select, textarea'));
+
+  fields.forEach(field => {
+    field.addEventListener('input', () => field.removeAttribute('aria-invalid'));
+    field.addEventListener('change', () => field.removeAttribute('aria-invalid'));
+    field.addEventListener('invalid', () => field.setAttribute('aria-invalid', 'true'));
+  });
+
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+
+    status.hidden = true;
+    status.className = 'form-status';
+    status.textContent = '';
+
+    if (!form.reportValidity()) {
+      const firstInvalidField = fields.find(field => !field.checkValidity());
+      if (firstInvalidField) {
+        firstInvalidField.setAttribute('aria-invalid', 'true');
+      }
+      status.hidden = false;
+      status.classList.add('error');
+      status.textContent = 'Please review the highlighted fields and try again.';
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.setAttribute('aria-busy', 'true');
+    submitButton.textContent = 'Sending...';
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    form.reset();
+    fields.forEach(field => field.removeAttribute('aria-invalid'));
+
+    status.hidden = false;
+    status.classList.add('success');
+    status.textContent = 'Thank you. We will get back to you within 2 working days.';
+
+    submitButton.disabled = false;
+    submitButton.removeAttribute('aria-busy');
+    submitButton.textContent = 'Send Message';
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  setupBlogSearch();
   loadBlogs();
   setupScrollAnimations();
   setupHeroMotion();
   setupMobileNav();
+  setupContactForm();
 });
