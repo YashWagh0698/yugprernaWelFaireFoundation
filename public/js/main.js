@@ -99,6 +99,13 @@ async function loadBlogs() {
   const container = document.getElementById('blog-container');
   if (!container) return;
 
+  if (window.location.protocol === 'file:') {
+    container.setAttribute('aria-busy', 'false');
+    container.innerHTML = '<p class="blog-empty">Blog posts are visible when this page is opened through the server.</p>';
+    announceBlogResults(0, '');
+    return;
+  }
+
   const isHomepage = window.location.pathname.endsWith('/index.html') || window.location.pathname === '/' || window.location.pathname === '';
   const searchInput = document.getElementById('blog-search');
 
@@ -122,10 +129,7 @@ async function loadBlogs() {
   } catch (err) {
     console.error('Failed to load blogs:', err);
     container.setAttribute('aria-busy', 'false');
-    const fallbackMessage = window.location.protocol === 'file:'
-      ? 'Could not load posts. Start backend with "node server.js" and open http://localhost:5000/.'
-      : 'Could not load posts right now. Please try again later.';
-    container.innerHTML = `<p class="blog-empty">${fallbackMessage}</p>`;
+    container.innerHTML = '<p class="blog-empty">Could not load posts right now. Please try again later.</p>';
     announceBlogResults(0, '');
   }
 }
