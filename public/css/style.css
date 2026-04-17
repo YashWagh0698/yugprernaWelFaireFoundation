@@ -217,16 +217,38 @@ nav.site-nav {
 .nav-logo {
   display: flex; align-items: center; gap: 12px; text-decoration: none;
 }
-.nav-logo-mark {
+.nav-logo-mark-wrap {
   width: 44px;
   height: 44px;
   flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--saffron);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+.nav-logo-mark {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   background: #fff;
-  border-radius: 10px;
   display: block;
   padding: 4px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+.nav-logo-fallback {
+  display: none;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+  line-height: 1;
+}
+.nav-logo-mark-wrap.logo-fallback .nav-logo-mark {
+  display: none;
+}
+.nav-logo-mark-wrap.logo-fallback .nav-logo-fallback {
+  display: inline-block;
 }
 .nav-logo-text {
   font-family: 'Playfair Display', serif; font-weight: 600;
@@ -593,11 +615,12 @@ footer.site-footer {
 .footer-brand p { font-size: 13px; line-height: 1.7; }
 .footer-col h4 { color: #fff; font-size: 13px; font-weight: 600; margin-bottom: 14px; letter-spacing: 0.06em; text-transform: uppercase; }
 .footer-col a {
-  display: inline-block;
+  display: block;
   color: rgba(255,255,255,0.82);
   text-decoration: none;
   font-size: 13px;
-  margin-bottom: 8px;
+  line-height: 1.6;
+  margin-bottom: 10px;
   position: relative;
   transition: color 0.25s ease, transform 0.25s ease;
 }
@@ -616,6 +639,10 @@ footer.site-footer {
   transform: translateX(5px);
 }
 .footer-col a:hover::after { width: 100%; }
+.contact-grid [style*="background: #EEF5EC"] {
+  border: 1px solid rgba(76, 215, 159, 0.4) !important;
+  border-left: 3px solid var(--sage-light) !important;
+}
 .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; font-size: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
 .footer-bottom a {
   color: #ffd6b5;
@@ -710,7 +737,8 @@ footer.site-footer {
 @media(max-width: 640px) {
   nav.site-nav { height: auto; min-height: 72px; }
   .nav-logo { gap: 10px; max-width: calc(100% - 64px); }
-  .nav-logo-mark { width: 40px; height: 40px; }
+  .nav-logo-mark-wrap { width: 40px; height: 40px; }
+  .nav-logo-mark { width: 100%; height: 100%; }
   .nav-logo-text { font-size: 15px; }
   .nav-logo-sub { font-size: 10px; line-height: 1.2; }
   .hero { padding: clamp(44px, 9vw, 62px) 16px; }

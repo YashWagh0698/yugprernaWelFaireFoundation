@@ -261,6 +261,26 @@ function setupMobileNav() {
   });
 }
 
+function setupLogoFallback() {
+  const logoImages = document.querySelectorAll('.nav-logo-mark');
+  if (!logoImages.length) return;
+
+  logoImages.forEach(img => {
+    const wrapper = img.closest('.nav-logo-mark-wrap');
+    if (!wrapper) return;
+
+    const showFallback = () => wrapper.classList.add('logo-fallback');
+    const hideFallback = () => wrapper.classList.remove('logo-fallback');
+
+    img.addEventListener('error', showFallback);
+    img.addEventListener('load', hideFallback);
+
+    if (img.complete && img.naturalWidth === 0) {
+      showFallback();
+    }
+  });
+}
+
 function setupContactForm() {
   const form = document.getElementById('contactForm');
   const submitButton = document.getElementById('submitBtn');
@@ -313,6 +333,7 @@ function setupContactForm() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  setupLogoFallback();
   setupBlogSearch();
   loadBlogs();
   setupScrollAnimations();
