@@ -141,6 +141,7 @@
   --card-float: 0 28px 52px rgba(0, 0, 0, 0.36);
 }
 
+
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 html { scroll-behavior: smooth; }
@@ -169,7 +170,6 @@ body::before {
   opacity: 0.9;
   z-index: -1;
 }
-
 /* ── SKIP LINK ── */
 .skip-link {
   position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden;
@@ -616,4 +616,8 @@ footer.site-footer {
 :root {
   --blue-accent: #5B9BD5;
   --blue-accent-pale: rgba(91, 155, 213, 0.12);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 5133bff8263377c3910ad2cd61b11817ca674ab2
