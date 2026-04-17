@@ -5,12 +5,6 @@ async function loadBlogs() {
   const isHomepage = document.querySelector('title')?.textContent?.includes('YugPrerna Welfare Foundation') &&
                      !document.querySelector('title')?.textContent?.includes('Blog');
 
-  // If opened via file:// (e.g., WhatsApp forward), API fetch will fail due to CORS.
-  if (window.location && window.location.protocol === 'file:') {
-    container.innerHTML = '<p class="blog-empty">Blog data loads only when the site is opened via http:// (local server or hosting).</p>';
-    return;
-  }
-
   try {
     const res = await fetch('/api/blogs');
     if (!res.ok) throw new Error(`Server returned ${res.status}`);
@@ -69,14 +63,6 @@ function esc(str) {
   return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-<<<<<<< HEAD
-loadBlogs();
-
-
-
-
-<<<<<<< HEAD
-=======
 function setupScrollAnimations() {
   const selectors = [
     '.hero-inner',
@@ -142,10 +128,8 @@ function setupMobileNav() {
   const navLinks = document.getElementById('navLinks');
   if (!button || !navLinks) return;
 
-  button.addEventListener('click', (e) => {
-    e.stopPropagation();
+  button.addEventListener('click', () => {
     navLinks.classList.toggle('open');
-    button.setAttribute('aria-expanded', navLinks.classList.contains('open') ? 'true' : 'false');
   });
 
   document.addEventListener('click', event => {
@@ -171,6 +155,3 @@ document.addEventListener('DOMContentLoaded', () => {
   setupHeroMotion();
   setupMobileNav();
 });
->>>>>>> a73b645 (improved UI)
-=======
->>>>>>> 2aa42300a67da169e869904c593e46fa93b4b5c7
