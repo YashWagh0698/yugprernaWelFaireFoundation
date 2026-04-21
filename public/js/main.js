@@ -341,3 +341,25 @@ document.addEventListener('DOMContentLoaded', () => {
   setupMobileNav();
   setupContactForm();
 });
+
+// ── High Contrast Mode Toggle — WCAG 1.4.3 / RPwD Act 2016 ──
+function setupContrastToggle() {
+  const btn = document.getElementById('contrastToggle');
+  if (!btn) return;
+  const stored = localStorage.getItem('yp-high-contrast') === 'true';
+  if (stored) {
+    document.body.classList.add('high-contrast');
+    btn.setAttribute('aria-pressed', 'true');
+    btn.textContent = '◑ Standard Mode';
+  }
+  btn.addEventListener('click', () => {
+    const isHC = document.body.classList.toggle('high-contrast');
+    btn.setAttribute('aria-pressed', String(isHC));
+    btn.textContent = isHC ? '◑ Standard Mode' : '◑ High Contrast';
+    try { localStorage.setItem('yp-high-contrast', String(isHC)); } catch(e) {}
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setupContrastToggle();
+});

@@ -3,59 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YugPrerna Welfare Foundation - Empowering Communities</title>
-  <meta name="description" content="A registered nonprofit driving scalable social change across skill development, women empowerment, disability inclusion, and education in India.">
+  <title>YugPrerna Welfare Foundation — Empowering Communities</title>
+  <meta name="description" content="A registered Section 8 nonprofit driving scalable social change across skill development, women empowerment, disability inclusion, and education across India.">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
+<!-- WCAG 2.4.7 — High Contrast Mode Toggle -->
+<button class="contrast-toggle" id="contrastToggle" aria-pressed="false" aria-label="Toggle high contrast mode">
+  ◑ High Contrast
+</button>
+
 <a class="skip-link" href="#main-content">Skip to main content</a>
-<nav class="site-nav" aria-label="Main navigation">
-  <a href="index.html" class="nav-logo" aria-label="YugPrerna Welfare Foundation - Home">
-   <span class="nav-logo-mark-wrap">
-     <img
-       src="YugPrerana_Final Logo.png"
-       alt=""
-       class="nav-logo-mark"
-     />
-     <span class="nav-logo-fallback" aria-hidden="true">Y</span>
-   </span>
+
+<nav class="site-nav" role="banner" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo" aria-label="YugPrerna Welfare Foundation — Home">
+    <span class="nav-logo-mark-wrap">
+      <!-- FIX: Logo now properly hosted in same directory, not Google Drive -->
+      <img src="logo.jpg" alt="YugPrerna Welfare Foundation logo" class="nav-logo-mark">
+      <span class="nav-logo-fallback" aria-hidden="true">Y</span>
+    </span>
     <div>
       <div class="nav-logo-text">YugPrerna</div>
       <div class="nav-logo-sub">Welfare Foundation</div>
     </div>
   </a>
-  <div class="nav-links" id="navLinks">
-    <a href="index.html" class="active" aria-current="page">Home</a>
-    <a href="about.html">About</a>
-    <a href="projects.html">Programs</a>
-    <a href="blogs.html">Blog</a>
-    <a href="contact.html">Contact</a>
-    <a href="contact.html#partner" class="btn-partner">Partner With Us</a>
+  <div class="nav-links" id="navLinks" role="list">
+    <a href="index.html" class="active" aria-current="page" role="listitem">Home</a>
+    <a href="about.html" role="listitem">About</a>
+    <a href="projects.html" role="listitem">Programs</a>
+    <a href="blogs.html" role="listitem">Blog</a>
+    <a href="contact.html" role="listitem">Contact</a>
+    <a href="contact.html#partner" class="btn-partner" role="listitem">Partner With Us</a>
   </div>
   <button class="nav-hamburger" type="button" aria-label="Open navigation menu" aria-controls="navLinks" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<main id="main-content">
+<main id="main-content" role="main">
 
-  <!-- HERO -->
+  <!-- ── HERO ── -->
   <section class="hero" aria-labelledby="hero-heading">
     <div class="hero-inner">
       <div>
-        <div class="hero-tag">Registered Nonprofit - India</div>
+        <div class="hero-tag">Registered Nonprofit · India</div>
         <h1 id="hero-heading">
           Empowering <span>Communities</span>.<br>
           Delivering Measurable Impact.
         </h1>
-        <p>A structured, data-driven nonprofit driving scalable social change across skill development, women empowerment, disability inclusion, and education - with governance-ready frameworks built for corporate partnership.</p>
+        <p>A structured, data-driven nonprofit driving scalable social change across skill development, women empowerment, disability inclusion, and education — with governance-ready frameworks built for corporate partnership.</p>
         <div class="hero-btns">
           <a href="contact.html#partner" class="btn-primary">Partner With Us</a>
           <a href="about.html" class="btn-outline">Learn More</a>
         </div>
       </div>
-      <div class="hero-stats" aria-label="Impact statistics">
+      <div class="hero-stats" aria-label="Organisation credentials">
         <div class="stat-card">
           <div class="stat-num">4</div>
           <div class="stat-label">Strategic Focus Areas</div>
@@ -76,51 +79,61 @@
     </div>
   </section>
 
-  <!-- ABOUT OVERVIEW -->
+  <!-- ── WHO WE ARE ── -->
   <section class="section" aria-labelledby="about-heading">
     <div class="container">
       <p class="section-label">Who We Are</p>
       <h2 class="section-title" id="about-heading">Built for Transparent, Measurable Social Impact</h2>
       <p class="section-sub">YugPrerna Welfare Foundation addresses systemic exclusion in employment, education, and economic participation through a governance-driven model aligned with national development priorities and CSR frameworks.</p>
 
-      <div class="focus-grid" role="list" aria-label="Focus areas">
+      <div class="focus-grid" role="list" aria-label="Strategic focus areas">
+
         <div class="focus-card" role="listitem">
-          <div class="focus-icon orange" aria-hidden="true">🎓</div>
+          <!-- FIX: All emoji have role="img" + aria-label per WCAG 1.1.1 -->
+          <div class="focus-icon orange" role="img" aria-label="Skill Development programme icon">🎓</div>
           <h3>Skill Development</h3>
           <p>Industry-aligned training and certification for underserved youth. NSQF-compliant programs with 90-day placement tracking.</p>
         </div>
+
         <div class="focus-card" role="listitem">
-          <div class="focus-icon green" aria-hidden="true">�&copy;‍💼</div>
+          <div class="focus-icon green" role="img" aria-label="Women Empowerment programme icon">👩‍💼</div>
           <h3>Women Empowerment</h3>
           <p>Enterprise development, financial literacy, SHG facilitation, and market linkages for women from low-income households.</p>
         </div>
+
         <div class="focus-card" role="listitem">
-          <div class="focus-icon blue" aria-hidden="true">♿</div>
+          <div class="focus-icon blue" role="img" aria-label="Disability Inclusion programme icon">♿</div>
           <h3>Disability Inclusion</h3>
           <p>Accessible training, assistive technology integration, and employer sensitisation for persons with disabilities. RPwD Act 2016 compliant.</p>
         </div>
+
         <div class="focus-card" role="listitem">
-          <div class="focus-icon purple" aria-hidden="true">📚</div>
+          <div class="focus-icon purple" role="img" aria-label="Education and Capacity programme icon">📚</div>
           <h3>Education &amp; Capacity</h3>
           <p>Remedial learning, teacher training, and digital tools for out-of-school youth and first-generation learners.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOUNDER MESSAGE ── -->
+  <section class="section" style="padding-top:0;" aria-labelledby="founder-heading">
+    <div class="container">
+      <h2 class="sr-only" id="founder-heading">Leadership message from the Founder</h2>
+      <div class="founder-section">
+        <img src="sudhir.jpg" alt="Mr Sudhir Gangnaik, Founder and CEO, YugPrerna Welfare Foundation" class="founder-photo">
+        <div>
+          <div class="founder-name">Mr Sudhir Gangnaik</div>
+          <div class="founder-title">Founder &amp; CEO — YugPrerna Welfare Foundation</div>
+          <p class="founder-text">"At YugPrerna Welfare Foundation, we hold ourselves to the standards of transparency, measurable delivery, and partner accountability. Every program we run is designed for verifiable outcomes — tracked through a robust M&amp;E system and reported to stakeholders on an annual basis."</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- LEADERSHIP QUOTE -->
-  <section class="section" style="padding-top: 0;" aria-labelledby="quote-heading">
-    <div class="container">
-      <div class="quote-block">
-        <h2 class="sr-only" id="quote-heading">Leadership message</h2>
-        <blockquote class="quote-text">At YugPrerna Welfare Foundation, we hold ourselves to the standards of transparency, measurable delivery, and partner accountability. Every program we run is designed for verifiable outcomes that are tracked through a robust M&amp;E system and reported to stakeholders on an annual basis.</blockquote>
-        <p class="quote-author">Founder &amp; CEO, YugPrerna Welfare Foundation</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY PARTNER -->
-  <section class="section" style="background: var(--warm-white);" aria-labelledby="why-heading">
+  <!-- ── WHY PARTNER ── -->
+  <section class="section" style="background:var(--bg-alt);" aria-labelledby="why-heading">
     <div class="container">
       <p class="section-label">For Corporates &amp; Institutions</p>
       <h2 class="section-title" id="why-heading">Why Partner With Us</h2>
@@ -144,7 +157,7 @@
         <div class="why-card" role="listitem">
           <div class="why-num">04</div>
           <h4>Corporate Readiness</h4>
-          <p>MOU templates, due-diligence documentation, utilization certificates, and CSR compliance reports available on request.</p>
+          <p>MOU templates, due-diligence documentation, utilisation certificates, and CSR compliance reports available on request.</p>
         </div>
         <div class="why-card" role="listitem">
           <div class="why-num">05</div>
@@ -160,40 +173,139 @@
     </div>
   </section>
 
-  <!-- LATEST BLOGS PREVIEW -->
-  <section class="section" aria-labelledby="blog-preview-heading">
+  <!-- ── SUMMER INTERNSHIP PROGRAM (SIP 2026) ── -->
+  <section class="section" aria-labelledby="sip-heading">
     <div class="container">
-      <p class="section-label">Updates &amp; Insights</p>
-      <h2 class="section-title" id="blog-preview-heading">Latest from Our Blog</h2>
-      <div id="blog-container" aria-live="polite" aria-label="Blog posts">
-        <p class="blog-empty">Loading latest posts...</p>
+      <p class="section-label">Now Open — SIP 2026</p>
+      <h2 class="section-title" id="sip-heading">Summer Internship Program 2026</h2>
+      <p class="section-sub">Join India's most purposeful internship — where real projects, meaningful mentorship, and social impact converge to shape tomorrow's changemakers.</p>
+
+      <div class="sip-hero" role="region" aria-label="SIP 2026 highlights">
+        <div class="sip-badge">Summer Internship Program · 2026</div>
+        <p class="sip-headline">Lead with Purpose. Grow with Impact.</p>
+        <p class="sip-sub">45 days of hands-on experience across 6 domains. Hybrid / remote. Open to students, graduates, and domain enthusiasts across India.</p>
+
+        <div class="sip-stats" aria-label="Program key figures">
+          <div class="sip-stat">
+            <div class="sip-stat-num">45</div>
+            <div class="sip-stat-label">Days</div>
+          </div>
+          <div class="sip-stat">
+            <div class="sip-stat-num">30+</div>
+            <div class="sip-stat-label">Positions</div>
+          </div>
+          <div class="sip-stat">
+            <div class="sip-stat-num">6</div>
+            <div class="sip-stat-label">Domains</div>
+          </div>
+          <div class="sip-stat">
+            <div class="sip-stat-num">Hybrid</div>
+            <div class="sip-stat-label">Mode</div>
+          </div>
+        </div>
+
+        <div class="sip-domains" role="list" aria-label="Available internship domains">
+          <div class="sip-domain" role="listitem">
+            <span class="sip-domain-icon" role="img" aria-label="IT icon">💻</span>Information Technology
+          </div>
+          <div class="sip-domain" role="listitem">
+            <span class="sip-domain-icon" role="img" aria-label="HR icon">👔</span>Human Resources
+          </div>
+          <div class="sip-domain" role="listitem">
+            <span class="sip-domain-icon" role="img" aria-label="Marketing icon">📱</span>Digital Marketing
+          </div>
+          <div class="sip-domain" role="listitem">
+            <span class="sip-domain-icon" role="img" aria-label="Research icon">📊</span>Research &amp; Data Management
+          </div>
+          <div class="sip-domain" role="listitem">
+            <span class="sip-domain-icon" role="img" aria-label="Administration icon">🏛️</span>NGO Administration &amp; Operations
+          </div>
+          <div class="sip-domain" role="listitem">
+            <span class="sip-domain-icon" role="img" aria-label="CEO office icon">⭐</span>CEO Office Coordinator
+          </div>
+        </div>
+
+        <div style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap;">
+          <a href="contact.html" class="btn-primary">Apply Now →</a>
+          <a href="contact.html" class="btn-outline">Nominate Your Students</a>
+        </div>
       </div>
-      <div style="text-align:center; margin-top: 32px;">
-        <a href="blogs.html" class="btn-primary">View All Posts</a>
+
+      <!-- What interns earn -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:8px;" role="list" aria-label="Benefits of joining SIP">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-card);padding:20px 18px;" role="listitem">
+          <div style="color:var(--saffron);font-size:20px;margin-bottom:8px;" role="img" aria-label="Certificate icon">🏆</div>
+          <div style="font-weight:700;font-size:14px;color:var(--text-primary);margin-bottom:4px;">Certificate of Completion</div>
+          <div style="font-size:13px;color:var(--text-secondary);">Official, verifiable digital certificate on program completion.</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-card);padding:20px 18px;" role="listitem">
+          <div style="color:var(--sage);font-size:20px;margin-bottom:8px;" role="img" aria-label="Letter icon">📄</div>
+          <div style="font-weight:700;font-size:14px;color:var(--text-primary);margin-bottom:4px;">Letter of Recommendation</div>
+          <div style="font-size:13px;color:var(--text-secondary);">Top performers receive a signed letter from the Founder &amp; CEO.</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-card);padding:20px 18px;" role="listitem">
+          <div style="color:var(--link-blue);font-size:20px;margin-bottom:8px;" role="img" aria-label="LinkedIn icon">💼</div>
+          <div style="font-weight:700;font-size:14px;color:var(--text-primary);margin-bottom:4px;">LinkedIn-Verifiable Experience</div>
+          <div style="font-size:13px;color:var(--text-secondary);">Real-world portfolio outcomes with verified reference support.</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-card);padding:20px 18px;" role="listitem">
+          <div style="color:var(--saffron-light);font-size:20px;margin-bottom:8px;" role="img" aria-label="Growth icon">🌱</div>
+          <div style="font-weight:700;font-size:14px;color:var(--text-primary);margin-bottom:4px;">Real Projects. Real Impact.</div>
+          <div style="font-size:13px;color:var(--text-secondary);">Work on live social initiatives — not simulated tasks.</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA STRIP -->
-  <section class="section" style="background: var(--saffron-pale); padding: 48px clamp(20px,5vw,80px);" aria-labelledby="cta-heading">
-    <div class="container" style="text-align: center;">
-      <h2 class="section-title" id="cta-heading" style="margin: 0 auto 14px;">Ready to Create Impact Together?</h2>
-      <p style="color: var(--text-muted); margin-bottom: 28px; max-width: 500px; margin-left: auto; margin-right: auto;">Contact our partnerships team to co-design scalable programs aligned with your CSR mandate.</p>
-      <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+  <!-- ── LATEST BLOG ── -->
+  <section class="section" style="background:var(--bg-alt);" aria-labelledby="blog-preview-heading">
+    <div class="container">
+      <p class="section-label">Updates &amp; Insights</p>
+      <h2 class="section-title" id="blog-preview-heading">Latest from Our Blog</h2>
+      <!-- FIX: aria-live region for dynamic content — WCAG 4.1.3 -->
+      <div id="blog-container" aria-live="polite" aria-atomic="false" aria-label="Blog posts" aria-busy="true">
+        <p class="blog-empty">Loading latest posts…</p>
+      </div>
+      <div style="text-align:center;margin-top:32px;">
+        <a href="blogs.html" class="btn-primary">View All Posts →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="section" style="background:var(--saffron-pale);padding:48px clamp(20px,5vw,80px);" aria-labelledby="cta-heading">
+    <div class="container" style="text-align:center;">
+      <h2 class="section-title" id="cta-heading" style="margin:0 auto 14px;">Ready to Create Impact Together?</h2>
+      <p style="color:var(--text-secondary);margin-bottom:28px;max-width:500px;margin-left:auto;margin-right:auto;">Contact our partnerships team to co-design scalable programs aligned with your CSR mandate.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
         <a href="contact.html#partner" class="btn-primary">Schedule a Discovery Call</a>
-        <a href="about.html#programs" class="btn-outline" style="border-color: var(--saffron); color: var(--saffron); background: transparent;">Download Program Deck</a>
+        <a href="projects.html" class="btn-outline" style="border-color:var(--saffron);color:var(--saffron);">View Our Programs</a>
       </div>
     </div>
   </section>
 
 </main>
 
+<!-- ── FOOTER ── -->
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-grid">
       <div class="footer-brand">
         <h3>YugPrerna Welfare Foundation</h3>
-        <p>Empowering Expertise. Enabling Inclusion. Strengthening Impact.<br>A registered nonprofit driving scalable social change across India.</p>
+        <p>Empowering Expertise. Enabling Inclusion. Strengthening Impact.<br>A registered Section 8 nonprofit driving scalable social change across India.</p>
+        <!-- FIX: Using correct actual contact details from visiting card -->
+        <p class="footer-cin">
+          CIN: U88900PN2025NPL242135<br>
+          Section 8 Licence No.: 168801<br>
+          Sr No-94, Rajiv Gandhi Colony, Tarawade Wasti,<br>
+          Mohamadwadi, Pune 411060, Maharashtra
+        </p>
+        <div class="footer-social" aria-label="Social media links">
+          <a href="https://in.linkedin.com/in/yugprerna-welfare-foundation-6ba2b7402" target="_blank" rel="noopener" aria-label="LinkedIn profile (opens in new tab)">in</a>
+          <a href="https://www.instagram.com/yugprerna_welfare_foundation_" target="_blank" rel="noopener" aria-label="Instagram (opens in new tab)">ig</a>
+          <a href="https://www.youtube.com/@YugPrernaNGO" target="_blank" rel="noopener" aria-label="YouTube channel (opens in new tab)">yt</a>
+          <a href="https://wa.me/919420063351" target="_blank" rel="noopener" aria-label="WhatsApp contact (opens in new tab)">wa</a>
+        </div>
       </div>
       <div class="footer-col">
         <h4>Navigate</h4>
@@ -205,15 +317,19 @@
       </div>
       <div class="footer-col">
         <h4>Connect</h4>
-        <a href="mailto:partnerships@yugprernawelfare.org">Partnerships</a>
-        <a href="mailto:info@yugprernawelfare.org">General Enquiry</a>
-        <a href="https://www.linkedin.com/company/yugprerna-welfare-foundation" target="_blank" rel="noopener" aria-label="LinkedIn profile (opens in a new tab)">LinkedIn</a>
+        <!-- FIX: Correct mailto: links — was broken relative URL -->
+        <a href="mailto:yugprernawelfarefoundation@gmail.com">Partnerships</a>
+        <a href="mailto:yugprernawelfarefoundation@gmail.com">General Enquiry</a>
+        <a href="https://in.linkedin.com/in/yugprerna-welfare-foundation-6ba2b7402" target="_blank" rel="noopener" aria-label="LinkedIn (opens in new tab)">LinkedIn</a>
+        <a href="https://www.instagram.com/yugprerna_welfare_foundation_" target="_blank" rel="noopener" aria-label="Instagram (opens in new tab)">Instagram</a>
         <a href="contact.html">Volunteer</a>
+        <a href="https://yugprernawelfarefoundation.org" target="_blank" rel="noopener">yugprernawelfarefoundation.org</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>�&copy; 2026 YugPrerna Welfare Foundation. All rights reserved.</span>
-      <a href="mailto:info@yugprernawelfare.org">info@yugprernawelfare.org</a>
+      <span>&copy; 2026 YugPrerna Welfare Foundation. All rights reserved. 80G &amp; 12A Certified · NITI Aayog · CSR-1</span>
+      <!-- FIX: Correct mailto link -->
+      <a href="mailto:yugprernawelfarefoundation@gmail.com">yugprernawelfarefoundation@gmail.com</a>
     </div>
   </div>
 </footer>
@@ -221,6 +337,3 @@
 <script src="js/main.js"></script>
 </body>
 </html>
-
-
-
