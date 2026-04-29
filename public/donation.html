@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate — YugPrerna Welfare Foundation</title>
+  <meta name="description" content="Support YugPrerna Welfare Foundation. Donate via UPI, bank transfer, or scan our QR code. 80G tax exemption available. Every rupee empowers a community.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ══ ACCESSIBILITY PANEL ══ -->
+<button class="a11y-toggle-btn" id="a11yToggleBtn" aria-expanded="false" aria-controls="a11yPanel" aria-label="Open Accessibility Options">
+  <span class="a11y-fab-icon">⚙</span>
+  Accessibility Options
+</button>
+<div class="a11y-panel" id="a11yPanel" role="region" aria-label="Accessibility preferences">
+  <div class="a11y-panel-title">⚙ Accessibility Options</div>
+  <button class="a11y-btn" id="btnHC" aria-pressed="false" aria-label="Toggle high contrast mode"><span class="a11y-btn-icon">◑</span> High Contrast</button>
+  <button class="a11y-btn" id="btnLT" aria-pressed="false" aria-label="Toggle large text"><span class="a11y-btn-icon">A+</span> Large Text</button>
+  <button class="a11y-btn" id="btnDX" aria-pressed="false" aria-label="Toggle dyslexia-friendly font"><span class="a11y-btn-icon">Aa</span> Dyslexia Font</button>
+  <button class="a11y-btn" id="btnRM" aria-pressed="false" aria-label="Toggle reading mode"><span class="a11y-btn-icon">¶</span> Reading Mode</button>
+  <hr class="a11y-divider">
+  <span class="a11y-section-label">Jump to section</span>
+  <a class="a11y-skip-link-btn" href="#site-nav">↑ Navigation</a>
+  <a class="a11y-skip-link-btn" href="#main-content">→ Main Content</a>
+  <a class="a11y-skip-link-btn" href="#site-footer">↓ Footer</a>
+  <hr class="a11y-divider">
+  <span class="a11y-section-label">Language</span>
+  <select class="a11y-lang-select" id="langSelect" aria-label="Select language">
+    <option value="en">English</option>
+    <option value="hi">हिन्दी (Hindi)</option>
+    <option value="mr">मराठी (Marathi)</option>
+  </select>
+</div>
+<button class="a11y-mobile-fab" id="a11yMobileFab" aria-expanded="false" aria-controls="a11yPanel" aria-label="Open Accessibility Options">
+  <span>⚙</span> Accessibility
+</button>
+
+<div class="a11y-panel" id="a11yPanel" role="region" aria-label="Accessibility preferences">
+  <div class="a11y-panel-title">⚙ Accessibility Options</div>
+  <button class="a11y-btn" id="btnHC" aria-pressed="false" aria-label="Toggle high contrast mode">
+    <span class="a11y-btn-icon">◑</span> High Contrast
+  </button>
+  <button class="a11y-btn" id="btnLT" aria-pressed="false" aria-label="Toggle large text">
+    <span class="a11y-btn-icon">A+</span> Large Text
+  </button>
+  <button class="a11y-btn" id="btnDX" aria-pressed="false" aria-label="Toggle dyslexia-friendly font">
+    <span class="a11y-btn-icon">Aa</span> Dyslexia Font
+  </button>
+  <button class="a11y-btn" id="btnRM" aria-pressed="false" aria-label="Toggle reading mode">
+    <span class="a11y-btn-icon">¶</span> Reading Mode
+  </button>
+  <hr class="a11y-divider">
+  <span class="a11y-section-label">Jump to section</span>
+  <a class="a11y-skip-link-btn" href="#site-nav">↑ Navigation</a>
+  <a class="a11y-skip-link-btn" href="#main-content">→ Main Content</a>
+  <a class="a11y-skip-link-btn" href="#site-footer">↓ Footer</a>
+  <hr class="a11y-divider">
+  <span class="a11y-section-label">Language</span>
+  <select class="a11y-lang-select" id="langSelect" aria-label="Select language">
+    <option value="en">English</option>
+    <option value="hi">हिन्दी (Hindi)</option>
+    <option value="mr">मराठी (Marathi)</option>
+  </select>
+</div>
+<button class="a11y-mobile-fab" id="a11yMobileFab" aria-expanded="false" aria-controls="a11yPanel" aria-label="Open Accessibility Options">
+  <span>⚙</span> Accessibility
+</button>
+
+<!-- ══ SKIP LINKS ══ -->
+<div class="skip-links">
+  <a class="skip-link" href="#site-nav">Skip to navigation</a>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#site-footer">Skip to footer</a>
+</div>
+
+<!-- ══ NAVIGATION ══ -->
+<nav class="site-nav" id="site-nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="YugPrerna Welfare Foundation — Home">
+    <span class="nav-logo-mark-wrap">
+      <img src="logo.jpg" alt="YugPrerna Welfare Foundation logo" class="nav-logo-mark">
+    </span>
+    <div>
+      <div class="nav-logo-text">YugPrerna</div>
+      <div class="nav-logo-sub">Welfare Foundation</div>
+      <div class="nav-tagline">✦ The Era Of Inspiration</div>
+    </div>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <div class="nav-dropdown">
+      <a href="projects.html" aria-haspopup="true" aria-expanded="false">Programs</a>
+      <div class="nav-dropdown-menu" role="menu">
+        <a href="projects.html#sitdp" role="menuitem">
+          <span class="dd-icon">🏛️</span>
+          <span class="dd-text">
+            <span class="dd-title">SITDP</span>
+            <span class="dd-sub">Structured Internship &amp; Talent Development</span>
+          </span>
+        </a>
+        <a href="projects.html#sip" role="menuitem">
+          <span class="dd-icon">☀️</span>
+          <span class="dd-text">
+            <span class="dd-title">Summer Internship 2026</span>
+            <span class="dd-sub">45-day hybrid · 6 domains · Open now</span>
+          </span>
+        </a>
+        <a href="projects.html#vep" role="menuitem">
+          <span class="dd-icon">🤝</span>
+          <span class="dd-text">
+            <span class="dd-title">Volunteer Ecosystem (VEP/YNVEC)</span>
+            <span class="dd-sub">4-tier national volunteer corps</span>
+          </span>
+        </a>
+        <a href="projects.html" role="menuitem">
+          <span class="dd-icon">📋</span>
+          <span class="dd-text">
+            <span class="dd-title">All Programs</span>
+            <span class="dd-sub">View complete program portfolio</span>
+          </span>
+        </a>
+      </div>
+    </div>
+    <a href="courses.html">Our Courses</a>
+    <a href="donation.html" class="active" aria-current="page">Donate</a>
+    <a href="blogs.html">Blog</a>
+    <a href="sitemap.html">Site Map</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="contact.html#partner" class="btn-partner">Partner With Us</a>
+  </div>
+  <button class="nav-hamburger" type="button" aria-label="Open navigation menu" aria-controls="navLinks" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<main id="main-content" role="main">
+
+  <!-- ══ DONATION HERO ══ -->
+  <section class="donation-hero" aria-labelledby="donate-heading">
+    <div class="donation-hero-inner">
+      <div class="donation-eyebrow">♥ Support Our Mission</div>
+      <h1 id="donate-heading">
+        Every Rupee You Give<br><span>Transforms a Life.</span>
+      </h1>
+      <p>Your donation directly funds skill development, disability inclusion, women empowerment, and education programs run by YugPrerna Welfare Foundation — a registered Section 8 nonprofit with 80G tax exemption.</p>
+      <div class="donation-trust-row">
+        <span class="trust-chip">✓ 80G Tax Benefit</span>
+        <span class="trust-chip">✓ Section 8 Registered</span>
+        <span class="trust-chip">✓ NITI Aayog Listed</span>
+        <span class="trust-chip">✓ CSR-1 Eligible</span>
+        <span class="trust-chip">✓ Transparent Reporting</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ DONATION METHODS ══ -->
+  <section class="donation-section" id="donate-methods" aria-labelledby="methods-heading">
+    <div class="container">
+      <p class="section-label">How to Donate</p>
+      <h2 class="section-title" id="methods-heading">Choose Your Preferred Method</h2>
+      <p class="section-sub">We accept donations via UPI (scan &amp; pay), direct bank transfer, and all major UPI apps. All donations above ₹500 are eligible for an 80G tax exemption certificate.</p>
+
+      <div class="donation-grid">
+
+        <!-- QR / UPI Card -->
+        <div class="donation-card" aria-labelledby="qr-title">
+          <div class="donation-card-header">
+            <div class="donation-card-icon" aria-hidden="true">📱</div>
+            <div>
+              <div class="donation-card-title" id="qr-title">Scan &amp; Pay — UPI</div>
+              <div class="donation-card-sub">Works with all UPI apps instantly</div>
+            </div>
+          </div>
+          <div class="qr-wrap">
+            <img
+              src="qr_code.jpg"
+              alt="IDBI Bank UPI QR Code for YugPrerna Welfare Foundation. UPI ID: idb2508004870 25@idbi. Powered by IDBI Bank."
+              class="qr-img"
+            >
+            <div class="qr-upi-id" aria-label="UPI ID: idb2508004870 25 at idbi">
+              UPI ID: idb2508004870 25@idbi
+            </div>
+            <div class="upi-apps-row" aria-label="Supported UPI apps">
+              <span class="upi-app-badge">Google Pay</span>
+              <span class="upi-app-badge">PhonePe</span>
+              <span class="upi-app-badge">Paytm</span>
+              <span class="upi-app-badge">BHIM</span>
+              <span class="upi-app-badge">IDBI GoMobile+</span>
+              <span class="upi-app-badge">All UPI Apps ✓</span>
+            </div>
+          </div>
+          <div class="donation-tax-note" role="note">
+            <span aria-hidden="true">💡</span>
+            <span><strong>How to donate:</strong> Open any UPI app → Scan QR code or enter UPI ID → Enter amount → Add your name &amp; email in remarks for receipt.</span>
+          </div>
+        </div>
+
+        <!-- Bank Transfer Card -->
+        <div class="donation-card" aria-labelledby="bank-title">
+          <div class="donation-card-header">
+            <div class="donation-card-icon" aria-hidden="true">🏦</div>
+            <div>
+              <div class="donation-card-title" id="bank-title">Bank Transfer — NEFT / RTGS / IMPS</div>
+              <div class="donation-card-sub">Direct transfer for larger donations</div>
+            </div>
+          </div>
+          <table class="bank-table" aria-label="Bank account details for YugPrerna Welfare Foundation">
+            <tbody>
+              <tr>
+                <td>Bank Name</td>
+                <td><strong>IDBI Bank</strong></td>
+              </tr>
+              <tr>
+                <td>Account Name</td>
+                <td><strong>YugPrerna Welfare Foundation</strong></td>
+              </tr>
+              <tr>
+                <td>Account Number</td>
+                <td>
+                  <span class="bank-acct-num" aria-label="Account number: 0102102000036397">0102102000036397</span>
+                  <button class="copy-btn" onclick="copyText('0102102000036397', this)" aria-label="Copy account number">Copy</button>
+                </td>
+              </tr>
+              <tr>
+                <td>IFSC Code</td>
+                <td>
+                  <span class="bank-ifsc" aria-label="IFSC code: IBKL0000102">IBKL0000102</span>
+                  <button class="copy-btn" onclick="copyText('IBKL0000102', this)" aria-label="Copy IFSC code">Copy</button>
+                </td>
+              </tr>
+              <tr>
+                <td>Account Type</td>
+                <td>Current Account</td>
+              </tr>
+              <tr>
+                <td>Branch</td>
+                <td>Pune, Maharashtra</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="donation-tax-note" role="note">
+            <span aria-hidden="true">📧</span>
+            <span>After transferring, please email your transaction details to <strong><a href="mailto:yugprernawelfarefoundation@gmail.com" style="color:var(--sky);">yugprernawelfarefoundation@gmail.com</a></strong> to receive your 80G certificate.</span>
+          </div>
+        </div>
+
+      </div><!-- /donation-grid -->
+
+      <!-- 80G Tax Note -->
+      <div style="margin-top:2rem; padding:1.5rem 2rem; background:var(--bg-section); border:1px solid var(--border); border-radius:var(--radius-lg); border-left:4px solid var(--amber);">
+        <div style="display:flex; align-items:flex-start; gap:1rem; flex-wrap:wrap;">
+          <div style="flex:1; min-width:16rem;">
+            <div style="color:var(--amber); font-weight:700; font-size:0.9375rem; margin-bottom:0.5rem;">📜 80G Tax Exemption</div>
+            <p style="color:var(--text-silver); font-size:0.9375rem; line-height:1.8;">Donations to YugPrerna Welfare Foundation are eligible for 50% tax deduction under Section 80G of the Income Tax Act, 1961. Please share your PAN number when donating to receive a valid 80G receipt.</p>
+          </div>
+          <div style="flex:1; min-width:16rem;">
+            <div style="color:var(--emerald); font-weight:700; font-size:0.9375rem; margin-bottom:0.5rem;">🏢 CSR Partnerships</div>
+            <p style="color:var(--text-silver); font-size:0.9375rem; line-height:1.8;">Corporate donors and CSR teams can partner with us under Companies Act 2013, Schedule VII. We provide MOU, utilisation certificates, and impact reports. <a href="contact.html#partner" style="color:var(--sky);">Schedule a Discovery Call →</a></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ TRUST BANNER — Built by Creators ══ -->
+  <section class="trust-banner" aria-labelledby="trust-heading-donate">
+    <div class="trust-banner-inner">
+      <div class="trust-banner-content">
+        <div class="trust-banner-eyebrow">Built Within 45 Days · By Our Interns</div>
+        <h2 id="trust-heading-donate">
+          This Website Is Not Just Built —<br><em>It Is Earned.</em>
+        </h2>
+        <div class="trust-banner-paras">
+          <p>Created within <strong>45 days</strong> by our interns — many of whom are <em>visually impaired, blind, low vision, and locomotor disabled</em> — this platform stands as proof of ability beyond limitation. Every line of code, every colour, every interaction is crafted with resilience, discipline, and belief — supported by learning, effort, and responsible use of technology.</p>
+          <p>These are <strong>not beneficiaries</strong>. <em>These are creators.</em></p>
+          <p>When you visit, engage, enroll, or support — you are not just browsing a website. <strong>You are strengthening a movement</strong> that transforms potential into performance.</p>
+        </div>
+        <div class="trust-callout">
+          <p>Stand with these hands. Encourage their journey. Invest in their future.<br>
+          Because <strong>inclusion is not charity</strong> — it is <em>nation building</em>.<br><br>
+          <strong>Support us. Stay connected. Be part of the change.</strong></p>
+        </div>
+        <div class="trust-actions">
+          <a href="#donate-methods" class="btn-primary">♥ Donate Now</a>
+          <a href="contact.html" class="btn-outline">Stay Connected</a>
+        </div>
+      </div>
+      <div class="trust-banner-stat">
+        <div class="trust-stat-pill">
+          <div class="num">45</div>
+          <div class="lbl">Days to Build</div>
+        </div>
+        <div class="trust-stat-pill">
+          <div class="num">30+</div>
+          <div class="lbl">Creator Interns</div>
+        </div>
+        <div class="trust-stat-pill">
+          <div class="num">100%</div>
+          <div class="lbl">Ability &amp; Belief</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ IMPACT — Where Your Money Goes ══ -->
+  <section class="section section-alt" aria-labelledby="impact-donate-heading">
+    <div class="container">
+      <p class="section-label">Your Impact</p>
+      <h2 class="section-title" id="impact-donate-heading">Where Your Donation Goes</h2>
+      <p class="section-sub">Every rupee is accounted for through our Monitoring &amp; Evaluation system. Impact reports are shared with donors annually.</p>
+      <div class="why-grid" style="margin-top:2rem;">
+        <div class="why-card">
+          <div class="why-num">🎓</div>
+          <h4>Skill Development</h4>
+          <p>Funds industry-aligned training, NSQF-compliant programs, and placement support for underserved youth across India.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">♿</div>
+          <h4>Disability Inclusion</h4>
+          <p>Provides assistive technology, accessible training materials, and employer sensitisation programs for PwD communities.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">👩</div>
+          <h4>Women Empowerment</h4>
+          <p>Supports enterprise development, financial literacy training, and SHG facilitation for women from low-income households.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">📚</div>
+          <h4>Education Access</h4>
+          <p>Enables remedial learning, digital tools for first-generation learners, and teacher training in underserved communities.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">💼</div>
+          <h4>Internship Programs</h4>
+          <p>Funds structured internships (SITDP &amp; SIP) that give real work experience to students and graduates from all backgrounds.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">🌐</div>
+          <h4>Volunteer Ecosystem</h4>
+          <p>Builds and sustains the YNVEC volunteer network — connecting expert professionals with communities who need their knowledge.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA ══ -->
+  <section class="section" style="background:var(--amber-pale);padding:3rem clamp(1.25rem,5vw,5rem);" aria-labelledby="cta-donate-heading">
+    <div class="container" style="text-align:center;">
+      <h2 class="section-title" id="cta-donate-heading" style="margin:0 auto 0.875rem;">Ready to Make a Difference?</h2>
+      <p style="color:var(--text-silver);margin-bottom:1.75rem;max-width:31.25rem;margin-left:auto;margin-right:auto;line-height:1.8;">Every contribution, big or small, powers inclusion. Partner with us, donate today, or spread the word.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="#donate-methods" class="btn-primary">♥ Donate Now</a>
+        <a href="contact.html#partner" class="btn-outline" style="border-color:var(--amber);color:var(--amber);">Become a CSR Partner</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer" id="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>YugPrerna Welfare Foundation</h3>
+        <div class="footer-tagline">✦ The Era Of Inspiration</div>
+        <p>Empowering Expertise. Enabling Inclusion. Strengthening Impact.<br>A registered Section 8 nonprofit driving scalable social change across India.</p>
+        <p class="footer-cin">
+          CIN: U88900PN2025NPL242135 | Section 8 Licence No.: 168801<br>
+          80G Certified | 12A Certified | NITI Aayog | CSR-1<br>
+          Sr No-94, Rajiv Gandhi Colony, Tarawade Wasti,<br>
+          Mohamadwadi, Pune 411060, Maharashtra, India
+        </p>
+                <div class="footer-social" aria-label="Social media links" style="margin-top:1rem;">
+          <a href="https://in.linkedin.com/in/yugprerna-welfare-foundation-6ba2b7402" target="_blank" rel="noopener noreferrer" class="linkedin" aria-label="YugPrerna on LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://youtube.com/@yugprernawelfarefoundation?si=TmQzUNUYBClgiJBA" target="_blank" rel="noopener noreferrer" class="youtube" aria-label="YugPrerna on YouTube">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/yugprerna_welfare_foundation_?utm_source=qr&igsh=MXZpOHVkeDhid29mdg==" target="_blank" rel="noopener noreferrer" class="instagram" aria-label="YugPrerna on Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://wa.me/919420063351" target="_blank" rel="noopener noreferrer" class="whatsapp" aria-label="Contact on WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/share/1CWrEbNXn8/" target="_blank" rel="noopener noreferrer" class="facebook" aria-label="YugPrerna on Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="projects.html">Programs</a>
+        <a href="donation.html">Donate</a>
+        <a href="blogs.html">Blog</a>
+        <a href="sitemap.html">Site Map</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="mailto:yugprernawelfarefoundation@gmail.com">Partnerships</a>
+        <a href="mailto:yugprernawelfarefoundation@gmail.com">General Enquiry</a>
+        <a href="tel:+919834780805">+91 98347 80805</a>
+        <a href="tel:+919420063351">+91 94200 63351</a>
+        <a href="contact.html">Volunteer</a>
+        <a href="donation.html">Donate</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 YugPrerna Welfare Foundation. All rights reserved.</span>
+      <a href="mailto:yugprernawelfarefoundation@gmail.com">yugprernawelfarefoundation@gmail.com</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function copyText(text, btn) {
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = 'Copied!';
+    btn.style.color = 'var(--emerald)';
+    btn.style.borderColor = 'var(--emerald)';
+    setTimeout(function() {
+      btn.textContent = 'Copy';
+      btn.style.color = '';
+      btn.style.borderColor = '';
+    }, 2000);
+  });
+}
+</script>
+<script src="js/main.js"></script>
+</body>
+</html>

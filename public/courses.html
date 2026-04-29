@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Courses &amp; Skill Development Programmes | YugPrerna Welfare Foundation — Inclusive Training for All</title>
+  <meta name="description" content="Explore inclusive, accessible skill-development courses at YugPrerna Welfare Foundation. Digital Literacy, Digital Marketing, Google Workspace, Power BI, Freelancing and more — designed for Persons with Disabilities, youth, and women. Enrol today.">
+  <meta name="keywords" content="digital literacy visually impaired, accessible computer courses, skill development NGO, YugPrerna courses, screen reader training NVDA JAWS, Power BI beginners, freelancing course India, inclusive education">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ══ ACCESSIBILITY PANEL ══ -->
+<button class="a11y-toggle-btn" id="a11yToggleBtn" aria-expanded="false" aria-controls="a11yPanel" aria-label="Open Accessibility Options">
+  <span class="a11y-fab-icon">⚙</span>
+  Accessibility Options
+</button>
+<div class="a11y-panel" id="a11yPanel" role="region" aria-label="Accessibility preferences">
+  <div class="a11y-panel-title">⚙ Accessibility Options</div>
+  <button class="a11y-btn" id="btnHC" aria-pressed="false" aria-label="Toggle high contrast mode"><span class="a11y-btn-icon">◑</span> High Contrast</button>
+  <button class="a11y-btn" id="btnLT" aria-pressed="false" aria-label="Toggle large text"><span class="a11y-btn-icon">A+</span> Large Text</button>
+  <button class="a11y-btn" id="btnDX" aria-pressed="false" aria-label="Toggle dyslexia-friendly font"><span class="a11y-btn-icon">Aa</span> Dyslexia Font</button>
+  <button class="a11y-btn" id="btnRM" aria-pressed="false" aria-label="Toggle reading mode"><span class="a11y-btn-icon">¶</span> Reading Mode</button>
+  <hr class="a11y-divider">
+  <span class="a11y-section-label">Jump to section</span>
+  <a class="a11y-skip-link-btn" href="#site-nav">↑ Navigation</a>
+  <a class="a11y-skip-link-btn" href="#main-content">→ Main Content</a>
+  <a class="a11y-skip-link-btn" href="#enrol">→ Enrol Now</a>
+  <a class="a11y-skip-link-btn" href="#site-footer">↓ Footer</a>
+  <hr class="a11y-divider">
+  <span class="a11y-section-label">Language</span>
+  <select class="a11y-lang-select" id="langSelect" aria-label="Select language">
+    <option value="en">English</option>
+    <option value="hi">हिन्दी (Hindi)</option>
+    <option value="mr">मराठी (Marathi)</option>
+  </select>
+</div>
+<button class="a11y-mobile-fab" id="a11yMobileFab" aria-expanded="false" aria-controls="a11yPanel" aria-label="Open Accessibility Options">
+  <span>⚙</span> Accessibility
+</button>
+
+<!-- ══ SKIP LINKS ══ -->
+<div class="skip-links">
+  <a class="skip-link" href="#site-nav">Skip to navigation</a>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#site-footer">Skip to footer</a>
+</div>
+
+<!-- ══ NAVIGATION ══ -->
+<nav class="site-nav" id="site-nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo" aria-label="YugPrerna Welfare Foundation — Home">
+    <span class="nav-logo-mark-wrap">
+      <img src="logo.jpg" alt="YugPrerna Welfare Foundation logo" class="nav-logo-mark">
+    </span>
+    <div>
+      <div class="nav-logo-text">YugPrerna</div>
+      <div class="nav-logo-sub">Welfare Foundation</div>
+      <div class="nav-tagline">✦ The Era Of Inspiration</div>
+    </div>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <div class="nav-dropdown">
+      <a href="projects.html" aria-haspopup="true" aria-expanded="false">Programs</a>
+      <div class="nav-dropdown-menu" role="menu">
+        <a href="projects.html#sitdp" role="menuitem"><span class="dd-icon">🏛️</span><span class="dd-text"><span class="dd-title">SITDP</span><span class="dd-sub">Structured Internship &amp; Talent Development</span></span></a>
+        <a href="projects.html#sip" role="menuitem"><span class="dd-icon">☀️</span><span class="dd-text"><span class="dd-title">Summer Internship 2026</span><span class="dd-sub">45-day hybrid · 6 domains · Open now</span></span></a>
+        <a href="projects.html#vep" role="menuitem"><span class="dd-icon">🤝</span><span class="dd-text"><span class="dd-title">Volunteer Ecosystem (VEP/YNVEC)</span><span class="dd-sub">4-tier national volunteer corps</span></span></a>
+        <a href="projects.html" role="menuitem"><span class="dd-icon">📋</span><span class="dd-text"><span class="dd-title">All Programs</span><span class="dd-sub">View complete program portfolio</span></span></a>
+      </div>
+    </div>
+    <a href="courses.html" class="active" aria-current="page">Our Courses</a>
+    <a href="donation.html">Donate</a>
+    <a href="blogs.html">Blog</a>
+    <a href="sitemap.html">Site Map</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="contact.html#partner" class="btn-partner">Partner With Us</a>
+  </div>
+  <button class="nav-hamburger" type="button" aria-label="Open navigation menu" aria-controls="navLinks" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<main id="main-content" role="main">
+
+  <!-- ══ HERO ══ -->
+  <section class="courses-hero" aria-labelledby="courses-h1">
+    <div class="courses-hero-inner">
+      <div class="hero-tag">Skill Development Programmes · YugPrerna Welfare Foundation</div>
+      <h1 id="courses-h1">Learn. Grow.<br><span>Change Your Life.</span></h1>
+      <p>Practical, affordable, and fully accessible skill-development programmes for everyone — especially designed for Persons with Disabilities, youth, women, and job seekers across India.</p>
+      <div class="courses-hero-btns">
+        <a href="#courses-grid" class="btn-primary">Explore Our Programmes →</a>
+        <a href="#enrol" class="btn-outline" style="border-color:var(--emerald);color:var(--emerald);">Enquire / Enrol Now</a>
+      </div>
+      <div class="courses-stats-bar" role="list" aria-label="Programme highlights">
+        <div class="courses-stat" role="listitem">
+          <span class="s-icon" aria-hidden="true">📚</span>
+          <span class="s-val">8+</span>
+          <span class="s-lbl">Programmes Available</span>
+        </div>
+        <div class="courses-stat" role="listitem">
+          <span class="s-icon" aria-hidden="true">♿</span>
+          <span class="s-val">100%</span>
+          <span class="s-lbl">Accessibility-First Design</span>
+        </div>
+        <div class="courses-stat" role="listitem">
+          <span class="s-icon" aria-hidden="true">🎓</span>
+          <span class="s-val">Certificate</span>
+          <span class="s-lbl">Provided for All Courses</span>
+        </div>
+        <div class="courses-stat" role="listitem">
+          <span class="s-icon" aria-hidden="true">🌐</span>
+          <span class="s-val">Online + Offline</span>
+          <span class="s-lbl">Hybrid Modes Available</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ INTRO ══ -->
+  <section class="section section-alt" aria-labelledby="intro-heading">
+    <div class="container">
+      <p class="section-label">Our Programmes</p>
+      <h2 class="section-title" id="intro-heading">Built for Real Life, Designed for Everyone</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:1.25rem;" class="two-col-prose">
+        <div>
+          <p style="color:var(--text-silver);line-height:1.85;">At YugPrerna Welfare Foundation, we believe that quality education should never be gatekept by disability, geography, or income. Every programme we offer is built with one purpose: to give learners a practical skill they can use to earn, grow, and stand independently.</p>
+        </div>
+        <div>
+          <p style="color:var(--text-silver);line-height:1.85;">Our courses are not just lessons — they are career launchpads. Each programme is designed with screen-reader compatibility (NVDA, JAWS, VoiceOver), keyboard-only navigation, accessible study materials, and flexible learning modes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ COURSES GRID ══ -->
+  <section class="section" id="courses-grid" aria-labelledby="courses-grid-heading">
+    <div class="container">
+      <p class="section-label">All Programmes</p>
+      <h2 class="section-title" id="courses-grid-heading">Choose Your Learning Path</h2>
+
+      <!-- Tab Filter -->
+      <div class="course-tabs" role="tablist" aria-label="Filter courses by category">
+        <button class="course-tab-btn active" role="tab" aria-selected="true" data-filter="all">All Programmes</button>
+        <button class="course-tab-btn" role="tab" aria-selected="false" data-filter="live">Currently Running</button>
+        <button class="course-tab-btn" role="tab" aria-selected="false" data-filter="soon">Launching Soon</button>
+        <button class="course-tab-btn" role="tab" aria-selected="false" data-filter="tech">Technology</button>
+        <button class="course-tab-btn" role="tab" aria-selected="false" data-filter="marketing">Digital Marketing</button>
+        <button class="course-tab-btn" role="tab" aria-selected="false" data-filter="career">Career &amp; Freelancing</button>
+      </div>
+
+      <div class="courses-grid" id="coursesGrid" role="list" aria-label="Course cards">
+
+        <!-- ── CARD 1: Digital Literacy — LIVE ── -->
+        <article class="course-card flagship" role="listitem" data-category="live tech" aria-labelledby="c1-title">
+          <img src="1000741258.jpg" alt="A student using a computer with a screen reader" class="course-card-img" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="course-card-img-placeholder" style="display:none" aria-hidden="true">🖥️</div>
+          <div class="course-card-body">
+            <span class="course-status-badge live" aria-label="Status: Currently Running — Enrolment Open">🟢 Currently Running — Enrol Now</span>
+            <h3 class="course-card-title" id="c1-title">Computer Literacy &amp; Digital Skills for Visually Impaired Learners</h3>
+            <p class="course-card-tagline">Your keyboard is your superpower. We will teach you to use it.</p>
+            <div class="course-meta-row" aria-label="Course details">
+              <span class="course-meta-chip"><span>⏱</span> 3 Months</span>
+              <span class="course-meta-chip"><span>🌐</span> Online / Offline / Hybrid</span>
+              <span class="course-meta-chip"><span>🗣</span> EN · HI · MR</span>
+              <span class="course-meta-chip"><span>📖</span> NVDA &amp; JAWS Ready</span>
+            </div>
+            <p class="course-card-desc">A fully keyboard-based, screen-reader-driven computer literacy programme built exclusively for visually impaired learners. No mouse. No prior experience needed. Just you, a keyboard, and the determination to learn.</p>
+            <ul class="course-learn-list" aria-label="What you will learn">
+              <li>Week 1–4: Computer basics, keyboard mastery, NVDA screen reader</li>
+              <li>Week 5–8: MS Word document creation, file &amp; folder management</li>
+              <li>Week 9–10: MS Excel basics — data entry, simple calculations</li>
+              <li>Week 11–12: PowerPoint, internet safety, Gmail &amp; email usage</li>
+            </ul>
+            <div class="course-accordion" id="acc-c1">
+              <button class="course-accordion-btn" aria-expanded="false" aria-controls="acc-c1-body" onclick="toggleAccordion(this)">Programme Structure &amp; More Details</button>
+              <div class="course-accordion-content" id="acc-c1-body">
+                <h4>Programme Structure</h4>
+                <ul>
+                  <li><strong>Month 1:</strong> Keyboard mastery, NVDA commands, Windows navigation, touch typing</li>
+                  <li><strong>Month 2:</strong> MS Word document creation, formatting, file/folder organisation</li>
+                  <li><strong>Month 3:</strong> Excel basics, PowerPoint, internet, email, online safety</li>
+                </ul>
+                <h4>Who Is This For?</h4>
+                <ul>
+                  <li>Visually impaired students and youth (any age, beginner level)</li>
+                  <li>Persons who have never used a computer before</li>
+                  <li>VI individuals preparing for employment or higher education</li>
+                </ul>
+                <h4>Career Outcomes</h4>
+                <ul>
+                  <li>Apply for data-entry, documentation, or computer-operator roles</li>
+                  <li>Access government scheme portals independently</li>
+                  <li>Build confidence to enrol in advanced digital skill courses</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="course-card-footer">
+            <a href="#enrol" class="btn-course-enrol" aria-label="Enrol in Computer Literacy programme">Enrol Now — Seats Limited</a>
+            <a href="contact.html" class="btn-course-more" aria-label="Contact us about Computer Literacy programme">Contact Us</a>
+          </div>
+        </article>
+
+        <!-- ── CARD 2: Digital Marketing ── -->
+        <article class="course-card" role="listitem" data-category="soon marketing career" aria-labelledby="c2-title">
+          <img src="1000741259.jpg" alt="Students learning digital marketing on laptops" class="course-card-img" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="course-card-img-placeholder" style="display:none" aria-hidden="true">📱</div>
+          <div class="course-card-body">
+            <span class="course-status-badge soon">🔶 Launching Soon — Pre-Register</span>
+            <h3 class="course-card-title" id="c2-title">Complete Digital Marketing — From Zero to Income</h3>
+            <p class="course-card-tagline">India's fastest-growing career field. Learn it. Earn from it.</p>
+            <div class="course-meta-row">
+              <span class="course-meta-chip"><span>⏱</span> 4 Months</span>
+              <span class="course-meta-chip"><span>💰</span> ₹4,000</span>
+              <span class="course-meta-chip"><span>🌐</span> Online/Offline/Hybrid</span>
+              <span class="course-meta-chip"><span>📋</span> 3 Portfolio Projects</span>
+            </div>
+            <p class="course-card-desc">This 4-month programme teaches you to run real campaigns, grow real audiences, and earn real income. Built for everyone: job seekers, freelancers, entrepreneurs, and persons with disabilities.</p>
+            <ul class="course-learn-list">
+              <li>Social Media Marketing — Instagram, Facebook, content strategy</li>
+              <li>SEO — keyword research, on-page and off-page optimisation</li>
+              <li>Google Ads &amp; Meta Ads — running paid campaigns</li>
+              <li>Email marketing, analytics, and complete freelancer portfolio</li>
+            </ul>
+            <div class="course-accordion" id="acc-c2">
+              <button class="course-accordion-btn" aria-expanded="false" aria-controls="acc-c2-body" onclick="toggleAccordion(this)">Full 8-Module Curriculum</button>
+              <div class="course-accordion-content" id="acc-c2-body">
+                <h4>8 Modules — 160 Hours</h4>
+                <ul>
+                  <li>Module 1: Digital Marketing Foundations &amp; Customer Journey</li>
+                  <li>Module 2: Social Media Marketing — organic growth strategies</li>
+                  <li>Module 3: SEO — keyword research, on-page &amp; off-page</li>
+                  <li>Module 4: Content Marketing — writing, video, graphics</li>
+                  <li>Module 5: Paid Advertising — Google Ads &amp; Meta Ads</li>
+                  <li>Module 6: Email Marketing &amp; Marketing Automation</li>
+                  <li>Module 7: Analytics — GA4, Meta Insights, reporting</li>
+                  <li>Module 8: Freelancing &amp; Client Management</li>
+                </ul>
+                <h4>Fee Includes</h4>
+                <ul>
+                  <li>8 module workbooks, 3 project guides, student handbook</li>
+                  <li>Complete digital marketing ebook + 3 months post-course support</li>
+                  <li>YugPrerna Certificate of Completion</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="course-card-footer">
+            <a href="#enrol" class="btn-course-enrol">Pre-Register Now</a>
+            <a href="#enrol" class="btn-course-more">Download Syllabus</a>
+          </div>
+        </article>
+
+        <!-- ── CARD 3: Google Workspace ── -->
+        <article class="course-card" role="listitem" data-category="soon tech" aria-labelledby="c3-title">
+          <img src="1000741260.jpg" alt="Person using Google Workspace on a laptop" class="course-card-img" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="course-card-img-placeholder" style="display:none" aria-hidden="true">📧</div>
+          <div class="course-card-body">
+            <span class="course-status-badge soon">🔶 Launching Soon</span>
+            <h3 class="course-card-title" id="c3-title">Google Workspace Mastery — Gmail, Drive, Docs &amp; Sheets</h3>
+            <p class="course-card-tagline">The tools the whole world uses. Master them in just one month.</p>
+            <div class="course-meta-row">
+              <span class="course-meta-chip"><span>⏱</span> 1 Month</span>
+              <span class="course-meta-chip"><span>💰</span> ₹1,000</span>
+              <span class="course-meta-chip"><span>🌐</span> Online/Offline</span>
+              <span class="course-meta-chip"><span>📖</span> NVDA &amp; JAWS</span>
+            </div>
+            <p class="course-card-desc">Gmail. Google Drive. Google Docs. Google Sheets. In one focused month, you will stop being afraid of them and start using them like a professional — whether you are sighted or visually impaired.</p>
+            <ul class="course-learn-list">
+              <li>Gmail — professional email, filters, shortcuts, keyboard navigation</li>
+              <li>Google Drive — cloud storage, sharing permissions, collaboration</li>
+              <li>Google Docs — document creation, voice typing, collaborative editing</li>
+              <li>Google Sheets — formulas, charts, personal finance tracker</li>
+            </ul>
+          </div>
+          <div class="course-card-footer">
+            <a href="#enrol" class="btn-course-enrol">Pre-Register Now</a>
+            <a href="contact.html" class="btn-course-more">Enquire</a>
+          </div>
+        </article>
+
+        <!-- ── CARD 4: PowerPoint ── -->
+        <article class="course-card" role="listitem" data-category="soon tech career" aria-labelledby="c4-title">
+          <img src="1000741262.jpg" alt="Student creating a presentation on a computer" class="course-card-img" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="course-card-img-placeholder" style="display:none" aria-hidden="true">🖼️</div>
+          <div class="course-card-body">
+            <span class="course-status-badge soon">🔶 Launching Soon</span>
+            <h3 class="course-card-title" id="c4-title">PowerPoint &amp; Presentation Skills — Speak Your Ideas with Confidence</h3>
+            <p class="course-card-tagline">Great ideas deserve great presentations. Learn to build both.</p>
+            <div class="course-meta-row">
+              <span class="course-meta-chip"><span>⏱</span> 1 Month</span>
+              <span class="course-meta-chip"><span>💰</span> ₹1,500</span>
+              <span class="course-meta-chip"><span>🌐</span> Online/Offline</span>
+            </div>
+            <p class="course-card-desc">Whether you are a student, job seeker, or professional — the ability to build a clear, compelling PowerPoint is a skill that will serve you for life. This course teaches design, narration, and delivery.</p>
+            <ul class="course-learn-list">
+              <li>Week 1: Slide layouts, themes, text, accessibility basics</li>
+              <li>Week 2: Design &amp; visuals — images, SmartArt, charts</li>
+              <li>Week 3: Animations, transitions, Slide Master, audio/video</li>
+              <li>Week 4: Storytelling, public speaking basics, final project</li>
+            </ul>
+          </div>
+          <div class="course-card-footer">
+            <a href="#enrol" class="btn-course-enrol">Pre-Register Now</a>
+            <a href="contact.html" class="btn-course-more">Enquire</a>
+          </div>
+        </article>
+
+        <!-- ── CARD 5: Power BI ── -->
+        <article class="course-card" role="listitem" data-category="soon tech" aria-labelledby="c5-title">
+          <img src="1000741263.jpg" alt="Data analytics dashboard on a computer screen" class="course-card-img" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="course-card-img-placeholder" style="display:none" aria-hidden="true">📊</div>
+          <div class="course-card-body">
+            <span class="course-status-badge soon">🔶 Launching Soon</span>
+            <h3 class="course-card-title" id="c5-title">Power BI &amp; Data Analytics — The Skill That Pays in 2025 and Beyond</h3>
+            <p class="course-card-tagline">Data is the new language of business. This course makes you fluent.</p>
+            <div class="course-meta-row">
+              <span class="course-meta-chip"><span>⏱</span> 4 Months</span>
+              <span class="course-meta-chip"><span>💰</span> ₹5,000 Live / ₹3,000 Recorded</span>
+              <span class="course-meta-chip"><span>🌐</span> Online/Hybrid</span>
+            </div>
+            <p class="course-card-desc">Power BI is Microsoft's data visualisation platform used by companies worldwide. This course builds you from beginner to job-ready in 4 months, with real datasets and real dashboards.</p>
+            <ul class="course-learn-list">
+              <li>Excel Advanced — foundation of every data role</li>
+              <li>Power BI Desktop — connecting and transforming data</li>
+              <li>Building interactive dashboards and visual reports</li>
+              <li>DAX basics — formulas that make data speak</li>
+            </ul>
+            <div class="course-accordion" id="acc-c5">
+              <button class="course-accordion-btn" aria-expanded="false" aria-controls="acc-c5-body" onclick="toggleAccordion(this)">Career Outcomes &amp; Salary Potential</button>
+              <div class="course-accordion-content" id="acc-c5-body">
+                <h4>Career Outcomes</h4>
+                <ul>
+                  <li>Data Analyst — ₹25,000–₹50,000/month starting salary</li>
+                  <li>Business Intelligence Analyst — corporate and consulting roles</li>
+                  <li>Freelance Data Dashboard Creator</li>
+                  <li>MIS Executive in any mid-to-large company</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="course-card-footer">
+            <a href="#enrol" class="btn-course-enrol">Pre-Register Now</a>
+            <a href="contact.html" class="btn-course-more">Enquire</a>
+          </div>
+        </article>
+
+        <!-- ── CARD 6: Freelancing ── -->
+        <article class="course-card" role="listitem" data-category="soon career" aria-labelledby="c6-title">
+          <img src="1000741264.jpg" alt="Person working on a freelancing project on a laptop" class="course-card-img" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="course-card-img-placeholder" style="display:none" aria-hidden="true">💼</div>
+          <div class="course-card-body">
+            <span class="course-status-badge soon">🔶 Launching Soon</span>
+            <h3 class="course-card-title" id="c6-title">Freelancing Foundations — Build Your Income from Your Skills</h3>
+            <p class="course-card-tagline">You already have something valuable. Freelancing teaches you to sell it.</p>
+            <div class="course-meta-row">
+              <span class="course-meta-chip"><span>⏱</span> 1 Month</span>
+              <span class="course-meta-chip"><span>💰</span> ₹500 Live / ₹300 Recorded</span>
+              <span class="course-meta-chip"><span>🌐</span> Online/Offline</span>
+            </div>
+            <p class="course-card-desc">For millions of people with disabilities, homemakers, and youth in smaller cities — freelancing is the most direct path to financial independence. This course shows you exactly how to start.</p>
+            <ul class="course-learn-list">
+              <li>Setting up professional profiles on Fiverr, Upwork, Internshala &amp; LinkedIn</li>
+              <li>Writing a proposal that wins — structure, language, confidence</li>
+              <li>Pricing your work: how not to undercharge or overcharge</li>
+              <li>Building a portfolio when you have no prior clients</li>
+            </ul>
+          </div>
+          <div class="course-card-footer">
+            <a href="#enrol" class="btn-course-enrol">Pre-Register Now</a>
+            <a href="contact.html" class="btn-course-more">Enquire</a>
+          </div>
+        </article>
+
+        <!-- ── CARD 7: Cyber Safety ── -->
+        <article class="course-card" role="listitem" data-category="soon tech" aria-labelledby="c7-title">
+          <img src="1000741265.jpg" alt="Person learning about internet safety on a laptop" class="course-card-img" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="course-card-img-placeholder" style="display:none" aria-hidden="true">🔒</div>
+          <div class="course-card-body">
+            <span class="course-status-badge soon">🔶 Launching Soon</span>
+            <h3 class="course-card-title" id="c7-title">Internet Safety &amp; Cyber Literacy — Stay Smart, Stay Safe Online</h3>
+            <p class="course-card-tagline">The internet is powerful. So is knowing how to stay safe on it.</p>
+            <div class="course-meta-row">
+              <span class="course-meta-chip"><span>⏱</span> 2 Months</span>
+              <span class="course-meta-chip"><span>💰</span> ₹2,000 Live / ₹1,200 Recorded</span>
+              <span class="course-meta-chip"><span>🌐</span> Online/Offline</span>
+            </div>
+            <p class="course-card-desc">Every day, thousands of Indians are targeted by cyber fraud and phishing. This course is not optional anymore — it is essential. Learn to use the internet with confidence and protect yourself and your family.</p>
+            <ul class="course-learn-list">
+              <li>Recognising phishing, scams, and fake websites</li>
+              <li>Password safety and strong password management</li>
+              <li>Social media privacy settings and safe browsing habits</li>
+              <li>What to do if you are scammed — reporting, recovery, helplines</li>
+            </ul>
+          </div>
+          <div class="course-card-footer">
+            <a href="#enrol" class="btn-course-enrol">Pre-Register Now</a>
+            <a href="contact.html" class="btn-course-more">Enquire</a>
+          </div>
+        </article>
+
+        <!-- ── CARD 8: Interview Prep ── -->
+        <article class="course-card" role="listitem" data-category="soon career" aria-labelledby="c8-title">
+          <img src="1000741266.jpg" alt="A job interview preparation session" class="course-card-img" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="course-card-img-placeholder" style="display:none" aria-hidden="true">🤝</div>
+          <div class="course-card-body">
+            <span class="course-status-badge soon">🔶 Launching Soon</span>
+            <h3 class="course-card-title" id="c8-title">Interview Prep &amp; Resume Building — Get the Job You Deserve</h3>
+            <p class="course-card-tagline">Skills get shortlisted. Preparation gets hired.</p>
+            <div class="course-meta-row">
+              <span class="course-meta-chip"><span>⏱</span> 1–2 Months</span>
+              <span class="course-meta-chip"><span>💰</span> From ₹200</span>
+              <span class="course-meta-chip"><span>🌐</span> Online/Offline</span>
+            </div>
+            <p class="course-card-desc">Thousands of qualified candidates — especially persons with disabilities — lose opportunities not because they lack skills, but because they do not know how to present themselves. This course closes that gap.</p>
+            <ul class="course-learn-list">
+              <li>Resume Writing — structure, design, tailoring for specific jobs</li>
+              <li>Cover Letter Writing — make a recruiter want to meet you</li>
+              <li>Disability Disclosure — your rights, when &amp; how to disclose</li>
+              <li>Mock Interview Practice with real-time feedback</li>
+            </ul>
+          </div>
+          <div class="course-card-footer">
+            <a href="#enrol" class="btn-course-enrol">Pre-Register Now</a>
+            <a href="contact.html" class="btn-course-more">Enquire</a>
+          </div>
+        </article>
+
+      </div><!-- /courses-grid -->
+    </div>
+  </section>
+
+  <!-- ══ ACCESSIBILITY PROMISE ══ -->
+  <section class="a11y-promise" aria-labelledby="a11y-promise-heading">
+    <div class="container">
+      <p class="section-label">Our Commitment</p>
+      <h2 class="section-title" id="a11y-promise-heading">♿ Our Accessibility Promise — No Learner Left Behind</h2>
+      <p class="section-sub">At YugPrerna Welfare Foundation, accessibility is not an afterthought — it is how we build everything from the beginning. Every course, every material, and every form has been designed to work for every learner, regardless of disability.</p>
+      <div class="a11y-promise-grid">
+        <div class="a11y-promise-card">
+          <span class="a11y-promise-icon" aria-hidden="true">🖥️</span>
+          <h4>Screen Reader Ready</h4>
+          <p>All course materials and web content are fully compatible with NVDA, JAWS, and VoiceOver screen readers.</p>
+        </div>
+        <div class="a11y-promise-card">
+          <span class="a11y-promise-icon" aria-hidden="true">⌨️</span>
+          <h4>Keyboard-Only Navigation</h4>
+          <p>Every page, form, and interactive element can be operated without a mouse — essential for VI and motor-impaired learners.</p>
+        </div>
+        <div class="a11y-promise-card">
+          <span class="a11y-promise-icon" aria-hidden="true">📽️</span>
+          <h4>Captioned Videos</h4>
+          <p>All training videos have accurate captions and full transcripts available for download.</p>
+        </div>
+        <div class="a11y-promise-card">
+          <span class="a11y-promise-icon" aria-hidden="true">🔤</span>
+          <h4>Large Print &amp; Audio</h4>
+          <p>Every study material is available in large print (16pt minimum) and audio format on request.</p>
+        </div>
+        <div class="a11y-promise-card">
+          <span class="a11y-promise-icon" aria-hidden="true">⏱️</span>
+          <h4>No Timed Tasks</h4>
+          <p>We do not believe in time pressure. Every learner completes assessments at their own pace.</p>
+        </div>
+        <div class="a11y-promise-card">
+          <span class="a11y-promise-icon" aria-hidden="true">🗣️</span>
+          <h4>Hindi Language Support</h4>
+          <p>Full Hindi (and Marathi) language support available across all programmes for regional learners.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ENROLMENT FORM ══ -->
+  <section class="enrol-section" id="enrol" aria-labelledby="enrol-heading">
+    <div class="container">
+      <p class="section-label">Enrol or Enquire</p>
+      <h2 class="section-title" id="enrol-heading">Take the First Step</h2>
+      <p class="section-sub" style="margin-bottom:2rem;">Fill in this short form and our team will reach out within 2 working days with batch dates, fee details, and answers to all your questions. There is no obligation to enrol — just let us know you are interested.</p>
+
+      <form class="enrol-form" id="enrolForm" novalidate aria-label="Course enrolment enquiry form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="enrol-name">Full Name <span aria-label="required">*</span></label>
+            <input type="text" id="enrol-name" name="fullName" required autocomplete="name" placeholder="Your full name" aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="enrol-email">Email Address <span aria-label="required">*</span></label>
+            <input type="email" id="enrol-email" name="email" required autocomplete="email" placeholder="your@email.com" aria-required="true">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="enrol-phone">Mobile Number <span aria-label="required">*</span></label>
+            <input type="tel" id="enrol-phone" name="phone" required autocomplete="tel" placeholder="+91-XXXXX-XXXXX" aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="enrol-city">City / District <span aria-label="required">*</span></label>
+            <input type="text" id="enrol-city" name="city" required placeholder="e.g. Aurangabad" aria-required="true">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="enrol-programme">Programme of Interest <span aria-label="required">*</span></label>
+          <select id="enrol-programme" name="programme" required aria-required="true">
+            <option value="">— Select a programme —</option>
+            <option value="comp-literacy">Computer Literacy for Visually Impaired (LIVE NOW)</option>
+            <option value="digital-marketing">Complete Digital Marketing — 4 Months</option>
+            <option value="google-workspace">Google Workspace Mastery — 1 Month</option>
+            <option value="powerpoint">PowerPoint &amp; Presentation Skills — 1 Month</option>
+            <option value="power-bi">Power BI &amp; Data Analytics — 4 Months</option>
+            <option value="freelancing">Freelancing Foundations — 1 Month</option>
+            <option value="cyber-safety">Internet Safety &amp; Cyber Literacy — 2 Months</option>
+            <option value="interview-prep">Interview Prep &amp; Resume Building — 1–2 Months</option>
+            <option value="not-sure">Not Sure Yet — Help Me Choose</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="enrol-mode">Preferred Mode <span aria-label="required">*</span></label>
+            <select id="enrol-mode" name="mode" required aria-required="true">
+              <option value="">— Select mode —</option>
+              <option value="online">Online</option>
+              <option value="offline">Offline</option>
+              <option value="hybrid">Hybrid</option>
+              <option value="not-sure">Not Sure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="isPwd">Are you a Person with Disability?</label>
+            <select id="isPwd" name="isPwd">
+              <option value="">— Please select —</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="prefer-not">Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" id="disabilityTypeWrap" style="display:none;">
+          <label for="disabilityType">Type of Disability</label>
+          <select id="disabilityType" name="disabilityType">
+            <option value="">— Select —</option>
+            <option value="visual">Visual Impairment</option>
+            <option value="orthopaedic">Orthopaedic / Locomotor</option>
+            <option value="hearing">Hearing Impairment</option>
+            <option value="speech">Speech Impairment</option>
+            <option value="cognitive">Cognitive / Intellectual</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="enrol-message">Message / Questions (Optional)</label>
+          <textarea id="enrol-message" name="message" placeholder="Type any questions or special requirements here" rows="4"></textarea>
+        </div>
+        <div>
+          <button type="submit" class="btn-submit" id="enrolSubmitBtn" aria-label="Submit course enquiry form">Submit Enquiry →</button>
+          <div id="enrol-status" hidden aria-live="polite" class="form-status"></div>
+        </div>
+        <p class="enrol-privacy" role="note">
+          🔒 <strong>Your information is confidential.</strong> YugPrerna Welfare Foundation will never share your personal details with third parties. Your contact details will only be used to respond to this enquiry and share programme updates with your consent. You may unsubscribe at any time.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ══ FAQ ══ -->
+  <section class="section section-alt" aria-labelledby="faq-heading">
+    <div class="container">
+      <p class="section-label">Frequently Asked Questions</p>
+      <h2 class="section-title" id="faq-heading">Your Questions, Answered</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false" aria-controls="faq1-a" onclick="toggleFaq(this)">Do I need any prior experience to join a course?</button>
+          <div class="faq-a" id="faq1-a">No prior experience is needed for any of our courses — especially the Computer Literacy programme, which starts from complete beginner level. We teach from scratch, at a pace that works for every learner.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false" aria-controls="faq2-a" onclick="toggleFaq(this)">Are the courses accessible for visually impaired learners?</button>
+          <div class="faq-a" id="faq2-a">Yes — every course at YugPrerna is designed with accessibility as the first priority. All content is compatible with NVDA, JAWS, and VoiceOver screen readers. The Computer Literacy course is specifically built for visually impaired learners using keyboard-only navigation.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false" aria-controls="faq3-a" onclick="toggleFaq(this)">Will I receive a certificate after completing a course?</button>
+          <div class="faq-a" id="faq3-a">Yes. Every learner who successfully completes a YugPrerna course receives a Certificate of Completion issued by YugPrerna Welfare Foundation — a registered Section 8 nonprofit.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false" aria-controls="faq4-a" onclick="toggleFaq(this)">Can I attend classes in Hindi or Marathi?</button>
+          <div class="faq-a" id="faq4-a">Yes. Most of our courses offer full support in Hindi and Marathi. The Computer Literacy, Google Workspace, and Freelancing courses specifically include Hindi-medium instruction. Please mention your language preference in the enquiry form.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false" aria-controls="faq5-a" onclick="toggleFaq(this)">What is the fee structure? Are there any concessions?</button>
+          <div class="faq-a" id="faq5-a">Each course has its own fee (from ₹200 to ₹5,000). The Computer Literacy course for visually impaired learners is subsidised — please contact us directly for current fees. We also offer concessions for persons with disabilities and candidates from low-income backgrounds.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false" aria-controls="faq6-a" onclick="toggleFaq(this)">When do the Launching Soon courses start?</button>
+          <div class="faq-a" id="faq6-a">Batch dates for upcoming programmes will be announced on our website and social media channels. Pre-register now to be the first to know and to secure your seat at the launch price.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA STRIP ══ -->
+  <section style="background:var(--amber-pale);border-top:2px solid var(--amber);border-bottom:2px solid var(--emerald);padding:3rem clamp(1.25rem,5vw,5rem);text-align:center;" aria-labelledby="courses-cta-h">
+    <div class="container">
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.375rem,3vw,2rem);color:var(--text-pearl);margin-bottom:0.875rem;" id="courses-cta-h">Ready to Begin Your Learning Journey?</h2>
+      <p style="color:var(--text-silver);font-size:1.0625rem;line-height:1.8;max-width:36rem;margin:0 auto 1.75rem;">Every skill you learn here is a door that opens — to employment, to independence, to a better life. Your journey begins with one step.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="#enrol" class="btn-primary">Enrol or Enquire Now →</a>
+        <a href="contact.html" class="btn-outline" style="border-color:var(--emerald);color:var(--emerald);">Contact Our Team</a>
+        <a href="donation.html" class="btn-outline">Support a Learner ♥</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer" id="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>YugPrerna Welfare Foundation</h3>
+        <div class="footer-tagline">✦ The Era Of Inspiration</div>
+        <p>Empowering Expertise. Enabling Inclusion. Strengthening Impact.<br>A registered Section 8 nonprofit driving scalable social change across India.</p>
+        <p class="footer-cin">
+          CIN: U88900PN2025NPL242135 | Section 8 Licence No.: 168801<br>
+          80G Certified | 12A Certified | NITI Aayog | CSR-1<br>
+          Sr No-94, Rajiv Gandhi Colony, Tarawade Wasti,<br>
+          Mohamadwadi, Pune 411060, Maharashtra, India
+        </p>
+        <div class="footer-social" aria-label="Social media links" style="margin-top:1rem;">
+          <a href="https://in.linkedin.com/in/yugprerna-welfare-foundation-6ba2b7402" target="_blank" rel="noopener noreferrer" class="linkedin" aria-label="YugPrerna on LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://youtube.com/@yugprernawelfarefoundation?si=TmQzUNUYBClgiJBA" target="_blank" rel="noopener noreferrer" class="youtube" aria-label="YugPrerna on YouTube">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/yugprerna_welfare_foundation_?utm_source=qr&igsh=MXZpOHVkeDhid29mdg==" target="_blank" rel="noopener noreferrer" class="instagram" aria-label="YugPrerna on Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://wa.me/919420063351" target="_blank" rel="noopener noreferrer" class="whatsapp" aria-label="Contact on WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/share/1CWrEbNXn8/" target="_blank" rel="noopener noreferrer" class="facebook" aria-label="YugPrerna on Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="projects.html">Programs</a>
+        <a href="courses.html">Our Courses</a>
+        <a href="donation.html">Donate</a>
+        <a href="blogs.html">Blog</a>
+        <a href="sitemap.html">Site Map</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="mailto:yugprernawelfarefoundation@gmail.com">Partnerships</a>
+        <a href="mailto:yugprernawelfarefoundation@gmail.com">General Enquiry</a>
+        <a href="tel:+919834780805">+91 98347 80805</a>
+        <a href="tel:+919420063351">+91 94200 63351</a>
+        <a href="contact.html">Volunteer</a>
+        <a href="donation.html">Donate</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 YugPrerna Welfare Foundation. All rights reserved.</span>
+      <a href="mailto:yugprernawelfarefoundation@gmail.com">yugprernawelfarefoundation@gmail.com</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Accordion toggle
+function toggleAccordion(btn) {
+  const content = document.getElementById(btn.getAttribute('aria-controls'));
+  const isOpen = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', String(!isOpen));
+  content.classList.toggle('open', !isOpen);
+}
+// FAQ toggle
+function toggleFaq(btn) {
+  const content = document.getElementById(btn.getAttribute('aria-controls'));
+  const isOpen = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', String(!isOpen));
+  content.classList.toggle('open', !isOpen);
+}
+</script>
+<script src="js/main.js"></script>
+</body>
+</html>

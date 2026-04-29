@@ -9,23 +9,106 @@
 </head>
 <body>
 
-<button class="contrast-toggle" id="contrastToggle" aria-pressed="false" aria-label="Toggle high contrast mode">◑ High Contrast</button>
+<!-- ══ ACCESSIBILITY PANEL ══ -->
+<button class="a11y-toggle-btn" id="a11yToggleBtn" aria-expanded="false" aria-controls="a11yPanel" aria-label="Open Accessibility Options">
+  <span class="a11y-fab-icon">⚙</span>
+  Accessibility Options
+</button>
+<div class="a11y-panel" id="a11yPanel" role="region" aria-label="Accessibility preferences">
+  <div class="a11y-panel-title">⚙ Accessibility Options</div>
+  <button class="a11y-btn" id="btnHC" aria-pressed="false" aria-label="Toggle high contrast mode"><span class="a11y-btn-icon">◑</span> High Contrast</button>
+  <button class="a11y-btn" id="btnLT" aria-pressed="false" aria-label="Toggle large text"><span class="a11y-btn-icon">A+</span> Large Text</button>
+  <button class="a11y-btn" id="btnDX" aria-pressed="false" aria-label="Toggle dyslexia-friendly font"><span class="a11y-btn-icon">Aa</span> Dyslexia Font</button>
+  <button class="a11y-btn" id="btnRM" aria-pressed="false" aria-label="Toggle reading mode"><span class="a11y-btn-icon">¶</span> Reading Mode</button>
+  <hr class="a11y-divider">
+  <span class="a11y-section-label">Jump to section</span>
+  <a class="a11y-skip-link-btn" href="#site-nav">↑ Navigation</a>
+  <a class="a11y-skip-link-btn" href="#main-content">→ Main Content</a>
+  <a class="a11y-skip-link-btn" href="#site-footer">↓ Footer</a>
+  <hr class="a11y-divider">
+  <span class="a11y-section-label">Language</span>
+  <select class="a11y-lang-select" id="langSelect" aria-label="Select language">
+    <option value="en">English</option>
+    <option value="hi">हिन्दी (Hindi)</option>
+    <option value="mr">मराठी (Marathi)</option>
+  </select>
+</div>
+<button class="a11y-mobile-fab" id="a11yMobileFab" aria-expanded="false" aria-controls="a11yPanel" aria-label="Open Accessibility Options">
+  <span>⚙</span> Accessibility
+</button>
 
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<nav class="site-nav" aria-label="Main navigation">
-  <a href="index.html" class="nav-logo">
+<!-- ══ SKIP LINKS ══ -->
+<div class="skip-links">
+  <a class="skip-link" href="#site-nav">Skip to navigation</a>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#site-footer">Skip to footer</a>
+</div>
+
+<div class="skip-links">
+  <a class="skip-link" href="#site-nav">Skip to navigation</a>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#site-footer">Skip to footer</a>
+</div>
+
+
+<div class="skip-links">
+  <a class="skip-link" href="#site-nav">Skip to navigation</a>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#site-footer">Skip to footer</a>
+</div>
+
+<nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="index.html" class="nav-logo" aria-label="YugPrerna Welfare Foundation — Home">
     <span class="nav-logo-mark-wrap">
       <img src="logo.jpg" alt="YugPrerna Welfare Foundation logo" class="nav-logo-mark">
-      <span class="nav-logo-fallback" aria-hidden="true">Y</span>
     </span>
-    <div><div class="nav-logo-text">YugPrerna</div><div class="nav-logo-sub">Welfare Foundation</div></div>
+    <div>
+      <div class="nav-logo-text">YugPrerna</div>
+      <div class="nav-logo-sub">Welfare Foundation</div>
+      <div class="nav-tagline">✦ The Era Of Inspiration</div>
+    </div>
   </a>
   <div class="nav-links" id="navLinks">
     <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="projects.html">Programs</a>
+    <a href="about.html">About Us</a>
+    <div class="nav-dropdown">
+      <a href="projects.html" aria-haspopup="true" aria-expanded="false">Programs</a>
+      <div class="nav-dropdown-menu" role="menu">
+        <a href="projects.html#sitdp" role="menuitem">
+          <span class="dd-icon">🏛️</span>
+          <span class="dd-text">
+            <span class="dd-title">SITDP</span>
+            <span class="dd-sub">Structured Internship &amp; Talent Development</span>
+          </span>
+        </a>
+        <a href="projects.html#sip" role="menuitem">
+          <span class="dd-icon">☀️</span>
+          <span class="dd-text">
+            <span class="dd-title">Summer Internship 2026</span>
+            <span class="dd-sub">45-day hybrid · 6 domains · Open now</span>
+          </span>
+        </a>
+        <a href="projects.html#vep" role="menuitem">
+          <span class="dd-icon">🤝</span>
+          <span class="dd-text">
+            <span class="dd-title">Volunteer Ecosystem (VEP/YNVEC)</span>
+            <span class="dd-sub">4-tier national volunteer corps</span>
+          </span>
+        </a>
+        <a href="projects.html" role="menuitem">
+          <span class="dd-icon">📋</span>
+          <span class="dd-text">
+            <span class="dd-title">All Programs</span>
+            <span class="dd-sub">View complete program portfolio</span>
+          </span>
+        </a>
+      </div>
+    </div>
+    <a href="courses.html">Our Courses</a>
+    <a href="donation.html">Donate</a>
     <a href="blogs.html">Blog</a>
-    <a href="contact.html" class="active" aria-current="page">Contact</a>
+    <a href="sitemap.html">Site Map</a>
+    <a href="contact.html" class="active" aria-current="page">Contact Us</a>
     <a href="contact.html#partner" class="btn-partner">Partner With Us</a>
   </div>
   <button class="nav-hamburger" type="button" aria-label="Open navigation menu" aria-controls="navLinks" aria-expanded="false">
@@ -102,10 +185,10 @@
           <div style="margin-top: 24px; padding: 20px; background: #EEF5EC; border-radius: 12px; border: 1px solid #C3DCC0; border-left: 3px solid var(--sage-light);">
             <h3 style="font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Partner Engagement Models</h3>
             <ul style="list-style: disc; padding-left: 18px; font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; gap: 8px;">
-              <li><strong style="color: var(--text-mid);">Funded programs</strong>: Project-based CSR grants with defined deliverables</li>
-              <li><strong style="color: var(--text-mid);">Employee volunteering</strong>: Structured time-bound mentoring and workshops</li>
-              <li><strong style="color: var(--text-mid);">Co-design partnerships</strong>: Joint program design aligned to CSR priorities</li>
-              <li><strong style="color: var(--text-mid);">Procurement linkages</strong>: Connecting beneficiaries to corporate supply chains</li>
+              <li><strong style="color: var(--text-silver);">Funded programs</strong>: Project-based CSR grants with defined deliverables</li>
+              <li><strong style="color: var(--text-silver);">Employee volunteering</strong>: Structured time-bound mentoring and workshops</li>
+              <li><strong style="color: var(--text-silver);">Co-design partnerships</strong>: Joint program design aligned to CSR priorities</li>
+              <li><strong style="color: var(--text-silver);">Procurement linkages</strong>: Connecting beneficiaries to corporate supply chains</li>
             </ul>
           </div>
         </div>
@@ -153,7 +236,7 @@
     </div>
   </section>
 
-  <section class="section" style="background: var(--warm-white); padding-top: 0;" aria-labelledby="csr-cta-heading">
+  <section class="section" style="background: var(--bg-section); padding-top: 0;" aria-labelledby="csr-cta-heading">
     <div class="container">
       <div style="background: linear-gradient(135deg, var(--earth), #3D1A08); border-radius: 20px; padding: 40px; color: #fff; text-align: center;">
         <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 14px;" id="csr-cta-heading">Ready to Co-Design Impactful Programs?</h2>
@@ -167,11 +250,19 @@
 
 </main>
 
-<footer class="site-footer" role="contentinfo">
+<footer class="site-footer" id="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-grid">
-      <div class="footer-brand">
+            <div class="footer-brand">
         <h3>YugPrerna Welfare Foundation</h3>
+        <div class="footer-tagline">✦ The Era Of Inspiration</div>
+        <p>Empowering Expertise. Enabling Inclusion. Strengthening Impact.<br>A registered Section 8 nonprofit driving scalable social change across India.</p>
+        <p class="footer-cin">
+          CIN: U88900PN2025NPL242135 | Section 8 Licence No.: 168801<br>
+          80G Certified | 12A Certified | NITI Aayog | CSR-1<br>
+          Sr No-94, Rajiv Gandhi Colony, Tarawade Wasti,<br>
+          Mohamadwadi, Pune 411060, Maharashtra, India
+        </p>
         <p>Empowering Expertise. Enabling Inclusion. Strengthening Impact.</p>
         <p class="footer-cin">CIN: U88900PN2025NPL242135<br>Section 8 Licence No.: 168801<br>Sr No-94, Rajiv Gandhi Colony, Pune 411060</p>
       </div>
@@ -181,13 +272,17 @@
         <a href="about.html">About Us</a>
         <a href="projects.html">Programs</a>
         <a href="blogs.html">Blog</a>
-        <a href="contact.html">Contact</a>
+        <a href="contact.html">Contact Us</a>
       </div>
       <div class="footer-col">
         <h4>Connect</h4>
         <a href="mailto:yugprernawelfarefoundation@gmail.com">Partnerships</a>
         <a href="mailto:yugprernawelfarefoundation@gmail.com">General Enquiry</a>
-        <a href="https://in.linkedin.com/in/yugprerna-welfare-foundation-6ba2b7402" target="_blank" rel="noopener" aria-label="LinkedIn profile (opens in a new tab)">LinkedIn</a>
+        <a href="tel:+919834780805">+91 98347 80805</a>
+        <a href="https://in.linkedin.com/in/yugprerna-welfare-foundation-6ba2b7402" target="_blank" rel="noopener" aria-label="LinkedIn (opens in new tab)">LinkedIn ↗</a>
+        <a href="https://youtube.com/@yugprernawelfarefoundation" target="_blank" rel="noopener" aria-label="YouTube (opens in new tab)">YouTube ↗</a>
+        <a href="https://www.instagram.com/yugprerna_welfare_foundation_" target="_blank" rel="noopener" aria-label="Instagram (opens in new tab)">Instagram ↗</a>
+        <a href="contact.html">Volunteer</a>
       </div>
     </div>
     <div class="footer-bottom">
