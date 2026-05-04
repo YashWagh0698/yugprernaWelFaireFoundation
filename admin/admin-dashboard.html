@@ -3,628 +3,1180 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Dashboard — YugPrerna Admin</title>
-=======
-  <title>Admin Dashboard - YugPrerna</title>
+  <meta name="description" content="YugPrerna Welfare Foundation admin dashboard for managing content and messages.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
+    /* ══════════════════════════════════════════════
+       DESIGN TOKENS — matches public site palette
+    ══════════════════════════════════════════════ */
     :root {
-
-      --saffron: #E8621A;
-      --saffron-light: #F5874A;
-      --saffron-pale: #FDF0E8;
-      --earth: #7A3B1E;
-      --earth-mid: #B05A2F;
-      --sage: #4A6741;
-      --cream: #FAF7F2;
-      --warm-white: #FFFDF9;
-      --text-dark: #1C1008;
-      --text-mid: #4A3728;
-      --text-muted: #8B6F5E;
-      --border: #E8D5C4;
-      --success: #2D7D46;
-      --warning: #A05C00;
-      --info: #1A5276;
+      --bg-base:       #0D2B2E;
+      --bg-section:    #1A3A3E;
+      --bg-nav:        #091E21;
+      --bg-card:       #1A3A3E;
+      --bg-card-hover: #2A4D52;
+      --bg-input:      #112428;
+      --text-pearl:    #F0F9FA;
+      --text-silver:   #B2D8DC;
+      --text-muted:    #7BABB0;
+      --amber:         #E8611A;
+      --amber-hover:   #F47B35;
+      --amber-pale:    rgba(232,97,26,0.12);
+      --emerald:       #2DD4BF;
+      --emerald-pale:  rgba(45,212,191,0.12);
+      --sky:           #5EEAD4;
+      --violet:        #A78BFA;
+      --border:        #2A5A5E;
+      --focus-ring:    #E8611A;
+      --radius-sm:     0.5rem;
+      --radius-md:     0.875rem;
+      --radius-lg:     1.25rem;
+      --shadow-card:   0 0.75rem 2rem rgba(0,0,0,0.4);
+      --shadow-hover:  0 1.25rem 3rem rgba(0,0,0,0.55);
+      --sidebar-w:     240px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; }
 
-    /* ── TOP BAR ── */
-    .admin-bar {
-      background: var(--earth); color: #fff;
-      padding: 0 24px; height: 56px;
-      display: flex; align-items: center; justify-content: space-between;
+    /* ══════════════════════════════════════════════
+       RESET & BASE
+    ══════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-pearl);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--sky); text-decoration: underline; }
+    a:hover { color: var(--amber); }
+
+    /* ── Focus ring — all interactive elements ── */
+    :focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ── Skip links ── */
+    .skip-links { position: absolute; top: 0; left: 0; z-index: 10000; }
+    .skip-link {
+      position: absolute; left: -999px; top: auto;
+      width: 1px; height: 1px; overflow: hidden;
+      font-size: 0.875rem; font-weight: 700;
+    }
+    .skip-link:focus {
+      left: 1rem; top: 1rem; width: auto; height: auto;
+      padding: 0.75rem 1.25rem;
+      background: var(--amber); color: #fff;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      outline: 3px solid #fff;
+    }
+
+    /* ══════════════════════════════════════════════
+       TOP BAR
+    ══════════════════════════════════════════════ */
+    .top-bar {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(9,30,33,0.97);
+      border-bottom: 2px solid var(--border);
+      backdrop-filter: blur(14px);
+      height: 4rem;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
       flex-shrink: 0;
     }
-    .admin-bar-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; text-decoration: none; color: #fff; }
-    .admin-bar-logo { height: 34px; width: auto; border-radius: 4px; object-fit: contain; }
-    .admin-bar-links { display: flex; gap: 4px; align-items: center; }
-    .admin-bar-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; padding: 6px 12px; border-radius: 6px; transition: background 0.2s; }
-    .admin-bar-links a:hover, .admin-bar-links a.active { background: rgba(255,255,255,0.15); color: #fff; }
-    .admin-bar-links a.btn-view { background: rgba(232,98,26,0.3); color: #fff; }
-    .admin-bar-links a.btn-view:hover { background: var(--saffron); }
 
-    /* ── LAYOUT ── */
-    .layout { display: flex; flex: 1; min-height: 0; }
-
-    /* ── SIDEBAR ── */
-    .sidebar {
-      width: 220px; flex-shrink: 0;
-      background: var(--warm-white); border-right: 1px solid var(--border);
-      padding: 24px 0;
-      display: flex; flex-direction: column;
+    .top-bar-brand {
+      display: flex; align-items: center; gap: 0.625rem;
+      text-decoration: none; color: var(--text-pearl);
+      font-weight: 700; font-size: 1rem;
     }
-    .sidebar-section-title {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--text-muted); padding: 0 20px; margin-bottom: 6px; margin-top: 20px;
+    .top-bar-logo {
+      width: 2rem; height: 2rem;
+      border-radius: var(--radius-sm);
+      object-fit: contain;
+      background: #fff; padding: 2px;
     }
-    .sidebar-section-title:first-child { margin-top: 0; }
-    .sidebar-link {
-      display: flex; align-items: center; gap: 10px;
-      padding: 9px 20px; font-size: 13px; font-weight: 500;
-      color: var(--text-mid); text-decoration: none; border-radius: 0;
-      transition: background 0.15s, color 0.15s;
-      cursor: pointer; border: none; background: none; width: 100%; text-align: left;
-    }
-    .sidebar-link:hover { background: var(--saffron-pale); color: var(--saffron); }
-    .sidebar-link.active { background: var(--saffron-pale); color: var(--saffron); border-right: 3px solid var(--saffron); font-weight: 600; }
-    .sidebar-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
-    .sidebar-badge {
-      margin-left: auto; background: var(--saffron); color: #fff;
-      font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px;
-    }
-    .sidebar-badge.wip { background: var(--border); color: var(--text-muted); }
-
-    /* ── MAIN CONTENT ── */
-    .main { flex: 1; overflow-y: auto; padding: 32px; }
-
-    /* ── PAGE HEADER ── */
-    .page-header { margin-bottom: 28px; }
-    .page-header h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--earth); margin-bottom: 4px; }
-    .page-header p { color: var(--text-muted); font-size: 14px; }
-    .breadcrumb { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
-    .breadcrumb span { color: var(--saffron); }
-
-    /* ── STAT CARDS ── */
-    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
-    .stat-card {
-      background: var(--warm-white); border: 1px solid var(--border);
-      border-radius: 14px; padding: 20px;
-      display: flex; flex-direction: column; gap: 8px;
-    }
-    .stat-card-icon { font-size: 24px; }
-    .stat-card-value { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--earth); font-weight: 700; line-height: 1; }
-    .stat-card-label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
-    .stat-card.highlight { background: var(--earth); border-color: var(--earth); }
-    .stat-card.highlight .stat-card-value { color: var(--saffron-light); }
-    .stat-card.highlight .stat-card-label { color: rgba(255,255,255,0.7); }
-
-    /* ── QUICK ACTIONS GRID ── */
-    .section-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--earth); margin-bottom: 16px; }
-    .actions-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 32px; }
-    .action-card {
-      background: var(--warm-white); border: 1px solid var(--border);
-      border-radius: 14px; padding: 24px;
-      display: flex; flex-direction: column; gap: 12px;
-      text-decoration: none; color: inherit;
-      transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
-      cursor: pointer;
-      position: relative; overflow: hidden;
-    }
-    .action-card:hover:not(.disabled) { box-shadow: 0 4px 20px rgba(120,59,30,0.12); transform: translateY(-2px); border-color: var(--saffron); }
-    .action-card.disabled { opacity: 0.65; cursor: default; }
-    .action-card-icon {
-      width: 44px; height: 44px; border-radius: 10px;
+    .top-bar-logo-fallback {
+      width: 2rem; height: 2rem;
+      border-radius: var(--radius-sm);
+      background: var(--amber);
       display: flex; align-items: center; justify-content: center;
-      font-size: 20px; flex-shrink: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; color: #fff; font-weight: 700;
+      flex-shrink: 0;
     }
-    .action-card-icon.orange { background: var(--saffron-pale); }
-    .action-card-icon.green { background: #EEF5EC; }
-    .action-card-icon.blue { background: #EAF2FB; }
-    .action-card-icon.purple { background: #F0EBF8; }
-    .action-card-icon.teal { background: #E6F4F1; }
-    .action-card-icon.amber { background: #FEF3E2; }
-    .action-card h3 { font-size: 14px; font-weight: 600; color: var(--earth); line-height: 1.3; }
-    .action-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
-    .action-card-tag {
-      position: absolute; top: 12px; right: 12px;
-      font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 10px;
+
+    .top-bar-right {
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+
+    /* Notifications button in top bar */
+    .notif-wrap {
+      position: relative;
+    }
+    #notif-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--bg-section);
+      color: var(--text-silver);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.875rem;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.8125rem; font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+      min-height: 2.25rem;
+      position: relative;
+    }
+    #notif-btn:hover { border-color: var(--amber); color: var(--amber); background: var(--amber-pale); }
+    #notif-badge {
+      display: none;
+      background: var(--amber);
+      color: #fff;
+      font-size: 0.625rem;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 0.1rem 0.4rem;
+      min-width: 1.1rem;
+      text-align: center;
+      line-height: 1.5;
+    }
+    #notif-badge.visible { display: inline-flex; align-items: center; justify-content: center; }
+
+    /* Notification panel */
+    #notif-panel {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: min(26rem, 92vw);
+      max-height: 72vh;
+      overflow-y: auto;
+      background: var(--bg-nav);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-hover);
+      z-index: 300;
+    }
+    #notif-panel.open { display: block; }
+
+    .notif-panel-header {
+      padding: 0.875rem 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--amber);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .notif-empty {
+      padding: 1.5rem 1rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      text-align: center;
+    }
+    .notif-item {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(42,90,94,0.5);
+      transition: background 0.15s;
+    }
+    .notif-item:last-child { border-bottom: none; }
+    .notif-item.unread { background: rgba(232,97,26,0.06); border-left: 3px solid var(--amber); }
+    .notif-item-header {
+      display: flex; align-items: flex-start; gap: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+    .notif-unread-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--amber); flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .notif-name {
+      font-weight: 700; font-size: 0.9rem;
+      color: var(--text-pearl); flex: 1;
+    }
+    .notif-date {
+      font-size: 0.7rem; color: var(--text-muted);
+      flex-shrink: 0; white-space: nowrap;
+    }
+    .notif-email {
+      font-size: 0.78rem; color: var(--emerald);
+      margin-bottom: 0.375rem;
+    }
+    .notif-type {
+      display: inline-block;
+      font-size: 0.65rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      padding: 0.15rem 0.5rem; border-radius: 999px;
+      background: var(--emerald-pale);
+      color: var(--emerald);
+      border: 1px solid rgba(45,212,191,0.25);
+      margin-bottom: 0.375rem;
+    }
+    .notif-msg {
+      font-size: 0.875rem; color: var(--text-silver);
+      line-height: 1.55; word-break: break-word;
+    }
+    .notif-mark-btn {
+      margin-top: 0.625rem;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 0.75rem; font-weight: 600;
+      padding: 0.25rem 0.625rem;
+      cursor: pointer;
+      font-family: 'Source Sans 3', sans-serif;
+      transition: color 0.2s, border-color 0.2s;
+      min-height: 2rem;
+    }
+    .notif-mark-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+    /* Top bar nav links */
+    .top-bar-nav {
+      display: flex; align-items: center; gap: 0.25rem;
+    }
+    .top-bar-nav a {
+      color: var(--text-silver); text-decoration: none;
+      font-size: 0.8125rem; font-weight: 500;
+      padding: 0.375rem 0.75rem;
+      border-radius: var(--radius-sm);
+      border: 2px solid transparent;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      min-height: 2.25rem;
+      display: inline-flex; align-items: center;
+    }
+    .top-bar-nav a:hover { background: var(--amber-pale); color: var(--text-pearl); border-color: rgba(232,97,26,0.2); text-decoration: none; }
+    .top-bar-nav a.btn-site { background: var(--emerald-pale); color: var(--emerald); border-color: rgba(45,212,191,0.25); }
+    .top-bar-nav a.btn-site:hover { background: var(--emerald); color: #091E21; }
+    .top-bar-nav button.btn-logout {
+      background: none;
+      border: 2px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.8125rem; font-weight: 600;
+      padding: 0.375rem 0.75rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: 'Source Sans 3', sans-serif;
+      transition: border-color 0.2s, color 0.2s;
+      min-height: 2.25rem;
+    }
+    .top-bar-nav button.btn-logout:hover { border-color: #F87171; color: #F87171; }
+
+    /* ══════════════════════════════════════════════
+       LAYOUT SHELL
+    ══════════════════════════════════════════════ */
+    .layout {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* ══════════════════════════════════════════════
+       SIDEBAR
+    ══════════════════════════════════════════════ */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: var(--bg-nav);
+      border-right: 2px solid var(--border);
+      padding: 1.25rem 0;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .sidebar-group-label {
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 0 1.25rem;
+      margin-bottom: 0.25rem;
+      margin-top: 1.25rem;
+    }
+    .sidebar-group-label:first-of-type { margin-top: 0; }
+
+    .sidebar-link,
+    .sidebar-btn {
+      display: flex; align-items: center; gap: 0.625rem;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.875rem; font-weight: 500;
+      color: var(--text-silver);
+      text-decoration: none;
+      border: none; background: none;
+      width: 100%; text-align: left;
+      cursor: pointer;
+      font-family: 'Source Sans 3', sans-serif;
+      transition: background 0.15s, color 0.15s;
+      border-left: 3px solid transparent;
+      min-height: 2.5rem;
+    }
+    .sidebar-link:hover,
+    .sidebar-btn:hover {
+      background: var(--amber-pale);
+      color: var(--amber);
+      border-left-color: rgba(232,97,26,0.4);
+      text-decoration: none;
+    }
+    .sidebar-link.active {
+      background: var(--amber-pale);
+      color: var(--amber);
+      border-left-color: var(--amber);
+      font-weight: 600;
+    }
+    .sidebar-icon { font-size: 1rem; width: 1.25rem; text-align: center; flex-shrink: 0; }
+    .sidebar-badge {
+      margin-left: auto;
+      font-size: 0.625rem; font-weight: 700;
+      padding: 0.15rem 0.4rem; border-radius: 999px;
       text-transform: uppercase; letter-spacing: 0.06em;
     }
-    .action-card-tag.live { background: #EEF5EC; color: var(--success); }
-    .action-card-tag.wip { background: var(--border); color: var(--text-muted); }
-    .action-card-arrow { font-size: 13px; color: var(--saffron); font-weight: 600; margin-top: auto; }
-    .action-card.disabled .action-card-arrow { color: var(--text-muted); }
+    .sidebar-badge.soon { background: rgba(42,90,94,0.6); color: var(--text-muted); border: 1px solid var(--border); }
+    .sidebar-badge.live { background: var(--emerald-pale); color: var(--emerald); border: 1px solid rgba(45,212,191,0.3); }
 
-    /* ── RECENT ACTIVITY PLACEHOLDER ── */
+    /* ══════════════════════════════════════════════
+       MAIN CONTENT
+    ══════════════════════════════════════════════ */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem 2rem 3rem;
+    }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: 2rem; }
+    .breadcrumb {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .breadcrumb [aria-current="page"] { color: var(--amber); }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--text-pearl);
+      line-height: 1.2;
+      margin-bottom: 0.375rem;
+    }
+    .page-header p { color: var(--text-muted); font-size: 0.9375rem; }
+
+    /* ── Section title ── */
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-pearl);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-heading::after {
+      content: ''; flex: 1;
+      height: 1px; background: var(--border);
+    }
+
+    /* ── Stat cards ── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+      position: relative; overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .stat-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--amber), var(--emerald));
+    }
+    .stat-card:hover { border-color: var(--amber); }
+    .stat-card-icon { font-size: 1.375rem; }
+    .stat-card-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.875rem; font-weight: 700;
+      color: var(--amber-hover); line-height: 1;
+    }
+    .stat-card-label { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.4; }
+    .stat-card.live-card { border-color: var(--emerald); }
+    .stat-card.live-card::before { background: var(--emerald); }
+    .stat-card.live-card .stat-card-value { color: var(--emerald); }
+
+    /* ── Quick actions ── */
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .action-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex; flex-direction: column; gap: 0.75rem;
+      text-decoration: none; color: inherit;
+      position: relative; overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .action-card:not(.disabled):hover {
+      border-color: var(--amber);
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-3px);
+      text-decoration: none;
+    }
+    .action-card.disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+    .action-card-badge {
+      position: absolute; top: 0.75rem; right: 0.75rem;
+      font-size: 0.625rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      padding: 0.2rem 0.5rem; border-radius: 999px; border: 1px solid;
+    }
+    .action-card-badge.live  { background: var(--emerald-pale); color: var(--emerald); border-color: rgba(45,212,191,0.3); }
+    .action-card-badge.soon { background: rgba(42,90,94,0.5); color: var(--text-muted); border-color: var(--border); }
+    .action-icon {
+      width: 2.75rem; height: 2.75rem;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem; flex-shrink: 0;
+    }
+    .action-icon.amber  { background: var(--amber-pale); }
+    .action-icon.emerald{ background: var(--emerald-pale); }
+    .action-icon.sky    { background: rgba(94,234,212,0.12); }
+    .action-icon.violet { background: rgba(167,139,250,0.12); }
+    .action-icon.teal   { background: rgba(45,212,191,0.1); }
+    .action-card h3 { font-size: 0.9375rem; font-weight: 600; color: var(--text-pearl); line-height: 1.3; }
+    .action-card p  { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.55; flex: 1; }
+    .action-arrow   { font-size: 0.8125rem; color: var(--amber); font-weight: 700; margin-top: auto; }
+    .action-card.disabled .action-arrow { color: var(--text-muted); }
+
+    /* ── Activity feed ── */
     .activity-box {
-      background: var(--warm-white); border: 1px solid var(--border);
-      border-radius: 14px; padding: 24px;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
     }
     .activity-row {
-      display: flex; align-items: center; gap: 14px;
-      padding: 12px 0; border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 0.875rem;
+      padding: 0.875rem 1.25rem;
+      border-bottom: 1px solid rgba(42,90,94,0.4);
     }
-    .activity-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .activity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: var(--saffron); }
-    .activity-dot.gray { background: var(--border); }
-    .activity-text { font-size: 13px; color: var(--text-mid); flex: 1; }
-    .activity-time { font-size: 12px; color: var(--text-muted); flex-shrink: 0; }
+    .activity-row:last-child { border-bottom: none; }
+    .activity-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--amber); flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .activity-dot.muted { background: var(--border); }
+    .activity-text { font-size: 0.875rem; color: var(--text-silver); flex: 1; line-height: 1.5; }
+    .activity-time { font-size: 0.75rem; color: var(--text-muted); flex-shrink: 0; white-space: nowrap; }
 
-    /* ── WIP MODAL ── */
+    /* ══════════════════════════════════════════════
+       MODAL
+    ══════════════════════════════════════════════ */
     .modal-overlay {
       display: none; position: fixed; inset: 0;
-      background: rgba(28,16,8,0.5); z-index: 500;
+      background: rgba(6,14,16,0.75);
+      z-index: 1000;
       align-items: center; justify-content: center;
+      padding: 1rem;
     }
     .modal-overlay.open { display: flex; }
     .modal {
-      background: var(--warm-white); border-radius: 16px;
-      padding: 32px; max-width: 420px; width: 90%;
-      text-align: center; position: relative;
+      background: var(--bg-nav);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      max-width: 26rem; width: 100%;
+      text-align: center;
     }
-    .modal-icon { font-size: 48px; margin-bottom: 16px; }
-    .modal h2 { font-family: 'Playfair Display', serif; color: var(--earth); margin-bottom: 10px; font-size: 1.3rem; }
-    .modal p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; }
+    .modal-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    .modal h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; color: var(--text-pearl);
+      margin-bottom: 0.625rem;
+    }
+    .modal p { font-size: 0.9375rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.5rem; }
     .modal-close {
-      background: var(--saffron); color: #fff; border: none;
-      padding: 10px 28px; border-radius: 8px; font-family: 'DM Sans', sans-serif;
-      font-weight: 600; font-size: 14px; cursor: pointer;
+      background: var(--amber); color: #fff;
+      border: 2px solid var(--amber);
+      padding: 0.625rem 1.75rem;
+      border-radius: var(--radius-sm);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.9375rem; font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      min-height: 2.75rem;
     }
-    .modal-close:hover { background: var(--earth); }
+    .modal-close:hover { background: var(--amber-hover); border-color: var(--amber-hover); }
 
-    /* ── FOOTER ── */
+    /* ══════════════════════════════════════════════
+       TOAST
+    ══════════════════════════════════════════════ */
+    #admin-toast {
+      position: fixed;
+      bottom: 1.5rem; right: 1.5rem;
+      background: var(--amber);
+      color: #fff;
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem; font-weight: 600;
+      font-family: 'Source Sans 3', sans-serif;
+      box-shadow: var(--shadow-card);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(1rem);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      max-width: 20rem;
+    }
+    #admin-toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════ */
     .admin-footer {
-      background: var(--warm-white); border-top: 1px solid var(--border);
-      padding: 12px 32px; font-size: 12px; color: var(--text-muted);
+      background: var(--bg-nav);
+      border-top: 2px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
       display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 0.5rem;
       flex-shrink: 0;
     }
+    .admin-footer a { color: var(--amber); }
 
-    /* ── RESPONSIVE ── */
-    @media(max-width: 768px) {
-      .sidebar { display: none; }
-      .main { padding: 20px; }
-      .stat-grid { grid-template-columns: repeat(2, 1fr); }
-
-      --saffron: #ff8e42;
-      --text-main: #f3f6fb;
-      --text-soft: #cdd6e4;
-      --text-muted: #97a6bc;
-      --border: #26344b;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: "DM Sans", sans-serif;
-      color: var(--text-main);
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 10% 10%, rgba(255, 142, 66, 0.14), transparent 24%),
-        radial-gradient(circle at 84% 10%, rgba(104, 179, 255, 0.16), transparent 22%),
-        linear-gradient(165deg, #050910 0%, #0a1220 55%, #060b13 100%);
-    }
-    .admin-bar {
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(8, 12, 19, 0.9);
-    }
-    .admin-bar a {
-      color: var(--text-soft);
-      text-decoration: none;
-      font-size: 14px;
-      margin-left: 14px;
-    }
-    .admin-bar a.active, .admin-bar a:hover { color: var(--text-main); }
-    .page {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 34px 20px 70px;
-    }
-    h1 {
-      font-family: "Playfair Display", serif;
-      margin-bottom: 8px;
-    }
-    p { color: var(--text-muted); }
-    .grid {
-      margin-top: 22px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
-    .card {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      background: linear-gradient(180deg, rgba(19, 28, 43, 0.88) 0%, rgba(14, 20, 32, 0.92) 100%);
-      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45);
-    }
-    .card h3 { margin-bottom: 6px; }
-    .badge {
-      display: inline-block;
-      margin-top: 10px;
-      background: rgba(255, 142, 66, 0.12);
-      color: #ffc89b;
-      border: 1px solid rgba(255, 142, 66, 0.35);
-      border-radius: 999px;
-      padding: 5px 10px;
-      font-size: 11px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
+    /* ══════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════ */
     @media (max-width: 768px) {
-      .admin-bar {
-        height: auto;
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 10px;
-        padding: 14px 16px;
+      .sidebar { display: none; }
+      .main { padding: 1.25rem 1rem 2.5rem; }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+      .actions-grid { grid-template-columns: 1fr; }
+      .top-bar-nav .hide-mobile { display: none; }
+    }
+    @media (max-width: 480px) {
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── Reduced motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
       }
-      .admin-bar nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-      .admin-bar a {
-        margin-left: 0;
-      }
-      .page {
-        padding: 24px 16px 52px;
-      }
-      .grid {
-        grid-template-columns: 1fr;
-      }
-      .card {
-        padding: 18px;
-      }
->>>>>>> a73b645 (improved UI)
     }
   </style>
 </head>
+
 <body>
-  <div class="admin-bar">
-    <strong>YugPrerna Admin</strong>
-    <nav>
-      <a href="/admin/dashboard" class="active" onclick="return openAdmin(event, '/admin/dashboard')">Dashboard</a>
-      <a href="/admin/add-blog" onclick="return openAdmin(event, '/admin/add-blog')">Add Blog</a>
-      <a href="/admin/add-project" onclick="return openAdmin(event, '/admin/add-project')">Add Project</a>
-      <a href="/admin" data-auth="login">Login</a>
-      <a href="#" data-auth="logout" onclick="logoutAdmin(event)">Logout</a>
-    </nav>
+
+  <!-- ══ SKIP LINKS ══ -->
+  <div class="skip-links">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <a class="skip-link" href="#admin-nav">Skip to navigation</a>
   </div>
 
-<<<<<<< HEAD
-<!-- TOP BAR -->
-<div class="admin-bar" role="banner">
-  <a href="/admin/dashboard" class="admin-bar-brand">
-    <img src="https://drive.google.com/uc?id=1krpIJwi0ZUlLmnE0Z2pRff8NSsnZa-Vb"
-         alt="YugPrerna Welfare Foundation"
-         class="admin-bar-logo"
-         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-    <span style="display:none; width:28px; height:28px; background:var(--saffron); border-radius:5px; align-items:center; justify-content:center; font-family:'Playfair Display'; font-size:14px; color:#fff;">Y</span>
-    YugPrerna Admin
-  </a>
-  <div class="admin-bar-links">
-    <a href="/admin/dashboard" class="active">Dashboard</a>
-    <a href="/admin/add-blog">Add Blog</a>
-    <a href="/index.html" target="_blank" class="btn-view">View Site ↗</a>
-  </div>
-</div>
-
-<!-- MAIN LAYOUT -->
-<div class="layout">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar" role="navigation" aria-label="Admin navigation">
-    <p class="sidebar-section-title">Content</p>
-    <a href="/admin/add-blog" class="sidebar-link">
-      <span class="sidebar-icon">📝</span> Add Blog Post
+  <!-- ══ TOP BAR ══ -->
+  <header class="top-bar" role="banner">
+    <a href="/admin/dashboard" class="top-bar-brand" aria-label="YugPrerna Admin — go to dashboard">
+      <img src="/logo.jpg"
+           alt=""
+           class="top-bar-logo"
+           aria-hidden="true"
+           id="topBarLogo"
+           onerror="this.style.display='none'; document.getElementById('topBarLogoFallback').style.display='flex'">
+      <span class="top-bar-logo-fallback" id="topBarLogoFallback" style="display:none;" aria-hidden="true">Y</span>
+      <span>YugPrerna Admin</span>
     </a>
-    <button class="sidebar-link" onclick="showWip('Manage Blogs')">
-      <span class="sidebar-icon">📋</span> Manage Blogs
-      <span class="sidebar-badge wip">Soon</span>
-    </button>
 
-    <p class="sidebar-section-title">Team</p>
-    <button class="sidebar-link" onclick="showWip('Add Employee')">
-      <span class="sidebar-icon">👤</span> Add Employee
-    </button>
-    <button class="sidebar-link" onclick="showWip('Manage Team')">
-      <span class="sidebar-icon">👥</span> Manage Team
-      <span class="sidebar-badge wip">Soon</span>
-    </button>
-    <button class="sidebar-link" onclick="showWip('Volunteer Registry')">
-      <span class="sidebar-icon">🤝</span> Volunteer Registry
-      <span class="sidebar-badge wip">Soon</span>
-    </button>
+    <div class="top-bar-right">
 
-    <p class="sidebar-section-title">Programs</p>
-    <button class="sidebar-link" onclick="showWip('Add Project')">
-      <span class="sidebar-icon">🎯</span> Add Project
-    </button>
-    <button class="sidebar-link" onclick="showWip('Impact Reports')">
-      <span class="sidebar-icon">📊</span> Impact Reports
-      <span class="sidebar-badge wip">Soon</span>
-    </button>
+      <!-- ── Notifications ── -->
+      <div class="notif-wrap">
+        <button
+          id="notif-btn"
+          aria-expanded="false"
+          aria-controls="notif-panel"
+          aria-label="Notifications — 0 unread messages"
+          aria-haspopup="true">
+          <span aria-hidden="true">🔔</span>
+          <span class="hide-mobile">Notifications</span>
+          <span id="notif-badge" role="status" aria-live="polite" aria-label="unread messages count"></span>
+        </button>
 
-    <p class="sidebar-section-title">Settings</p>
-    <button class="sidebar-link" onclick="showWip('Site Settings')">
-      <span class="sidebar-icon">⚙️</span> Site Settings
-      <span class="sidebar-badge wip">Soon</span>
-    </button>
-    <button class="sidebar-link" onclick="showWip('Media Library')">
-      <span class="sidebar-icon">🖼️</span> Media Library
-      <span class="sidebar-badge wip">Soon</span>
-    </button>
-  </aside>
+        <div
+          id="notif-panel"
+          role="region"
+          aria-label="Contact messages"
+          aria-describedby="notif-panel-heading">
+          <div class="notif-panel-header" id="notif-panel-heading">
+            <span aria-hidden="true">📩</span> Contact Messages
+          </div>
+          <div id="notif-list">
+            <p class="notif-empty">Loading messages…</p>
+          </div>
+        </div>
+      </div>
 
-  <!-- MAIN CONTENT -->
-  <main class="main" id="main-content">
-
-    <!-- BREADCRUMB + HEADER -->
-    <div class="page-header">
-      <p class="breadcrumb">Admin / <span>Dashboard</span></p>
-      <h1>Dashboard</h1>
-      <p>Welcome back. Here's an overview of your website and content.</p>
+      <!-- ── Nav links ── -->
+      <nav class="top-bar-nav" id="admin-nav" aria-label="Admin navigation">
+        <a href="/admin/dashboard" aria-current="page" class="hide-mobile">Dashboard</a>
+        <a href="/admin/add-blog" class="hide-mobile">Add Blog</a>
+        <a href="/index.html" target="_blank" rel="noopener" class="btn-site" aria-label="View public site (opens in new tab)">
+          View Site ↗
+        </a>
+        <button class="btn-logout" id="logoutBtn" aria-label="Log out of admin panel">
+          Logout
+        </button>
+      </nav>
     </div>
+  </header>
 
-    <!-- STAT CARDS -->
-    <div class="stat-grid" role="list" aria-label="Site statistics">
-      <div class="stat-card" role="listitem">
-        <div class="stat-card-icon">📝</div>
-        <div class="stat-card-value" id="stat-blogs">—</div>
-        <div class="stat-card-label">Blog Posts Published</div>
-      </div>
-      <div class="stat-card" role="listitem">
-        <div class="stat-card-icon">🎯</div>
-        <div class="stat-card-value">4</div>
-        <div class="stat-card-label">Active Programs</div>
-      </div>
-      <div class="stat-card" role="listitem">
-        <div class="stat-card-icon">🤝</div>
-        <div class="stat-card-value">4</div>
-        <div class="stat-card-label">Volunteer Tiers</div>
-      </div>
-      <div class="stat-card highlight" role="listitem">
-        <div class="stat-card-icon">✅</div>
-        <div class="stat-card-value">Live</div>
-        <div class="stat-card-label">Website Status</div>
-      </div>
-    </div>
+  <!-- ══ MAIN LAYOUT ══ -->
+  <div class="layout">
 
-    <!-- QUICK ACTIONS -->
-    <h2 class="section-title">Quick Actions</h2>
-    <div class="actions-grid" role="list">
+    <!-- ── SIDEBAR ── -->
+    <nav class="sidebar" id="sidebar" aria-label="Admin sidebar navigation">
 
-      <!-- ADD BLOG — Live -->
-      <a href="/admin/add-blog" class="action-card" role="listitem" aria-label="Add Blog Post">
-        <span class="action-card-tag live">Live</span>
-        <div class="action-card-icon orange">📝</div>
-        <h3>Add Blog Post</h3>
-        <p>Upload images &amp; videos to Drive, save content to Google Sheets.</p>
-        <div class="action-card-arrow">Go to form →</div>
+      <span class="sidebar-group-label">Content</span>
+      <a href="/admin/add-blog" class="sidebar-link">
+        <span class="sidebar-icon" aria-hidden="true">📝</span>
+        Add Blog Post
+        <span class="sidebar-badge live" aria-label="feature is live">Live</span>
       </a>
+      <button class="sidebar-btn" onclick="showWip('Manage Blogs')" aria-label="Manage Blogs — coming soon">
+        <span class="sidebar-icon" aria-hidden="true">📋</span>
+        Manage Blogs
+        <span class="sidebar-badge soon" aria-label="coming soon">Soon</span>
+      </button>
 
-      <!-- ADD EMPLOYEE — WIP -->
-      <div class="action-card disabled" role="listitem" onclick="showWip('Add New Employee')" aria-label="Add Employee - Under Development" tabindex="0" onkeydown="if(event.key==='Enter') showWip('Add New Employee')">
-        <span class="action-card-tag wip">Coming Soon</span>
-        <div class="action-card-icon green">👤</div>
-        <h3>Add New Employee</h3>
-        <p>Register team members, assign roles, and manage staff profiles.</p>
-        <div class="action-card-arrow">Under development</div>
+      <span class="sidebar-group-label">Team</span>
+      <button class="sidebar-btn" onclick="showWip('Add Employee')" aria-label="Add Employee — coming soon">
+        <span class="sidebar-icon" aria-hidden="true">👤</span>
+        Add Employee
+        <span class="sidebar-badge soon">Soon</span>
+      </button>
+      <button class="sidebar-btn" onclick="showWip('Manage Team')" aria-label="Manage Team — coming soon">
+        <span class="sidebar-icon" aria-hidden="true">👥</span>
+        Manage Team
+        <span class="sidebar-badge soon">Soon</span>
+      </button>
+      <button class="sidebar-btn" onclick="showWip('Volunteer Registry')" aria-label="Volunteer Registry — coming soon">
+        <span class="sidebar-icon" aria-hidden="true">🤝</span>
+        Volunteer Registry
+        <span class="sidebar-badge soon">Soon</span>
+      </button>
+
+      <span class="sidebar-group-label">Programs</span>
+      <button class="sidebar-btn" onclick="showWip('Add Project')" aria-label="Add Project — coming soon">
+        <span class="sidebar-icon" aria-hidden="true">🎯</span>
+        Add Project
+        <span class="sidebar-badge soon">Soon</span>
+      </button>
+      <button class="sidebar-btn" onclick="showWip('Impact Reports')" aria-label="Impact Reports — coming soon">
+        <span class="sidebar-icon" aria-hidden="true">📊</span>
+        Impact Reports
+        <span class="sidebar-badge soon">Soon</span>
+      </button>
+
+      <span class="sidebar-group-label">Settings</span>
+      <button class="sidebar-btn" onclick="showWip('Site Settings')" aria-label="Site Settings — coming soon">
+        <span class="sidebar-icon" aria-hidden="true">⚙️</span>
+        Site Settings
+        <span class="sidebar-badge soon">Soon</span>
+      </button>
+      <button class="sidebar-btn" onclick="showWip('Media Library')" aria-label="Media Library — coming soon">
+        <span class="sidebar-icon" aria-hidden="true">🖼️</span>
+        Media Library
+        <span class="sidebar-badge soon">Soon</span>
+      </button>
+
+    </nav>
+
+    <!-- ── MAIN CONTENT ── -->
+    <main class="main" id="main-content" tabindex="-1">
+
+      <!-- Breadcrumb + heading -->
+      <div class="page-header">
+        <nav aria-label="Breadcrumb">
+          <ol style="list-style:none; display:flex; gap:0.375rem; font-size:0.75rem; color:var(--text-muted);">
+            <li>Admin</li>
+            <li aria-hidden="true" style="color:var(--border);">/</li>
+            <li><span aria-current="page" style="color:var(--amber);">Dashboard</span></li>
+          </ol>
+        </nav>
+        <h1>Dashboard</h1>
+        <p>Welcome back. Here's an overview of your website content and activity.</p>
       </div>
 
-      <!-- ADD PROJECT — WIP -->
-      <div class="action-card disabled" role="listitem" onclick="showWip('Add Project')" aria-label="Add Project - Under Development" tabindex="0" onkeydown="if(event.key==='Enter') showWip('Add Project')">
-        <span class="action-card-tag wip">Coming Soon</span>
-        <div class="action-card-icon blue">🎯</div>
-        <h3>Add Project</h3>
-        <p>Publish program updates, outcomes, and impact stories to the website.</p>
-        <div class="action-card-arrow">Under development</div>
-      </div>
+      <!-- Stat cards -->
+      <section aria-labelledby="stats-heading">
+        <h2 class="section-heading" id="stats-heading">Site Overview</h2>
+        <div class="stat-grid" role="list">
 
-      <!-- MANAGE BLOGS — WIP -->
-      <div class="action-card disabled" role="listitem" onclick="showWip('Manage Blogs')" aria-label="Manage Blogs - Under Development" tabindex="0" onkeydown="if(event.key==='Enter') showWip('Manage Blogs')">
-        <span class="action-card-tag wip">Coming Soon</span>
-        <div class="action-card-icon purple">📋</div>
-        <h3>Manage Blogs</h3>
-        <p>View, edit, and delete existing blog posts from Google Sheets.</p>
-        <div class="action-card-arrow">Under development</div>
-      </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-card-icon" aria-hidden="true">📝</span>
+            <div class="stat-card-value" id="stat-blogs" aria-label="blog posts published">—</div>
+            <div class="stat-card-label">Blog Posts Published</div>
+          </div>
 
-      <!-- VOLUNTEER REGISTRY — WIP -->
-      <div class="action-card disabled" role="listitem" onclick="showWip('Volunteer Registry')" aria-label="Volunteer Registry - Under Development" tabindex="0" onkeydown="if(event.key==='Enter') showWip('Volunteer Registry')">
-        <span class="action-card-tag wip">Coming Soon</span>
-        <div class="action-card-icon teal">🤝</div>
-        <h3>Volunteer Registry</h3>
-        <p>View and manage VEP volunteer applications and tier assignments.</p>
-        <div class="action-card-arrow">Under development</div>
-      </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-card-icon" aria-hidden="true">📩</span>
+            <div class="stat-card-value" id="stat-messages" aria-label="unread contact messages">—</div>
+            <div class="stat-card-label">Unread Messages</div>
+          </div>
 
-      <!-- IMPACT REPORTS — WIP -->
-      <div class="action-card disabled" role="listitem" onclick="showWip('Impact Reports')" aria-label="Impact Reports - Under Development" tabindex="0" onkeydown="if(event.key==='Enter') showWip('Impact Reports')">
-        <span class="action-card-tag wip">Coming Soon</span>
-        <div class="action-card-icon amber">📊</div>
-        <h3>Impact Reports</h3>
-        <p>Generate quarterly partner dashboards and annual impact summaries.</p>
-        <div class="action-card-arrow">Under development</div>
-      </div>
+          <div class="stat-card" role="listitem">
+            <span class="stat-card-icon" aria-hidden="true">🎯</span>
+            <div class="stat-card-value">4</div>
+            <div class="stat-card-label">Active Programs</div>
+          </div>
 
-    </div>
+          <div class="stat-card live-card" role="listitem">
+            <span class="stat-card-icon" aria-hidden="true">✅</span>
+            <div class="stat-card-value">Live</div>
+            <div class="stat-card-label">Website Status</div>
+          </div>
 
-    <!-- RECENT ACTIVITY -->
-    <h2 class="section-title">Recent Activity</h2>
-    <div class="activity-box" aria-label="Recent activity">
-      <div class="activity-row">
-        <div class="activity-dot"></div>
-        <div class="activity-text">Blog module connected — Google Sheets &amp; Drive integration active</div>
-        <div class="activity-time">Today</div>
-      </div>
-      <div class="activity-row">
-        <div class="activity-dot"></div>
-        <div class="activity-text">Admin login system configured and working</div>
-        <div class="activity-time">Today</div>
-      </div>
-      <div class="activity-row">
-        <div class="activity-dot"></div>
-        <div class="activity-text">Google OAuth authentication set up successfully</div>
-        <div class="activity-time">Today</div>
-      </div>
-      <div class="activity-row">
-        <div class="activity-dot gray"></div>
-        <div class="activity-text" id="recent-blog-text" style="color: var(--text-muted);">Loading latest blog post...</div>
-        <div class="activity-time" id="recent-blog-time">—</div>
-      </div>
-    </div>
+        </div>
+      </section>
 
-  </main>
-</div>
+      <!-- Quick actions -->
+      <section aria-labelledby="actions-heading">
+        <h2 class="section-heading" id="actions-heading">Quick Actions</h2>
+        <div class="actions-grid" role="list">
 
-<!-- FOOTER -->
-<footer class="admin-footer" role="contentinfo">
-  <span>YugPrerna Welfare Foundation — Admin Panel</span>
-  <span>© 2026 · <a href="/index.html" target="_blank" style="color: var(--saffron); text-decoration: none;">View Public Site</a></span>
-</footer>
+          <a href="/admin/add-blog" class="action-card" role="listitem" aria-label="Add Blog Post — go to form">
+            <span class="action-card-badge live">Live</span>
+            <div class="action-icon amber" aria-hidden="true">📝</div>
+            <h3>Add Blog Post</h3>
+            <p>Upload images &amp; videos to Drive, save content to Google Sheets.</p>
+            <div class="action-arrow" aria-hidden="true">Go to form →</div>
+          </a>
 
-<!-- WIP MODAL -->
-<div class="modal-overlay" id="wipModal" role="dialog" aria-modal="true" aria-labelledby="wip-title"
-     onclick="if(event.target===this) closeWip()">
-  <div class="modal">
-    <div class="modal-icon" aria-hidden="true">🚧</div>
-    <h2 id="wip-title">Feature Under Development</h2>
-    <p id="wip-desc">This feature is currently under development and will be available soon.</p>
-    <button class="modal-close" onclick="closeWip()" aria-label="Close dialog">Got it</button>
+          <div class="action-card disabled" role="listitem"
+               tabindex="0"
+               aria-label="Add Employee — feature under development"
+               aria-disabled="true"
+               onclick="showWip('Add New Employee')"
+               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showWip('Add New Employee')}">
+            <span class="action-card-badge soon">Coming Soon</span>
+            <div class="action-icon emerald" aria-hidden="true">👤</div>
+            <h3>Add New Employee</h3>
+            <p>Register team members, assign roles, and manage staff profiles.</p>
+            <div class="action-arrow" aria-hidden="true">Under development</div>
+          </div>
+
+          <div class="action-card disabled" role="listitem"
+               tabindex="0"
+               aria-label="Add Project — feature under development"
+               aria-disabled="true"
+               onclick="showWip('Add Project')"
+               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showWip('Add Project')}">
+            <span class="action-card-badge soon">Coming Soon</span>
+            <div class="action-icon sky" aria-hidden="true">🎯</div>
+            <h3>Add Project</h3>
+            <p>Publish program updates, outcomes, and impact stories to the website.</p>
+            <div class="action-arrow" aria-hidden="true">Under development</div>
+          </div>
+
+          <div class="action-card disabled" role="listitem"
+               tabindex="0"
+               aria-label="Manage Blogs — feature under development"
+               aria-disabled="true"
+               onclick="showWip('Manage Blogs')"
+               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showWip('Manage Blogs')}">
+            <span class="action-card-badge soon">Coming Soon</span>
+            <div class="action-icon violet" aria-hidden="true">📋</div>
+            <h3>Manage Blogs</h3>
+            <p>View, edit, and delete existing blog posts from Google Sheets.</p>
+            <div class="action-arrow" aria-hidden="true">Under development</div>
+          </div>
+
+          <div class="action-card disabled" role="listitem"
+               tabindex="0"
+               aria-label="Volunteer Registry — feature under development"
+               aria-disabled="true"
+               onclick="showWip('Volunteer Registry')"
+               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showWip('Volunteer Registry')}">
+            <span class="action-card-badge soon">Coming Soon</span>
+            <div class="action-icon teal" aria-hidden="true">🤝</div>
+            <h3>Volunteer Registry</h3>
+            <p>View and manage VEP volunteer applications and tier assignments.</p>
+            <div class="action-arrow" aria-hidden="true">Under development</div>
+          </div>
+
+          <div class="action-card disabled" role="listitem"
+               tabindex="0"
+               aria-label="Impact Reports — feature under development"
+               aria-disabled="true"
+               onclick="showWip('Impact Reports')"
+               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showWip('Impact Reports')}">
+            <span class="action-card-badge soon">Coming Soon</span>
+            <div class="action-icon amber" aria-hidden="true">📊</div>
+            <h3>Impact Reports</h3>
+            <p>Generate quarterly partner dashboards and annual impact summaries.</p>
+            <div class="action-arrow" aria-hidden="true">Under development</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Recent activity -->
+      <section aria-labelledby="activity-heading">
+        <h2 class="section-heading" id="activity-heading">Recent Activity</h2>
+        <div class="activity-box" role="log" aria-label="Recent activity log" aria-live="polite">
+
+          <div class="activity-row">
+            <div class="activity-dot" aria-hidden="true"></div>
+            <div class="activity-text">Blog module connected — Google Sheets &amp; Drive integration active</div>
+            <div class="activity-time">
+              <time>Today</time>
+            </div>
+          </div>
+
+          <div class="activity-row">
+            <div class="activity-dot" aria-hidden="true"></div>
+            <div class="activity-text">Admin login system configured and working</div>
+            <div class="activity-time"><time>Today</time></div>
+          </div>
+
+          <div class="activity-row">
+            <div class="activity-dot" aria-hidden="true"></div>
+            <div class="activity-text">Google OAuth authentication set up successfully</div>
+            <div class="activity-time"><time>Today</time></div>
+          </div>
+
+          <div class="activity-row">
+            <div class="activity-dot muted" id="recent-blog-dot" aria-hidden="true"></div>
+            <div class="activity-text" id="recent-blog-text" style="color:var(--text-muted);">Loading latest blog post…</div>
+            <div class="activity-time" id="recent-blog-time">—</div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
   </div>
-</div>
 
-<script>
-// ── WIP Modal ─────────────────────────────────────────────
-function showWip(featureName) {
-  document.getElementById('wip-title').textContent = featureName;
-  document.getElementById('wip-desc').textContent =
-    `"${featureName}" is currently under development. This feature will be available in a future update.`;
-  const modal = document.getElementById('wipModal');
-  modal.classList.add('open');
-  document.getElementById('wipModal').querySelector('.modal-close').focus();
-}
-function closeWip() {
-  document.getElementById('wipModal').classList.remove('open');
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWip(); });
+  <!-- ══ FOOTER ══ -->
+  <footer class="admin-footer" role="contentinfo">
+    <span>YugPrerna Welfare Foundation — Admin Panel</span>
+    <span>© 2026 ·
+      <a href="/index.html" target="_blank" rel="noopener" aria-label="View public site (opens in new tab)">
+        View Public Site ↗
+      </a>
+    </span>
+  </footer>
 
-// ── Load blog count + latest post from API ─────────────────
-async function loadStats() {
-  try {
-    const res = await fetch('/api/blogs');
-    if (!res.ok) return;
-    const blogs = await res.json();
+  <!-- ══ WIP MODAL ══ -->
+  <div
+    class="modal-overlay"
+    id="wipModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="wip-title"
+    aria-describedby="wip-desc">
+    <div class="modal">
+      <span class="modal-icon" aria-hidden="true">🚧</span>
+      <h2 id="wip-title">Feature Under Development</h2>
+      <p id="wip-desc">This feature is currently under development and will be available soon.</p>
+      <button class="modal-close" id="wipClose">Got it</button>
+    </div>
+  </div>
 
-    document.getElementById('stat-blogs').textContent = blogs.length;
+  <!-- ══ TOAST ══ -->
+  <div id="admin-toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
 
-    if (blogs.length > 0) {
-      // Sort newest first
-      blogs.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
-      const latest = blogs[0];
-      const date = latest.created_at
-        ? new Date(latest.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
-        : '';
-      document.getElementById('recent-blog-text').textContent =
-        `Blog post published: "${latest.title.length > 50 ? latest.title.slice(0,47)+'...' : latest.title}"`;
-      document.getElementById('recent-blog-text').style.color = '';
-      document.getElementById('recent-blog-time').textContent = date;
-      document.getElementById('recent-blog-dot') && (document.getElementById('recent-blog-dot').classList.remove('gray'));
-    } else {
-      document.getElementById('recent-blog-text').textContent = 'No blog posts yet — publish your first one!';
-      document.getElementById('recent-blog-time').textContent = '';
+  <!-- ══ SCRIPTS ══ -->
+  <script>
+    // ── Helpers ───────────────────────────────────────────────
+    function esc(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
-  } catch (e) {
-    document.getElementById('stat-blogs').textContent = '—';
-    document.getElementById('recent-blog-text').textContent = 'Could not connect to blog API';
-  }
-}
-
-loadStats();
-</script>
-</body>
-=======
-  <main class="page">
-    <h1>Admin Dashboard</h1>
-    <p>Dashboard now follows the same dark visual language as the rest of the website.</p>
-
-    <section class="grid">
-      <article class="card">
-        <h3>Blog Management</h3>
-        <p>Create and publish blog content with media upload support.</p>
-        <span class="badge">Active</span>
-      </article>
-
-      <article class="card">
-        <h3>Project Management</h3>
-        <p>Project entry page is themed and ready for full form integration.</p>
-        <span class="badge">Ready</span>
-      </article>
-
-      <article class="card">
-        <h3>Theme Status</h3>
-        <p>Public pages and admin screens are now aligned to the new dark style.</p>
-        <span class="badge">Updated</span>
-      </article>
-    </section>
-  </main>
-</body>
-<script>
-  async function logoutAdmin(e) {
-    if (e) e.preventDefault();
-    const token = localStorage.getItem('adminToken') || '';
-    try {
-      await fetch('/admin/logout', {
-        method: 'POST',
-        headers: token ? { 'x-admin-token': token } : {}
+    function fmtDate(iso) {
+      if (!iso) return '';
+      const d = new Date(iso);
+      return isNaN(d) ? '' : d.toLocaleString('en-IN', {
+        day: 'numeric', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
       });
-    } catch {}
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminTokenExpiresAt');
-    window.location.href = '/admin';
-  }
+    }
+    function shortDate(iso) {
+      if (!iso) return '';
+      const d = new Date(iso);
+      return isNaN(d) ? '' : d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+    }
 
-  function setAuthLinks() {
-    const hasToken = !!localStorage.getItem('adminToken');
-    document.querySelectorAll('[data-auth="login"]').forEach(el => {
-      el.style.display = hasToken ? 'none' : 'inline-flex';
-    });
-    document.querySelectorAll('[data-auth="logout"]').forEach(el => {
-      el.style.display = hasToken ? 'inline-flex' : 'none';
-    });
-  }
+    // ── WIP Modal ─────────────────────────────────────────────
+    let wipTrigger = null;
 
-  async function openAdmin(e, target) {
-    if (e) e.preventDefault();
-    const token = localStorage.getItem('adminToken');
-    if (!token) {
+    function showWip(name) {
+      wipTrigger = document.activeElement;
+      document.getElementById('wip-title').textContent = name + ' — Coming Soon';
+      document.getElementById('wip-desc').textContent =
+        '"' + name + '" is under development and will be available in a future update.';
+      const modal = document.getElementById('wipModal');
+      modal.classList.add('open');
+      document.getElementById('wipClose').focus();
+    }
+
+    function closeWip() {
+      document.getElementById('wipModal').classList.remove('open');
+      if (wipTrigger) { wipTrigger.focus(); wipTrigger = null; }
+    }
+
+    document.getElementById('wipClose').addEventListener('click', closeWip);
+    document.getElementById('wipModal').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeWip();
+    });
+
+    // ── Toast ─────────────────────────────────────────────────
+    let toastTimer = null;
+    function showToast(msg) {
+      const t = document.getElementById('admin-toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 4500);
+    }
+
+    // ── Logout ────────────────────────────────────────────────
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        await fetch('/admin/logout', { method: 'POST', credentials: 'include' });
+      } catch {}
       window.location.href = '/admin';
-      return false;
-    }
-    try {
-      const res = await fetch('/admin/session', {
-        method: 'POST',
-        headers: { 'x-admin-token': token }
-      });
-      if (res.ok) {
-        window.location.href = target;
-        return false;
-      }
-    } catch {}
-    window.location.href = '/admin';
-    return false;
-  }
+    });
 
-  setAuthLinks();
-</script>
->>>>>>> a73b645 (improved UI)
+    // ── Keyboard: Escape closes modal / notif panel ───────────
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeWip();
+        closeNotifPanel();
+      }
+    });
+
+    // ──────────────────────────────────────────────────────────
+    //  NOTIFICATIONS
+    // ──────────────────────────────────────────────────────────
+    let allMessages    = [];
+    let lastUnread     = -1;   // -1 = first load, suppress toast
+    let notifPanelOpen = false;
+
+    const notifBtn   = document.getElementById('notif-btn');
+    const notifPanel = document.getElementById('notif-panel');
+    const notifBadge = document.getElementById('notif-badge');
+    const notifList  = document.getElementById('notif-list');
+
+    // Update badge
+    function updateBadge(count) {
+      if (count > 0) {
+        notifBadge.textContent = count > 99 ? '99+' : count;
+        notifBadge.classList.add('visible');
+        notifBadge.setAttribute('aria-label', count + ' unread message' + (count !== 1 ? 's' : ''));
+      } else {
+        notifBadge.textContent = '';
+        notifBadge.classList.remove('visible');
+        notifBadge.setAttribute('aria-label', 'no unread messages');
+      }
+      notifBtn.setAttribute(
+        'aria-label',
+        'Notifications — ' + (count > 0 ? count + ' unread' : 'no unread messages')
+      );
+      // Update stat card
+      const sc = document.getElementById('stat-messages');
+      if (sc) sc.textContent = count > 0 ? count : '0';
+    }
+
+    // Render panel contents
+    function renderNotifPanel() {
+      if (!allMessages.length) {
+        notifList.innerHTML = '<p class="notif-empty">No messages yet.</p>';
+        return;
+      }
+      notifList.innerHTML = allMessages.map(msg => `
+        <article
+          class="notif-item ${msg.is_read ? '' : 'unread'}"
+          aria-label="Message from ${esc(msg.name)}${msg.is_read ? '' : ', unread'}">
+          <div class="notif-item-header">
+            ${!msg.is_read ? '<span class="notif-unread-dot" aria-hidden="true"></span>' : ''}
+            <span class="notif-name">${esc(msg.name)}</span>
+            <span class="notif-date"><time datetime="${esc(msg.created_at)}">${fmtDate(msg.created_at)}</time></span>
+          </div>
+          <div class="notif-email">${esc(msg.email)}</div>
+          ${msg.enquiry_type ? `<span class="notif-type">${esc(msg.enquiry_type)}</span>` : ''}
+          <p class="notif-msg">${esc(msg.message)}</p>
+          ${!msg.is_read
+            ? `<button
+                class="notif-mark-btn"
+                data-id="${esc(msg.id)}"
+                aria-label="Mark message from ${esc(msg.name)} as read">
+                Mark as read
+              </button>`
+            : ''}
+        </article>
+      `).join('');
+
+      // Attach mark-as-read handlers
+      notifList.querySelectorAll('.notif-mark-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          btn.disabled = true;
+          btn.textContent = 'Marking…';
+          await markAsRead(btn.dataset.id);
+        });
+      });
+    }
+
+    // Fetch from API
+    async function fetchMessages() {
+      try {
+        const res = await fetch('/api/messages', { credentials: 'include' });
+        if (!res.ok) return;
+        const data = await res.json();
+        const newUnread = data.unread_count || 0;
+
+        if (lastUnread !== -1 && newUnread > lastUnread) {
+          showToast('📩 ' + (newUnread - lastUnread) + ' new message' + (newUnread - lastUnread > 1 ? 's' : '') + ' received');
+        }
+        lastUnread   = newUnread;
+        allMessages  = data.messages || [];
+
+        updateBadge(newUnread);
+        if (notifPanelOpen) renderNotifPanel();
+
+      } catch (err) {
+        console.warn('Notification fetch failed:', err.message);
+      }
+    }
+
+    // Mark as read
+    async function markAsRead(id) {
+      try {
+        const res = await fetch('/api/messages/' + encodeURIComponent(id) + '/read', {
+          method: 'PATCH',
+          credentials: 'include'
+        });
+        if (!res.ok) throw new Error('Failed');
+        const msg = allMessages.find(m => m.id === id);
+        if (msg) msg.is_read = true;
+        const unread = allMessages.filter(m => !m.is_read).length;
+        lastUnread = unread;
+        updateBadge(unread);
+        renderNotifPanel();
+      } catch (err) {
+        console.error('Mark read failed:', err.message);
+      }
+    }
+
+    // Open / close panel
+    function openNotifPanel() {
+      notifPanelOpen = true;
+      notifPanel.classList.add('open');
+      notifBtn.setAttribute('aria-expanded', 'true');
+      renderNotifPanel();
+      // Move focus into panel for keyboard users
+      const firstFocusable = notifPanel.querySelector('button, a, [tabindex="0"]');
+      if (firstFocusable) firstFocusable.focus();
+    }
+
+    function closeNotifPanel() {
+      if (!notifPanelOpen) return;
+      notifPanelOpen = false;
+      notifPanel.classList.remove('open');
+      notifBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    notifBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      notifPanelOpen ? closeNotifPanel() : openNotifPanel();
+    });
+
+    // Close on outside click
+    document.addEventListener('click', e => {
+      if (!notifBtn.contains(e.target) && !notifPanel.contains(e.target)) {
+        closeNotifPanel();
+      }
+    });
+
+    // ── Blog stats ────────────────────────────────────────────
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/blogs', { credentials: 'include' });
+        if (!res.ok) return;
+        const blogs = await res.json();
+        const count = Array.isArray(blogs) ? blogs.length : 0;
+
+        const statEl = document.getElementById('stat-blogs');
+        if (statEl) statEl.textContent = count;
+
+        if (count > 0) {
+          const sorted = [...blogs].sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+          const latest = sorted[0];
+          const titleTrunc = (latest.title || '').length > 55
+            ? (latest.title || '').slice(0, 52) + '…'
+            : (latest.title || '');
+          const dot  = document.getElementById('recent-blog-dot');
+          const text = document.getElementById('recent-blog-text');
+          const time = document.getElementById('recent-blog-time');
+          if (text) { text.textContent = 'Blog post published: "' + titleTrunc + '"'; text.style.color = ''; }
+          if (time) time.textContent = shortDate(latest.created_at);
+          if (dot)  dot.classList.remove('muted');
+        } else {
+          const text = document.getElementById('recent-blog-text');
+          if (text) { text.textContent = 'No blog posts yet — publish your first one!'; }
+          const time = document.getElementById('recent-blog-time');
+          if (time) time.textContent = '';
+        }
+      } catch {
+        const statEl = document.getElementById('stat-blogs');
+        if (statEl) statEl.textContent = '—';
+      }
+    }
+
+    // ── Init ──────────────────────────────────────────────────
+    loadStats();
+    // First fetch; suppress toast on initial load
+    fetchMessages();
+    // Poll every 30 s
+    setInterval(fetchMessages, 30000);
+  </script>
+
+  <!-- Notifications JS (handles mark-as-read etc via admin-notifications.js) -->
+  <script src="/admin-notifications.js"></script>
+
+</body>
 </html>

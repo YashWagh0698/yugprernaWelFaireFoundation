@@ -6,6 +6,7 @@ const MongoStore = require('connect-mongo').default;
 const authRoutes = require('./routes/authRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const blogRoutes = require('./routes/blogRoutes');
+const contactRoutes = require('./routes/contactRoutes'); // ← NEW
 
 const app = express();
 
@@ -15,28 +16,27 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Session MUST be registered before routes so req.session is available in controllers
 app.use(session({
-secret: 'mysecret',
-resave: false,
-saveUninitialized: false,
-store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
-cookie: {
-secure: true,
-sameSite: 'none'
-}
+    secret: 'mysecret',
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+    cookie: {
+        secure: true,
+        sameSite: 'none'
+    }
 }));
 
 app.use(express.static('public'));
-app.use(express.static('admin', { index: false })); // serve admin html files
+app.use(express.static('admin', { index: false }));
 
 // Routes
 app.use('/auth', authRoutes);
 app.use('/api', uploadRoutes);
 app.use('/api', blogRoutes);
+app.use('/api', contactRoutes); // ← NEW
 
-// ── Public config endpoint — exposes safe frontend variables ──────────────────
-// Frontend calls GET /api/config to get the logo URL (avoids hardcoding in HTML)
+// Public config endpoint
 app.get('/api/config', (req, res) => {
     const logoId = process.env.website_logo;
     res.json({
@@ -44,31 +44,25 @@ app.get('/api/config', (req, res) => {
     });
 });
 
-// ── Admin login ───────────────────────────────────────────────────────────────
-// BUG FIX: .env uses ADMIN_USER / ADMIN_PASS — not ADMIN_USERNAME / ADMIN_PASSWORD
+// Admin login
 app.post('/admin/login', (req, res) => {
     const { username, password } = req.body;
-
     const adminUser = process.env.ADMIN_USER?.trim();
     const adminPass = process.env.ADMIN_PASS?.trim();
-
-    if (
-        username?.trim() === adminUser &&
-        password?.trim() === adminPass
-    ) {
+    if (username?.trim() === adminUser && password?.trim() === adminPass) {
         req.session.isAdmin = true;
         return res.json({ success: true });
     }
     res.status(401).json({ success: false, message: 'Invalid credentials' });
 });
 
-// ── Middleware to protect admin pages ─────────────────────────────────────────
+// Admin auth middleware
 function requireAdmin(req, res, next) {
     if (req.session && req.session.isAdmin) return next();
     res.status(401).json({ error: 'Unauthorized' });
 }
 
-// ── Admin page routes ─────────────────────────────────────────────────────────
+// Admin page routes
 app.get('/admin', (req, res) => res.sendFile('login.html', { root: 'admin' }));
 app.get('/admin/login', (req, res) => res.sendFile('login.html', { root: 'admin' }));
 app.get('/admin/dashboard', requireAdmin, (req, res) =>

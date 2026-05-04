@@ -221,33 +221,85 @@ function setupLogoFallback() {
   });
 }
 
+// ══════════════════════════════════════════════
+//  CONTACT FORM SUBMISSION  (append to main.js)
+// ══════════════════════════════════════════════
+
 function setupContactForm() {
-  const form = document.getElementById('contactForm');
-  const submitBtn = document.getElementById('submitBtn');
-  const status = document.getElementById('form-status');
-  if (!form||!submitBtn||!status) return;
-  const fields = Array.from(form.querySelectorAll('input,select,textarea'));
-  fields.forEach(f => {
-    f.addEventListener('input',   () => f.removeAttribute('aria-invalid'));
-    f.addEventListener('invalid', () => f.setAttribute('aria-invalid','true'));
-  });
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    status.hidden = true; status.className = 'form-status'; status.textContent = '';
-    if (!form.reportValidity()) {
-      const bad = fields.find(f => !f.checkValidity());
-      if (bad) bad.setAttribute('aria-invalid','true');
-      status.hidden = false; status.classList.add('error');
-      status.textContent = 'Please review the highlighted fields and try again.';
-      return;
-    }
-    submitBtn.disabled = true; submitBtn.setAttribute('aria-busy','true'); submitBtn.textContent = 'Sending…';
-    await new Promise(r => setTimeout(r, 1000));
-    form.reset(); fields.forEach(f => f.removeAttribute('aria-invalid'));
-    status.hidden = false; status.classList.add('success');
-    status.textContent = 'Thank you. We will get back to you within 2 working days.';
-    submitBtn.disabled = false; submitBtn.removeAttribute('aria-busy'); submitBtn.textContent = 'Send Message';
-  });
+    const form      = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const status    = document.getElementById('form-status');
+    if (!form || !submitBtn || !status) return;
+
+    // Live validation: clear invalid flag on edit
+    form.querySelectorAll('input, select, textarea').forEach(f => {
+        f.addEventListener('input', () => f.removeAttribute('aria-invalid'));
+    });
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        status.hidden = true;
+        status.className = 'form-status';
+        status.textContent = '';
+
+        // Client-side validation
+        const name    = form.name.value.trim();
+        const email   = form.email.value.trim();
+        const message = form.message.value.trim();
+
+        if (!name || !email || !message) {
+            ['name', 'email', 'message'].forEach(field => {
+                if (!form[field].value.trim()) form[field].setAttribute('aria-invalid', 'true');
+            });
+            status.hidden = false;
+            status.classList.add('error');
+            status.textContent = 'Please fill in all required fields (Name, Email, Message).';
+            return;
+        }
+
+        // Disable button while submitting
+        submitBtn.disabled = true;
+        submitBtn.setAttribute('aria-busy', 'true');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending…';
+
+        try {
+            const payload = {
+                name,
+                org:          (form.org?.value || '').trim(),
+                email,
+                enquiry_type: (form['enquiry-type']?.value || '').trim(),
+                message
+            };
+
+            const res = await fetch(getApiUrl('/api/contact'), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+
+            if (res.ok && data.success) {
+                form.reset();
+                form.querySelectorAll('[aria-invalid]').forEach(f => f.removeAttribute('aria-invalid'));
+                status.hidden = false;
+                status.classList.add('success');
+                status.textContent = data.message || 'Message sent! We'll be in touch within 2 working days.';
+            } else {
+                throw new Error(data.error || 'Submission failed.');
+            }
+        } catch (err) {
+            status.hidden = false;
+            status.classList.add('error');
+            status.textContent = err.message || 'Something went wrong. Please try again or email us directly.';
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.removeAttribute('aria-busy');
+            submitBtn.textContent = originalText;
+        }
+    });
 }
 
 // ── Accessibility Preferences ───────────────────────────────────
