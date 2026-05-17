@@ -2,13 +2,27 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
-const MongoStore = require('connect-mongo').default;
+const MongoStore = require('connect-mongo'); // ✅ Fix 1: removed .default
+const mongoose = require('mongoose'); // ✅ Fix 2: added mongoose
 const authRoutes = require('./routes/authRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const blogRoutes = require('./routes/blogRoutes');
-const contactRoutes = require('./routes/contactRoutes'); // ← NEW
+const contactRoutes = require('./routes/contactRoutes');
 
 const app = express();
+
+// ✅ Fix 3: MongoDB connection added
+if (!process.env.MONGODB_URI) {
+    console.error('❌ MONGODB_URI is missing in .env!');
+    process.exit(1);
+}
+
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('✅ MongoDB Connected Successfully'))
+    .catch(err => {
+        console.error('❌ MongoDB Connection Error:', err);
+        process.exit(1);
+    });
 
 app.use(cors({
     origin: true,
@@ -17,13 +31,13 @@ app.use(cors({
 app.use(express.json());
 
 app.use(session({
-    secret: 'mysecret',
+    secret: process.env.SESSION_SECRET || 'mysecret', // ✅ Fix 4: env variable
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
     cookie: {
-        secure: true,
-        sameSite: 'none'
+        secure: process.env.NODE_ENV === 'production',  // ✅ Fix 5: not always true
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
     }
 }));
 
@@ -34,7 +48,7 @@ app.use(express.static('admin', { index: false }));
 app.use('/auth', authRoutes);
 app.use('/api', uploadRoutes);
 app.use('/api', blogRoutes);
-app.use('/api', contactRoutes); // ← NEW
+app.use('/api', contactRoutes);
 
 // Public config endpoint
 app.get('/api/config', (req, res) => {
@@ -81,5 +95,5 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`🚀 Server running on port ${PORT}`);
 });
