@@ -1,14 +1,30 @@
 const { sheets, oauth2Client } = require('../config/google');
 
+// ✅ Check SHEET_ID at startup
+if (!process.env.SHEET_ID) {
+    console.error('❌ SHEET_ID missing in .env!');
+    process.exit(1);
+}
+
+// ✅ Reusable auth middleware function
+function setAuth(req) {
+    oauth2Client.setCredentials(req.session.tokens);
+}
+
+// ✅ Check session tokens
+function isAuthenticated(req, res) {
+    if (!req.session || !req.session.tokens) {
+        res.status(401).json({ error: 'Not authenticated. Please visit /auth/google first.' });
+        return false;
+    }
+    return true;
+}
+
 // POST /api/add-blog
 exports.addBlog = async (req, res) => {
     try {
-        // Tokens must exist — user must have gone through /auth/google first
-        if (!req.session || !req.session.tokens) {
-            return res.status(401).json({ error: 'Not authenticated. Please visit /auth/google first.' });
-        }
-
-        oauth2Client.setCredentials(req.session.tokens);
+        if (!isAuthenticated(req, res)) return;
+        setAuth(req);
 
         const { title, description, image, video, social_link } = req.body;
 
@@ -18,7 +34,7 @@ exports.addBlog = async (req, res) => {
 
         await sheets.spreadsheets.values.append({
             spreadsheetId: process.env.SHEET_ID,
-            range: 'Sheet1!A:F',          // A=title B=desc C=image D=video E=social F=timestamp
+            range: 'Sheet1!A:F',
             valueInputOption: 'USER_ENTERED',
             requestBody: {
                 values: [[
@@ -27,7 +43,7 @@ exports.addBlog = async (req, res) => {
                     image || '',
                     video || '',
                     social_link || '',
-                    new Date().toISOString()  // timestamp column so you can sort
+                    new Date().toISOString()
                 ]]
             }
         });
@@ -35,20 +51,16 @@ exports.addBlog = async (req, res) => {
         res.json({ success: true });
 
     } catch (err) {
-        console.error('SHEET WRITE ERROR:', err.message);
-        // Surface the real Google error to the frontend so you can debug it
+        console.error('❌ SHEET WRITE ERROR:', err.message);
         res.status(500).json({ error: err.message });
     }
 };
 
-// GET /api/blogs  — read all rows back out
+// GET /api/blogs
 exports.getBlogs = async (req, res) => {
     try {
-        if (!req.session || !req.session.tokens) {
-            return res.status(401).json({ error: 'Not authenticated' });
-        }
-
-        oauth2Client.setCredentials(req.session.tokens);
+        if (!isAuthenticated(req, res)) return;
+        setAuth(req);
 
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: process.env.SHEET_ID,
@@ -56,9 +68,9 @@ exports.getBlogs = async (req, res) => {
         });
 
         const rows = response.data.values || [];
-        // Skip header row if present, map to objects
+
         const blogs = rows
-            .filter(row => row[0] && row[0] !== 'title') // skip blank / header rows
+            .filter(row => row[0] && row[0] !== 'title') // ✅ skips header row
             .map(row => ({
                 title: row[0] || '',
                 description: row[1] || '',
@@ -71,7 +83,7 @@ exports.getBlogs = async (req, res) => {
         res.json(blogs);
 
     } catch (err) {
-        console.error('SHEET READ ERROR:', err.message);
+        console.error('❌ SHEET READ ERROR:', err.message);
         res.status(500).json({ error: err.message });
     }
 };
@@ -79,11 +91,8 @@ exports.getBlogs = async (req, res) => {
 // GET /api/sheets-status
 exports.sheetsStatus = async (req, res) => {
     try {
-        if (!req.session || !req.session.tokens) {
-            return res.status(401).json({ error: 'Not authenticated' });
-        }
-
-        oauth2Client.setCredentials(req.session.tokens);
+        if (!isAuthenticated(req, res)) return;
+        setAuth(req);
 
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: process.env.SHEET_ID,
@@ -95,8 +104,9 @@ exports.sheetsStatus = async (req, res) => {
             sheetId: process.env.SHEET_ID,
             sample: (response.data.values && response.data.values[0]) || []
         });
+
     } catch (err) {
-        console.error('SHEET STATUS ERROR:', err.message);
+        console.error('❌ SHEET STATUS ERROR:', err.message);
         res.status(500).json({ ok: false, error: err.message });
     }
 };
