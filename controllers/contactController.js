@@ -1,7 +1,6 @@
 const { sheets, oauth2Client } = require('../config/google');
 
-const SHEET_RANGE = 'Sheet1!A:I';
-// Columns: A=id, B=name, C=org, D=email, E=enquiry_type, F=message, G=created_at, H=is_read
+const SHEET_RANGE = 'Sheet1!A:H'; // ✅ Fix 1: A:H = 8 columns
 
 function getSheetId() {
     const id = process.env.user_messages;
@@ -9,12 +8,13 @@ function getSheetId() {
     return id;
 }
 
-// Ensure the sheet has a header row; if empty, write headers first
-async function ensureHeaders() {
+// ✅ Fix 2: tokens parameter add chesamu
+async function ensureHeaders(tokens) {
+    oauth2Client.setCredentials(tokens); // ✅ auth set chesamu
     const spreadsheetId = getSheetId();
     const res = await sheets.spreadsheets.values.get({
         spreadsheetId,
-        range: 'Sheet1!A1:H1'
+        range: 'Sheet1!A1:H1' // ✅ H1 only 8 columns
     });
     const row = res.data.values && res.data.values[0];
     if (!row || row[0] !== 'id') {
@@ -32,14 +32,10 @@ async function ensureHeaders() {
 // POST /api/contact
 exports.submitContact = async (req, res) => {
     try {
-        if (!req.session || !req.session.tokens) {
-            // For public contact form we still need auth tokens.
-            // If your server uses a service account or server-side auth, adjust here.
-            // For now, return a friendly error so the admin knows to authenticate first.
-            return res.status(503).json({ error: 'Server not authenticated with Google. Admin must visit /auth/google first.' });
-        }
-
-        oauth2Client.setCredentials(req.session.tokens);
+        // ✅ Fix 3: Public form - use server refresh token, not session tokens
+        oauth2Client.setCredentials({
+            refresh_token: process.env.REFRESH_TOKEN
+        });
 
         const { name, org, email, enquiry_type, message } = req.body;
 
@@ -52,9 +48,9 @@ exports.submitContact = async (req, res) => {
             return res.status(400).json({ error: 'Invalid email address.' });
         }
 
-        await ensureHeaders();
+        // ✅ Pass refresh token credentials to ensureHeaders
+        await ensureHeaders({ refresh_token: process.env.REFRESH_TOKEN });
 
-        // Generate a simple unique ID: timestamp + random suffix
         const id = `msg_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
 
         await sheets.spreadsheets.values.append({
@@ -70,7 +66,7 @@ exports.submitContact = async (req, res) => {
                     (enquiry_type || '').trim(),
                     message.trim(),
                     new Date().toISOString(),
-                    'false'   // is_read default false
+                    'false'
                 ]]
             }
         });
@@ -78,12 +74,12 @@ exports.submitContact = async (req, res) => {
         res.json({ success: true, message: 'Message received. We will get back to you within 2 working days.' });
 
     } catch (err) {
-        console.error('CONTACT SUBMIT ERROR:', err.message);
+        console.error('❌ CONTACT SUBMIT ERROR:', err.message);
         res.status(500).json({ error: err.message || 'Failed to save message.' });
     }
 };
 
-// GET /api/messages  (admin only — caller should add requireAdmin middleware in server.js)
+// GET /api/messages (admin only)
 exports.getMessages = async (req, res) => {
     try {
         if (!req.session || !req.session.tokens) {
@@ -101,12 +97,11 @@ exports.getMessages = async (req, res) => {
         });
 
         const rows = response.data.values || [];
-        // Skip header row
         const messages = rows
             .slice(1)
             .filter(row => row[0] && row[0] !== 'id')
             .map((row, idx) => ({
-                _rowIndex: idx + 2, // 1-based, +1 for header
+                _rowIndex: idx + 2,
                 id:           row[0] || '',
                 name:         row[1] || '',
                 org:          row[2] || '',
@@ -116,14 +111,13 @@ exports.getMessages = async (req, res) => {
                 created_at:   row[6] || '',
                 is_read:      row[7] === 'true'
             }))
-            // Latest first
             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
         const unread_count = messages.filter(m => !m.is_read).length;
         res.json({ messages, unread_count });
 
     } catch (err) {
-        console.error('GET MESSAGES ERROR:', err.message);
+        console.error('❌ GET MESSAGES ERROR:', err.message);
         res.status(500).json({ error: err.message });
     }
 };
@@ -143,7 +137,6 @@ exports.markAsRead = async (req, res) => {
         const { id } = req.params;
         const spreadsheetId = getSheetId();
 
-        // Fetch all rows to find the right one
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId,
             range: SHEET_RANGE
@@ -156,8 +149,7 @@ exports.markAsRead = async (req, res) => {
             return res.status(404).json({ error: 'Message not found' });
         }
 
-        // rowIdx is 0-based in the array; Sheet row = rowIdx + 1 (1-based sheets)
-        const sheetRow = rowIdx + 1;
+        const sheetRow = rowIdx + 1; // ✅ Correct
 
         await sheets.spreadsheets.values.update({
             spreadsheetId,
@@ -169,7 +161,7 @@ exports.markAsRead = async (req, res) => {
         res.json({ success: true });
 
     } catch (err) {
-        console.error('MARK READ ERROR:', err.message);
+        console.error('❌ MARK READ ERROR:', err.message);
         res.status(500).json({ error: err.message });
     }
 };
